@@ -48,10 +48,14 @@ jobs:
         run: docker compose build
 
       - name: verificar
-        run: docker compose run --rm verificar | tee verificar.txt && grep -q "RESULTADO: pronto" verificar.txt
+        run: |
+          docker compose run --rm verificar | tee verificar.txt
+          grep -q "RESULTADO: pronto" verificar.txt
 
       - name: demo
-        run: docker compose run --rm demo && test -f saida/relatorio.md
+        run: |
+          docker compose run --rm demo
+          test -f saida/relatorio.md
 
       - name: teste
         run: docker compose run --rm teste
