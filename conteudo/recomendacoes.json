@@ -1,0 +1,50 @@
+{
+  "letra_trocada": {
+    "descricao": "colocou a letra na caixa de outra letra",
+    "sugestao": "comparar as duas letras lado a lado, falando o nome de cada uma e traçando a forma com o dedo."
+  },
+  "ordem_trocada": {
+    "descricao": "colocou as sílabas certas fora de ordem",
+    "sugestao": "bater palmas para cada sílaba da palavra, da esquerda para a direita, antes de montar."
+  },
+  "par_surdo_sonoro": {
+    "descricao": "trocou sons parecidos, como B e P ou T e D",
+    "sugestao": "sentir a garganta vibrando com a mão no pescoço: B vibra, P não. Treinar pares de palavras como bato e pato."
+  },
+  "silaba_de_outra_palavra": {
+    "descricao": "usou uma sílaba que não está na palavra",
+    "sugestao": "ouvir a palavra inteira de novo e procurar só as sílabas que aparecem nela."
+  },
+  "um_a_mais_ou_menos": {
+    "descricao": "errou a conta por um a mais ou um a menos",
+    "sugestao": "contar tocando em cada objeto, um toque por número, e dizer o último número em voz alta."
+  },
+  "operacao_trocada": {
+    "descricao": "somou quando era para tirar, ou tirou quando era para somar",
+    "sugestao": "ler o sinal da conta em voz alta antes de começar: mais junta, menos tira."
+  },
+  "digitos_invertidos": {
+    "descricao": "inverteu os algarismos, como 12 e 21",
+    "sugestao": "montar o número com dezenas e unidades separadas: primeiro as dezenas, depois as unidades."
+  },
+  "chute": {
+    "descricao": "respondeu muito rápido, sem montar a conta",
+    "sugestao": "pedir que monte com os objetos antes de escolher o cartão."
+  },
+  "somou_denominadores": {
+    "descricao": "somou os denominadores",
+    "sugestao": "pizzas sobrepostas, mostrando que o tamanho da fatia não muda."
+  },
+  "contou_fatias_errado": {
+    "descricao": "contou errado as fatias juntadas",
+    "sugestao": "contar as fatias tocando em cada uma, com a pizza parada."
+  },
+  "confundiu_numerador_denominador": {
+    "descricao": "trocou o número de cima com o de baixo da fração",
+    "sugestao": "o número de baixo diz em quantas fatias a pizza foi cortada; o de cima, quantas foram pegas."
+  },
+  "outro": {
+    "descricao": "teve dificuldade nesta habilidade",
+    "sugestao": "repetir a atividade junto, com o modelo, e depois deixar a criança fazer sozinha."
+  }
+}
