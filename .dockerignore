@@ -1,0 +1,13 @@
+.git
+.github
+.venv
+venv
+build
+dist
+saida
+node_modules
+**/__pycache__
+**/*.pyc
+.pytest_cache
+.ruff_cache
+docs/capturas

@@ -1,0 +1,24 @@
+# Todos os serviços usam a mesma imagem; o build roda uma vez e o cache serve aos demais.
+x-atlas: &atlas
+  build: .
+  image: atlas:local
+
+services:
+  verificar:
+    <<: *atlas
+    command: ["verificar"]
+  demo:
+    <<: *atlas
+    command: ["demo", "todas", "--saida", "/saida"]
+    volumes: ["./saida:/saida"]
+  teste:
+    <<: *atlas
+    entrypoint: ["python", "-m", "pytest", "-q"]
+  agente:
+    <<: *atlas
+    stdin_open: true
+    command: ["agente", "silabas"]
+  gui:
+    <<: *atlas
+    command: ["gui"]
+    ports: ["6080:6080"]
