@@ -68,3 +68,56 @@ def test_sessao_combina_perfis_do_aluno(registro, qtbot):
     assert sessao.perfil.espacamento_letras == 0.12
     sessao.definir(None)
     assert sessao.perfis == []
+
+
+def _tentativa(**mudancas):
+    from app.nucleo.registro import Tentativa
+
+    dados = dict(
+        aluno="Ana", atividade="treino", habilidade="reconhecer letras", item="A",
+        resposta="B", correta=False, tipo_erro="letra_trocada", pistas=1,
+        precisou_modelo=False, tempo_ms=2300, modo_entrada="mouse", perfis=["tea"],
+    )
+    dados.update(mudancas)
+    return Tentativa(**dados)
+
+
+def test_tentativas_tem_os_campos_da_especificacao(registro):
+    colunas = {linha[1] for linha in registro.conexao.execute("PRAGMA table_info(tentativas)")}
+    assert colunas == {
+        "id", "aluno", "atividade", "habilidade", "item", "resposta", "correta", "tipo_erro",
+        "pistas", "precisou_modelo", "tempo_ms", "modo_entrada", "perfis", "ts",
+    }
+
+
+def test_salvar_e_listar_tentativas(registro):
+    registro.salvar_tentativa(_tentativa())
+    registro.salvar_tentativa(_tentativa(aluno="Beto", correta=True, tipo_erro=None))
+    todas = registro.listar_tentativas()
+    assert len(todas) == 2
+    assert todas[0]["correta"] is False and todas[0]["perfis"] == ["tea"]
+    assert todas[0]["ts"]  # preenchido na hora
+    assert [t["aluno"] for t in registro.listar_tentativas("Beto")] == ["Beto"]
+
+
+def test_exportar_e_apagar_tudo(registro, tmp_path):
+    registro.salvar_aluno("Ana", "gato", ["tea"])
+    registro.salvar_tentativa(_tentativa())
+    registro.salvar_config("volume", "0.5")
+    arquivo = registro.exportar_json(tmp_path / "atlas.json")
+    import json
+
+    dados = json.loads(arquivo.read_text("utf-8"))
+    assert dados["alunos"][0]["apelido"] == "Ana"
+    assert dados["tentativas"][0]["tipo_erro"] == "letra_trocada"
+
+    registro.apagar_tudo()
+    assert registro.listar_alunos() == [] and registro.listar_tentativas() == []
+    assert registro.ler_config("volume", "1.0") == "1.0"
+
+
+def test_config(registro):
+    assert registro.ler_config("volume", "0.8") == "0.8"
+    registro.salvar_config("volume", "0.3")
+    registro.salvar_config("volume", "0.4")
+    assert registro.ler_config("volume", "0.8") == "0.4"
