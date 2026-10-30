@@ -27,4 +27,15 @@
 | 2026-10-30 | Esc só emite `pausar` (e anuncia) por enquanto; a tela de Pausa entra com a `AtividadeBase` na Etapa 3 | Mantém a etapa no escopo combinado |
 | 2026-10-30 | Formulário da área do adulto dentro de uma área com rolagem | Em 1280 x 720 o formulário não cabia e os itens se sobrepunham (visto na captura) |
 | 2026-10-30 | PySide6-Essentials fixado em 6.11.3 (6.12.0 excluída no `pyproject.toml`) | No Linux, a 6.12.0 tira uma referência do `None` a cada `setPos`/`setVisible` de item de cena; com a mão (milhares de quadros) o Python abortava ao finalizar. Reproduzido no Docker, 6.11.3 e 6.10.3 sem o bug; `tests/test_qt_refcount.py` vigia |
+| 2026-10-30 | Áudio tocado pelo sistema (`winsound` no Windows, `afplay` no macOS, `paplay`/`aplay` no Linux), não por `QSoundEffect` | O PySide6-Essentials não traz o QtMultimedia; o PySide6-Addons somaria centenas de MB. Volume aplicado multiplicando as amostras; `ATLAS_AUDIO=nulo` no Docker |
+| 2026-10-30 | Frases compostas (erro + instrução) tocam juntando os WAV dos trechos | Evita gerar áudio para cada combinação; o serviço procura os maiores trechos que existem no manifesto |
+| 2026-10-30 | Voz gerada com espeak-ng (provedor `espeak`), rodando num contêiner | Não há credencial do Google Cloud. A voz é sintética e mais robótica; com credencial, `gerar_audio.py --provedor google --refazer` troca todos os WAV |
+| 2026-10-30 | Sem QTextToSpeech de reserva: frase sem WAV vira só legenda (e linha no `audio.log`) | O módulo não está no PySide6-Essentials; a especificação do Docker já prevê a legenda |
+| 2026-10-30 | Na classificação de contas, padrões específicos (operação trocada, dígitos invertidos, um a mais/menos) vencem o "chute" | Dizem mais ao professor; "chute" só quando nenhum padrão explica o erro rápido |
+| 2026-10-30 | Soltar fora de qualquer caixa não conta como tentativa; a peça só volta | Não é uma resposta da criança |
+| 2026-10-30 | "Próximo" começa a nova rodada direto no momento da atividade; a apresentação aparece ao abrir a atividade | Evita repetir a explicação a cada rodada; a faixa Agora/Depois mantém a previsibilidade |
+| 2026-10-30 | O perfil TEA não ouve o "Terminou!" falado (sem som de celebração) e vê o aviso do que vem depois | Regras do perfil TEA na especificação |
+| 2026-10-30 | Nos botões, só a letra cresce com a escala; altura mínima fica em 64 px | Em baixa visão (1,75) a moldura tomava o espaço da cena e as peças ficavam pequenas (visto nas capturas) |
+| 2026-10-30 | Travar nível e volume são ajustes gerais (tabela `config`), não por aluno | Mais simples para o prazo; o professor ajusta na área do adulto |
+| 2026-10-30 | `docker compose run agente` usa o treino até o Ímã das Sílabas existir | O serviço já funciona hoje; troca para `silabas` na Etapa 4 |
 | 2026-10-30 | Toda captura de `docs/saida-exemplo/` sai do `atlas demo` rodando o app real | Regra de jogo limpo: demo de fachada desclassifica |

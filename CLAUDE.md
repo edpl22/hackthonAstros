@@ -31,6 +31,10 @@ atlas                       # interface gráfica (igual a `atlas gui` ou `python
 atlas verificar             # confere o ambiente; termina com "RESULTADO: pronto"
 atlas demo todas --saida saida [--perfil tea,dislexia] [--entrada mouse|teclado|varredura|mao-simulada]
 atlas perfis [--combinar tea,dislexia]   # JSON dos perfis e das regras
+echo '{"acao":"estado"}' | atlas agente treino   # joga por JSON Lines
+python scripts/validar_conteudo.py         # confere JSON, WAV e palavras
+# gerar os WAV sem instalar nada (espeak-ng num contêiner); depois commitar assets/audio e o manifesto:
+docker run --rm -v "$PWD:/w" -w /w python:3.11-slim-bookworm sh -c "apt-get update -qq && apt-get install -y -qq espeak-ng && python scripts/gerar_audio.py --provedor espeak"
 .venv/Scripts/ruff check .
 .venv/Scripts/python -m pytest   # roda em offscreen (tests/conftest.py)
 docker compose build
@@ -44,7 +48,7 @@ docker compose run --rm verificar | demo | teste
 app/          main.py, cli.py, janela.py, nucleo/, entrada/, telas/, headless/, atividades/
 conteudo/     frases.json, trilhas.json (depois: palavras, objetos, recomendacoes, manifesto_audio, simulacao_mao)
 assets/       audio/, figuras/, fontes/ (Atkinson, commitada), modelos/ (hand_landmarker.task, commitado)
-scripts/      baixar_modelo.py, baixar_fonte.py (depois: gerar_audio, validar_conteudo, seed_demo, ...)
+scripts/      baixar_modelo.py, baixar_fonte.py, gerar_audio.py, validar_conteudo.py (depois: seed_demo, ...)
 tests/        pytest + pytest-qt (offscreen)
 docker/       gui.sh (Etapa 7)
 docs/         DECISOES.md, PROGRESSO.md (depois: ARQUITETURA.md, AVALIACAO.md, saida-exemplo/)
@@ -69,7 +73,7 @@ docs/         DECISOES.md, PROGRESSO.md (depois: ARQUITETURA.md, AVALIACAO.md, s
 | 1a. Esqueleto, câmera, `atlas verificar`/`demo` mínimos, Docker | concluída |
 | 1b. Empacotamento, Release e imagem no GHCR | pendente |
 | 2. Perfis e entrada | concluída |
-| 3. Núcleo das atividades, demo e agente completos | pendente |
+| 3. Núcleo das atividades, demo e agente completos | concluída |
 | 4. Ímã das Sílabas | pendente |
 | 5. Mesa de Quantidades | pendente |
 | 6. Pizza de Frações | pendente |

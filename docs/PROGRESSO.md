@@ -36,12 +36,16 @@
 - [x] `atlas demo` com `--perfil` e `--entrada`
 - [x] **Aceite:** 132 testes verdes; capturas da área do adulto e do treino nos perfis padrão, TEA, baixa visão e dislexia revisadas
 
-## Etapa 3 — Núcleo das atividades
-- [ ] `AtividadeBase` (3 momentos, Agora/Depois, Pausa, pistas, ajuste de nível)
-- [ ] `registro.py` (SQLite) e `audio.py` (WAV + QTextToSpeech)
-- [ ] `gerar_audio.py` (google/offline) e `validar_conteudo.py`
-- [ ] WAV gerados
-- [ ] **Aceite:** testes de `progresso.py` e `erros.py` cobrem as regras
+## Etapa 3 — Núcleo das atividades, demo e agente
+- [x] `AtividadeBase`: 3 momentos, faixa Agora/Depois com ícones, Ouvir, Pausa (botão e Esc), pistas graduais, ajuste de nível, registro e `estado()`
+- [x] Treino migrado para a base, com nível 2 (minúsculas) e as 3 pistas (repetir, realçar, modelo)
+- [x] `progresso.py` (pistas, nível, travar) e `erros.py` (classificadores das 4 atividades) + `recomendacoes.json`
+- [x] `registro.py`: tentativas com todos os campos, configurações, exportar JSON, apagar tudo; na área do adulto: volume, travar nível, exportar e apagar
+- [x] `audio.py`: WAV pelo manifesto (frases compostas juntam trechos), backend nulo, legenda sempre, volume
+- [x] `gerar_audio.py` (google/espeak) e `validar_conteudo.py`; 47 WAV gerados com espeak-ng e commitados
+- [x] `atlas demo` completo: `relatorio.md`, capturas, `tentativas.json`, `eventos.jsonl`, `audio.log`
+- [x] `atlas agente <atividade>`: protocolo JSON Lines da seção 7.4
+- [x] **Aceite:** 211 testes verdes, incluindo `progresso.py`, `erros.py` e o protocolo do agente; capturas revisadas nos perfis padrão e baixa visão
 
 ## Etapa 4 — Ímã das Sílabas
 - [ ] Lógica pura, cena, níveis 1–4, 15 SVGs, áudios e erros classificados
