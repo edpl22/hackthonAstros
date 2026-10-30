@@ -39,11 +39,13 @@ class TelaTrilhas(QWidget):
         layout.addLayout(grade_centro)
         layout.addStretch(2)
 
-    def mostrar(self, materia: str) -> None:
+    def mostrar(self, materia: str, escala: float = 1.0) -> None:
         for b in self.botoes:
             self.grade.removeWidget(b)
+            b.hide()  # some na hora; o deleteLater só roda no próximo ciclo de eventos
             b.deleteLater()
         self.botoes = []
+        colunas = COLUNAS if escala < 1.3 else 2  # letras grandes: menos colunas, sem cortar
 
         # Trilhas cujas atividades ainda não existem ficam escondidas.
         disponiveis = self.atividades_disponiveis
@@ -52,7 +54,7 @@ class TelaTrilhas(QWidget):
         for i, trilha in enumerate(trilhas):
             b = botao(trilha["nome"], "grande")
             b.clicked.connect(lambda _=False, a=trilha["atividade"]: self.escolheu.emit(a))
-            self.grade.addWidget(b, i // COLUNAS, i % COLUNAS)
+            self.grade.addWidget(b, i // colunas, i % colunas)
             QWidget.setTabOrder(anterior, b)
             anterior = b
             self.botoes.append(b)
