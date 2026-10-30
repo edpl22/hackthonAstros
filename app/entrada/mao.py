@@ -1,6 +1,6 @@
-"""Lógica pura da mão: filtro One Euro, área ativa e pinça com histerese.
+"""Lógica pura da mão: filtro One Euro, área ativa, pinça com histerese e permanência.
 
-Não importa Qt nem OpenCV, para ser testada por completo. A permanência entra na Etapa 2.
+Não importa Qt nem OpenCV, para ser testada por completo.
 Os pontos seguem a numeração do MediaPipe: 0 = punho, 4 = ponta do polegar,
 8 = ponta do indicador, 9 = base do dedo médio.
 """
@@ -111,6 +111,44 @@ class DetectorPinca:
 
     def reiniciar(self) -> None:
         self.fechada = False
+
+
+class DetectorPermanencia:
+    """Dispara quando o cursor fica parado sobre um alvo (dentro da tolerância) pelo tempo dado.
+
+    Depois de disparar, só dispara de novo quando o cursor sair da tolerância e voltar,
+    para a criança não pegar e soltar sem querer.
+    """
+
+    def __init__(self, tolerancia_px: float, tempo_ms: float):
+        self.tolerancia_px = tolerancia_px
+        self.tempo_ms = tempo_ms
+        self.progresso = 0.0  # 0..1, para o anel do cursor
+        self._ancora: tuple[float, float] | None = None
+        self._inicio = 0.0
+        self._armado = True
+
+    def reiniciar(self) -> None:
+        self.progresso = 0.0
+        self._ancora = None
+        self._armado = True
+
+    def atualizar(self, x: float, y: float, t: float, sobre_alvo: bool) -> bool:
+        if not sobre_alvo:
+            self.reiniciar()
+            return False
+        if self._ancora is None or math.dist(self._ancora, (x, y)) > self.tolerancia_px:
+            self._ancora, self._inicio = (x, y), t
+            self.progresso = 0.0
+            self._armado = True
+            return False
+        if not self._armado:
+            return False
+        self.progresso = min(1.0, (t - self._inicio) * 1000 / self.tempo_ms)
+        if self.progresso >= 1.0:
+            self._armado = False
+            return True
+        return False
 
 
 @dataclass(frozen=True)

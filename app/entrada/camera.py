@@ -14,6 +14,8 @@ from PySide6.QtGui import QImage
 from app.nucleo import caminhos
 
 LARGURA, ALTURA = 640, 480
+LARGURA_REDUZIDA, ALTURA_REDUZIDA = 480, 360
+FPS_MINIMO = 15
 MINIATURA = (160, 120)
 TEMPO_MAX_ABRIR_S = 3.0
 INTERVALO_FPS_S = 0.5
@@ -87,6 +89,8 @@ class Camera(QThread):
         ligada = False
         ultimo_ts_ms = -1
         quadros, marca_fps = 0, time.monotonic()
+        medias: list[float] = []
+        reduzida = False
 
         while not self.isInterruptionRequested():
             ok, quadro = captura.read() if captura.isOpened() else (False, None)
@@ -124,8 +128,15 @@ class Camera(QThread):
 
             quadros += 1
             if agora - marca_fps >= INTERVALO_FPS_S:
-                self.fps.emit(quadros / (agora - marca_fps))
+                fps = quadros / (agora - marca_fps)
+                self.fps.emit(fps)
                 quadros, marca_fps = 0, agora
+                medias.append(fps)
+                # Máquina lenta: média abaixo de 15 fps nos últimos 2 s -> 480 x 360, uma vez.
+                if not reduzida and len(medias) >= 4 and sum(medias[-4:]) / 4 < FPS_MINIMO:
+                    captura.set(cv2.CAP_PROP_FRAME_WIDTH, LARGURA_REDUZIDA)
+                    captura.set(cv2.CAP_PROP_FRAME_HEIGHT, ALTURA_REDUZIDA)
+                    reduzida = True
 
 
 class CameraNula(QObject):

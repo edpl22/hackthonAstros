@@ -1,0 +1,20 @@
+{
+  "_sobre": "Roteiros da mão simulada. Cada passo move a ponta do indicador até um item ou alvo, ou abre/fecha a pinça. Os pontos sintéticos passam pelo app/entrada/mao.py real.",
+  "treino": [
+    {"esperar": 300},
+    {"ir_para": "peca-b-1", "ms": 700},
+    {"esperar": 400},
+    {"pinca": true, "ms": 300},
+    {"ir_para": "caixa-1", "ms": 700},
+    {"esperar": 400},
+    {"pinca": false, "ms": 300},
+    {"esperar": 300},
+    {"ir_para": "peca-a-0", "ms": 700},
+    {"esperar": 400},
+    {"pinca": true, "ms": 300},
+    {"ir_para": "caixa-1", "ms": 700},
+    {"esperar": 400},
+    {"pinca": false, "ms": 300},
+    {"esperar": 300}
+  ]
+}
