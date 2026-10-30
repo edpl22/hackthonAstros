@@ -65,7 +65,7 @@ docs/         DECISOES.md, PROGRESSO.md (depois: ARQUITETURA.md, AVALIACAO.md, s
 | Etapa | Estado |
 | --- | --- |
 | 0. Repositório | concluída |
-| 1a. Esqueleto, câmera, `atlas verificar`/`demo` mínimos, Docker | em andamento |
+| 1a. Esqueleto, câmera, `atlas verificar`/`demo` mínimos, Docker | concluída |
 | 1b. Empacotamento, Release e imagem no GHCR | pendente |
 | 2. Perfis e entrada | pendente |
 | 3. Núcleo das atividades, demo e agente completos | pendente |

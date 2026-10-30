@@ -14,7 +14,7 @@
 - [x] `atlas verificar` completo e `atlas demo` mínimo (4 capturas da navegação + `relatorio.md`)
 - [x] `Dockerfile`, `docker-compose.yml`, `.dockerignore`; job `docker` no CI
 - [x] `docker compose run --rm verificar`, `demo` e `teste` funcionando numa build limpa (imagem base com 1,2 GB)
-- [ ] **Aceite:** o usuário testa a câmera com `python -m app.main`
+- [x] **Aceite:** o usuário testou a câmera com `python -m app.main`: o cursor segue a mão e a pinça muda de estado
 
 ## Etapa 1b — Empacotamento, Release e GHCR
 - [ ] `empacotamento/atlas.spec` (onedir, dados do mediapipe, assets, conteúdo, Info.plist com uso de câmera)
