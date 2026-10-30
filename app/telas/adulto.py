@@ -1,15 +1,20 @@
 """Área do adulto: cadastrar alunos (apelido + bicho) e escolher os perfis de apoio."""
 
+from pathlib import Path
+
 from PySide6.QtCore import QSize, Qt, Signal
 from PySide6.QtWidgets import (
     QButtonGroup,
     QCheckBox,
+    QFileDialog,
     QGridLayout,
     QHBoxLayout,
+    QLabel,
     QLineEdit,
     QListWidget,
     QListWidgetItem,
     QScrollArea,
+    QSlider,
     QToolButton,
     QVBoxLayout,
     QWidget,
@@ -28,10 +33,12 @@ class TelaAdulto(QWidget):
     voltar = Signal()
     alunos_mudaram = Signal()
 
-    def __init__(self, registro, parent=None):
+    def __init__(self, registro, audio=None, parent=None):
         super().__init__(parent)
         self.registro = registro
+        self.audio = audio
         self.id_editando: int | None = None
+        self._confirmando_apagar = False
 
         self.botao_voltar = botao_voltar()
         self.botao_voltar.clicked.connect(self.voltar)
@@ -101,6 +108,36 @@ class TelaAdulto(QWidget):
         direita.addStretch()
         direita.addLayout(botoes)
         direita.addWidget(self.aviso)
+
+        # Ajustes gerais e dados.
+        direita.addSpacing(24)
+        direita.addWidget(rotulo(texto("adulto.ajustes"), centro=False))
+        self.volume = QSlider(Qt.Horizontal)
+        self.volume.setRange(0, 100)
+        self.volume.setValue(round(float(registro.ler_config("volume", "0.8")) * 100))
+        self.volume.setAccessibleName(texto("adulto.volume"))
+        self.volume.setMinimumHeight(48)
+        self.volume.valueChanged.connect(self._mudar_volume)
+        linha_volume = QHBoxLayout()
+        linha_volume.addWidget(QLabel(texto("adulto.volume")))
+        linha_volume.addWidget(self.volume, 1)
+        direita.addLayout(linha_volume)
+        self.travar_nivel = QCheckBox(texto("adulto.travar_nivel"))
+        self.travar_nivel.setAccessibleName(texto("adulto.travar_nivel"))
+        self.travar_nivel.setChecked(registro.ler_config("travar_nivel", "0") == "1")
+        self.travar_nivel.toggled.connect(
+            lambda ligado: registro.salvar_config("travar_nivel", "1" if ligado else "0")
+        )
+        direita.addWidget(self.travar_nivel)
+        self.botao_exportar = botao(texto("adulto.exportar"))
+        self.botao_exportar.clicked.connect(self.exportar)
+        self.botao_apagar_tudo = botao(texto("adulto.apagar_tudo"))
+        self.botao_apagar_tudo.clicked.connect(self.apagar_tudo)
+        linha_dados = QHBoxLayout()
+        linha_dados.addWidget(self.botao_exportar)
+        linha_dados.addWidget(self.botao_apagar_tudo)
+        linha_dados.addStretch()
+        direita.addLayout(linha_dados)
 
         conteudo = QWidget()
         corpo = QHBoxLayout(conteudo)
@@ -181,6 +218,37 @@ class TelaAdulto(QWidget):
         self.registro.apagar_aluno(self.id_editando)
         self.recarregar()
         self.aviso.setText(texto("adulto.apagado"))
+        self.alunos_mudaram.emit()
+
+    def _mudar_volume(self, valor: int) -> None:
+        self.registro.salvar_config("volume", f"{valor / 100:.2f}")
+        if self.audio is not None:
+            self.audio.definir_volume(valor / 100)
+
+    def exportar(self, destino: str | None = None) -> None:
+        if destino is None:
+            padrao = str(Path.home() / "atlas-dados.json")
+            destino, _ = QFileDialog.getSaveFileName(
+                self, texto("adulto.exportar"), padrao, "JSON (*.json)"
+            )
+            if not destino:
+                return
+        caminho = self.registro.exportar_json(destino)
+        self.aviso.setText(texto("adulto.exportado").format(arquivo=caminho.name))
+
+    def apagar_tudo(self) -> None:
+        """Pede um segundo toque para confirmar: apagar não tem volta."""
+        if not self._confirmando_apagar:
+            self._confirmando_apagar = True
+            self.botao_apagar_tudo.setText(texto("adulto.confirmar_apagar"))
+            self.botao_apagar_tudo.setAccessibleName(texto("adulto.confirmar_apagar"))
+            return
+        self._confirmando_apagar = False
+        self.botao_apagar_tudo.setText(texto("adulto.apagar_tudo"))
+        self.botao_apagar_tudo.setAccessibleName(texto("adulto.apagar_tudo"))
+        self.registro.apagar_tudo()
+        self.recarregar()
+        self.aviso.setText(texto("adulto.tudo_apagado"))
         self.alunos_mudaram.emit()
 
     def focar(self) -> None:

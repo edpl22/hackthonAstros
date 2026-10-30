@@ -2,10 +2,12 @@
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QStackedWidget
 
+from app.atividades.base import AtividadeBase, Contexto
 from app.atividades.teste_camera import TelaTesteCamera
 from app.atividades.treino.tela import TelaTreino
 from app.entrada.camera import fabrica_padrao
 from app.nucleo import tema
+from app.nucleo.audio import ServicoAudio
 from app.nucleo.conteudo import texto
 from app.nucleo.registro import Registro
 from app.nucleo.sessao import Sessao
@@ -18,19 +20,22 @@ MARGEM = 24
 
 
 class JanelaPrincipal(QMainWindow):
-    def __init__(self, fabrica_camera=None, registro=None, parent=None):
+    def __init__(self, fabrica_camera=None, registro=None, audio=None, parent=None):
         super().__init__(parent)
         self.setWindowTitle(texto("app.nome"))
         self.setMinimumSize(1024, 700)
         fabrica = fabrica_camera or fabrica_padrao()
         self.registro = registro or Registro()
         self.sessao = Sessao(self)
+        volume = float(self.registro.ler_config("volume", "0.8"))
+        self.audio = audio or ServicoAudio(volume=volume, parent=self)
+        self.contexto = Contexto(self.registro, self.audio, self.sessao, fabrica)
 
         self.inicio = TelaInicio()
-        self.adulto = TelaAdulto(self.registro)
+        self.adulto = TelaAdulto(self.registro, self.audio)
         self.materias = TelaMaterias()
         self.atividades = {
-            "treino": TelaTreino(fabrica),
+            "treino": TelaTreino(self.contexto),
             "teste_camera": TelaTesteCamera(fabrica),
         }
         self.trilhas = TelaTrilhas(self.atividades.keys())
@@ -87,6 +92,9 @@ class JanelaPrincipal(QMainWindow):
         atividade = self.atividades[atividade_id]
         self.ir_para(atividade)
         atividade.iniciar(self.sessao.perfil, **opcoes)
+        if isinstance(atividade, AtividadeBase):
+            # O professor pode travar o nível (área do adulto).
+            atividade.nivel.travado = self.registro.ler_config("travar_nivel", "0") == "1"
         atividade.focar()
 
     def closeEvent(self, evento):

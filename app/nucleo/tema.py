@@ -104,16 +104,18 @@ def folha_estilo(p: Paleta, familia: str, escala: float = 1.0, contorno: int = 3
         color: {p.texto};
         border: {borda}px solid {p.apoio};
         border-radius: 12px;
-        padding: {px(14)}px {px(30)}px;
-        min-height: {px(64)}px;
-        min-width: {px(64)}px;
+        /* Só a letra cresce com a escala: o alvo já tem 64 px, e assim sobra espaço
+           para a cena da atividade, que também cresce. */
+        padding: 10px 20px;
+        min-height: 64px;
+        min-width: 64px;
     }}
     QPushButton:hover, QToolButton:hover {{
         border: {borda}px solid {p.primaria};
     }}
     QPushButton:focus, QToolButton:focus {{
         border: {foco}px solid {p.primaria};
-        padding: {px(14) - (foco - borda)}px {px(30) - (foco - borda)}px;
+        padding: {10 - (foco - borda)}px {20 - (foco - borda)}px;
     }}
     QPushButton:pressed, QToolButton:pressed, QToolButton:checked {{
         background: {p.destaque};
@@ -121,8 +123,8 @@ def folha_estilo(p: Paleta, familia: str, escala: float = 1.0, contorno: int = 3
     QPushButton#grande {{
         font-size: {px(INSTRUCAO_PX)}px;
         font-weight: bold;
-        min-width: {px(240)}px;
-        min-height: {px(150)}px;
+        min-width: 240px;
+        min-height: 140px;
     }}
     QToolButton {{
         padding: {px(10)}px;

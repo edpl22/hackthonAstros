@@ -23,7 +23,15 @@
     "apagar_aluno": "Apagar este aluno",
     "salvo": "Aluno salvo.",
     "apagado": "Aluno apagado.",
-    "erro_apelido": "Escreva um apelido."
+    "erro_apelido": "Escreva um apelido.",
+    "ajustes": "Ajustes e dados",
+    "volume": "Volume",
+    "travar_nivel": "Travar o nível (não oferecer desafio nem voltar)",
+    "exportar": "Exportar JSON",
+    "exportado": "Dados exportados para {arquivo}.",
+    "apagar_tudo": "Apagar todos os dados",
+    "confirmar_apagar": "Toque de novo para apagar tudo",
+    "tudo_apagado": "Todos os dados foram apagados."
   },
   "avatares": {
     "gato": "Gato",
@@ -61,17 +69,42 @@
     "pinca_fechada": "Pinça: fechada",
     "pinca_aberta": "Pinça: aberta"
   },
+  "base": {
+    "agora": "Agora",
+    "depois": "Depois",
+    "momento_apresentacao": "Explicação",
+    "momento_atividade": "Atividade",
+    "momento_fim": "Fim",
+    "momento_nova_rodada": "Nova rodada",
+    "comecar": "Começar",
+    "ouvir": "Ouvir a instrução",
+    "ouvir_curto": "Ouvir",
+    "pausa": "Pausa",
+    "pausado": "Pausa. A atividade está parada.",
+    "continuar": "Continuar",
+    "terminou": "Terminou!",
+    "proximo": "Próximo",
+    "desafio": "Quer um desafio?",
+    "sim": "Sim",
+    "nao": "Não",
+    "nivel_subiu": "Desafio aceito. Agora é o nível {nivel}.",
+    "nivel_voltou": "Vamos fazer um pouco mais fácil.",
+    "aviso_troca": "Quando terminar, você pode fazer outra rodada ou voltar.",
+    "pista_realce": "Olhe o que está marcado.",
+    "pista_modelo": "Veja como se faz."
+  },
   "treino": {
-    "instrucao": "Pegue a peça {letra}. Coloque na caixa {letra}.",
-    "terminou": "Terminou! Todas as peças estão nas caixas.",
-    "tentar_de_novo": "Vamos tentar de novo."
+    "habilidade": "reconhecer letras",
+    "apresentacao": "Vamos levar cada letra para a caixa da mesma letra.",
+    "instrucao": "Pegue a letra {letra}. Coloque na caixa da letra {letra}.",
+    "terminou": "Todas as letras estão nas caixas."
   },
   "anuncio": {
-    "pegou": "Peça {item} pega.",
-    "encaixou": "Peça {item} colocada na caixa {alvo}.",
-    "voltou": "A peça {item} voltou para o lugar. Vamos tentar de novo.",
-    "soltou_fora": "Peça {item} solta fora das caixas.",
-    "nada_para_pegar": "Nenhuma peça neste ponto.",
+    "pegou": "Você pegou a letra {item}.",
+    "encaixou": "Letra {item} colocada na caixa da letra {alvo}.",
+    "voltou": "A letra {item} voltou para o lugar. Vamos tentar de novo.",
+    "soltou_fora": "A letra {item} voltou para o lugar.",
+    "nada_para_pegar": "Nenhuma letra neste ponto.",
     "pausou": "Atividade pausada.",
     "continuou": "Atividade continuando."
   },

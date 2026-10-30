@@ -1,179 +1,106 @@
-"""Tela do treino de arrastar. Liga as entradas à cena e aplica as regras de `logica.py`."""
+"""Treino de arrastar sobre a AtividadeBase.
 
-from PySide6.QtCore import Qt, Signal
-from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout, QWidget
+Nível 1: peças em letra bastão (A) para a caixa da mesma letra.
+Nível 2: peças em minúscula (a) para a caixa da maiúscula (A).
+"""
 
+from app.atividades.base import AtividadeBase
 from app.atividades.treino import logica
-from app.entrada.camera import CameraNula
-from app.entrada.mao_entrada import EntradaMao
-from app.entrada.ponteiro import EntradaPonteiro
-from app.entrada.teclado import EntradaTeclado
-from app.entrada.varredura import EntradaVarredura
-from app.nucleo import anuncio
+from app.nucleo import anuncio, erros
 from app.nucleo.conteudo import texto
-from app.nucleo.eventos import Barramento
-from app.nucleo.perfis import PADRAO
 from app.telas.cena_itens import ALTURA, LARGURA, CenaItens
-from app.telas.comum import botao_voltar, rotulo
-from app.telas.indicador_camera import IndicadorCamera
 
 LADO_PECA = 140
 Y_PECAS, Y_CAIXAS = 0.28, 0.70  # centro das filas, em fração da altura da cena
 
 
-class TelaTreino(QWidget):
-    voltar = Signal()
-    anunciou = Signal(str)
+class TelaTreino(AtividadeBase):
+    id_atividade = "treino"
+    nivel_maximo = 2
 
-    def __init__(self, fabrica_camera=CameraNula, parent=None):
-        super().__init__(parent)
-        self.fabrica_camera = fabrica_camera
-        self.barramento = Barramento(self)
-        self.perfil = PADRAO
-        self.cena: CenaItens | None = None
-        self.rodada: logica.Rodada | None = None
-        self.camera = None
-        self.entrada_mao: EntradaMao | None = None
-        self.entrada_teclado: EntradaTeclado | None = None
-        self.ultimo_anuncio = ""
-
-        self.botao_voltar = botao_voltar()
-        self.botao_voltar.clicked.connect(self.voltar)
-        self.instrucao = rotulo("", "instrucao")
-        self.indicador = IndicadorCamera()
-        topo = QHBoxLayout()
-        topo.addWidget(self.botao_voltar)
-        topo.addSpacing(24)
-        topo.addWidget(self.instrucao, 1)
-        topo.addSpacing(24)
-        topo.addWidget(self.indicador)
-
-        self.legenda = rotulo("")  # o que aconteceu por último (também vira áudio na Etapa 3)
-        self.legenda.setAccessibleName("Legenda")
-
-        self.layout_principal = QVBoxLayout(self)
-        self.layout_principal.addLayout(topo)
-        self.layout_principal.addStretch(1)  # trocado pela cena em iniciar()
-        self.layout_principal.addWidget(self.legenda)
-
-        self.barramento.pausar.connect(lambda: self._anunciar(anuncio.frase("pausou")))
-
-    # --- ciclo de vida -------------------------------------------------------
-
-    def iniciar(self, perfil=None, semente: int | None = None, varredura: bool = False) -> None:
-        self.parar()
-        self.perfil = perfil or PADRAO
+    def preparar_rodada(self, semente: int | None) -> None:
         self.rodada = logica.nova_rodada(self.perfil.max_itens, semente)
-        self._montar_cena()
-        EntradaPonteiro(self.cena, self.barramento)
-        if varredura:
-            self.entrada_teclado = EntradaVarredura(self.cena, self.barramento)
-            self.entrada_teclado.ligar()
-        else:
-            self.entrada_teclado = EntradaTeclado(self.cena, self.barramento)
-        self.entrada_mao = EntradaMao(self.cena, self.barramento, self.perfil)
-        self.camera = self.fabrica_camera(mostrar_miniatura=False)
-        self.camera.pontos.connect(self.entrada_mao.receber)
-        self.camera.estado.connect(self.indicador.mostrar)
-        self.camera.start()
-        self._atualizar_instrucao()
-        self.legenda.clear()
-        self.cena.setFocus()
 
-    def parar(self) -> None:
-        if self.camera is not None:
-            camera, self.camera = self.camera, None
-            camera.parar()
-            camera.deleteLater()
-        if isinstance(self.entrada_teclado, EntradaVarredura):
-            self.entrada_teclado.desligar()
-        self.indicador.mostrar("desligada")
-
-    def focar(self) -> None:
-        if self.cena is not None:
-            self.cena.setFocus()
-
-    def _montar_cena(self) -> None:
-        if self.cena is not None:
-            self.layout_principal.removeWidget(self.cena)
-            self.cena.deleteLater()
-        else:
-            self.layout_principal.takeAt(1)  # o espaço reservado
-        self.barramento.deleteLater()
-        self.barramento = Barramento(self)
-        self.barramento.pausar.connect(lambda: self._anunciar(anuncio.frase("pausou")))
-        self.cena = CenaItens(self.barramento, self.perfil)
-        self.layout_principal.insertWidget(1, self.cena, 1)
-
+    def criar_area(self) -> CenaItens:
+        cena = CenaItens(self.barramento, self.perfil)
         letras = self.rodada.letras
         n = len(letras)
         # Escala do perfil, limitada para tudo caber na cena (largura e altura).
         lado = min(LADO_PECA * self.perfil.escala, (LARGURA - 80) / n - 40, ALTURA * 0.34)
         passo = LARGURA / n
-        y_pecas, y_caixas = ALTURA * Y_PECAS, ALTURA * Y_CAIXAS
+        minuscula = self.nivel.nivel >= 2
         for i, letra in enumerate(letras):
             coluna = self.rodada.ordem_pecas[i]
-            self.cena.adicionar_peca(
-                logica.id_peca(letra, i), letra, passo * (coluna + 0.5), y_pecas, lado
+            rotulo = letra.lower() if minuscula else letra
+            cena.adicionar_peca(
+                logica.id_peca(letra, i), rotulo, passo * (coluna + 0.5), ALTURA * Y_PECAS, lado
             )
-            self.cena.adicionar_caixa(
-                logica.id_caixa(i), letra, passo * (i + 0.5), y_caixas, lado + 24
+            cena.adicionar_caixa(
+                logica.id_caixa(i), letra, passo * (i + 0.5), ALTURA * Y_CAIXAS, lado + 24
             )
+        cena.pegou.connect(self._ao_pegar)
+        cena.soltou.connect(self._ao_soltar)
+        cena.nada_para_pegar.connect(lambda: self._anunciar(anuncio.frase("nada_para_pegar")))
+        return cena
 
-        self.cena.pegou.connect(self._ao_pegar)
-        self.cena.soltou.connect(self._ao_soltar)
-        self.cena.nada_para_pegar.connect(lambda: self._anunciar(anuncio.frase("nada_para_pegar")))
+    @property
+    def cena(self) -> CenaItens:
+        return self.area
 
-    # --- regras ----------------------------------------------------------------
+    def instrucao_atual(self) -> str:
+        letra = self.rodada.proxima_letra()
+        if letra is None:
+            return texto("treino.terminou")
+        return texto("treino.instrucao").format(letra=letra)
 
-    def _letra_da_peca(self, peca_id: str) -> str:
+    def item_atual(self) -> str | None:
+        return self.rodada.proxima_letra()
+
+    # --- jogadas --------------------------------------------------------------------
+
+    def _letra(self, peca_id: str) -> str:
         return self.cena.pecas[peca_id].rotulo
 
+    def _indice(self, letra: str) -> int:
+        return self.rodada.letras.index(letra.upper())
+
     def _ao_pegar(self, peca_id: str) -> None:
-        self._anunciar(anuncio.frase("pegou", item=self._letra_da_peca(peca_id)))
+        self._anunciar(anuncio.frase("pegou", item=self._letra(peca_id)), falar=False)
 
     def _ao_soltar(self, peca_id: str, caixa_id) -> None:
-        letra = self._letra_da_peca(peca_id)
-        if caixa_id is None:
+        letra = self._letra(peca_id)
+        if caixa_id is None:  # caiu fora: não é resposta, só volta
             self.cena.devolver(peca_id)
             self._anunciar(anuncio.frase("soltou_fora", item=letra))
             return
         letra_caixa = self.cena.caixas[caixa_id].rotulo
-        if logica.confere(letra, letra_caixa):
+        tipo_erro = erros.classificar_treino(letra, letra_caixa)
+        if tipo_erro is None:
             self.cena.encaixar(peca_id, caixa_id)
-            self.rodada.colocadas.add(letra)
-            self._anunciar(anuncio.frase("encaixou", item=letra, alvo=letra_caixa))
+            self.rodada.colocadas.add(letra_caixa)
+            frase = anuncio.frase("encaixou", item=letra, alvo=letra_caixa)
         else:
-            # Erro neutro: a peça volta e a frase convida a tentar de novo. Nada vermelho.
-            self.cena.devolver(peca_id)
-            self._anunciar(anuncio.frase("voltou", item=letra))
-        self._atualizar_instrucao()
+            self.cena.devolver(peca_id)  # erro neutro: a peça volta, nada vermelho
+            frase = anuncio.frase("voltou", item=letra)
+        self.cena.realcar([])
+        self.registrar_resposta(letra_caixa, letra, tipo_erro is None, tipo_erro, frase)
+        self._depois_da_jogada()
 
-    def _atualizar_instrucao(self) -> None:
+    def _depois_da_jogada(self) -> None:
+        self.atualizar_instrucao()
         if self.rodada.concluida:
-            self.instrucao.setText(texto("treino.terminou"))
-        else:
-            self.instrucao.setText(
-                texto("treino.instrucao").format(letra=self.rodada.proxima_letra())
-            )
+            self.concluir()
 
-    def _anunciar(self, frase: str) -> None:
-        self.ultimo_anuncio = frase
-        self.legenda.setText(frase)
-        self.anunciou.emit(frase)
+    # --- pistas ------------------------------------------------------------------------
 
-    def keyPressEvent(self, evento):
-        if evento.key() == Qt.Key_Escape:
-            self.barramento.pausar.emit()
-        else:
-            super().keyPressEvent(evento)
+    def realcar(self, item: str) -> None:
+        i = self._indice(item)
+        self.cena.realcar([logica.id_peca(self.rodada.letras[i], i), logica.id_caixa(i)])
 
-    def estado(self) -> dict:
-        return {
-            "tela": "treino",
-            "instrucao": self.instrucao.text(),
-            **self.cena.estado(),
-            "concluida": self.rodada.concluida,
-            "anuncio": self.ultimo_anuncio,
-            "modo_entrada": self.barramento.modo_entrada,
-        }
+    def mostrar_modelo(self, item: str) -> None:
+        i = self._indice(item)
+        self.cena.encaixar(logica.id_peca(self.rodada.letras[i], i), logica.id_caixa(i))
+        self.rodada.colocadas.add(self.rodada.letras[i])
+
+    def estado_area(self) -> dict:
+        return self.cena.estado()

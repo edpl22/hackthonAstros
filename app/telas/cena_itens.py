@@ -30,15 +30,21 @@ class _Figura(QGraphicsObject):
         self.lado = lado
         self.contorno = contorno
         self.focado = False
+        self.realcado = False  # pista 2
 
     def boundingRect(self) -> QRectF:
-        m = self.lado / 2 + 12
+        m = self.lado / 2 + 16
         return QRectF(-m, -m, 2 * m, 2 * m)
 
     def _quadro(self) -> QRectF:
         return QRectF(-self.lado / 2, -self.lado / 2, self.lado, self.lado)
 
     def _desenhar_foco(self, pintor) -> None:
+        if self.realcado:  # pista: contorno duplo grosso, forma e não só cor
+            pintor.setPen(QPen(QColor(paleta_atual().primaria), 6))
+            pintor.setBrush(Qt.NoBrush)
+            pintor.drawRoundedRect(self._quadro().adjusted(-6, -6, 6, 6), 12, 12)
+            pintor.drawRoundedRect(self._quadro().adjusted(-11, -11, 11, 11), 12, 12)
         if self.focado:
             pintor.setPen(QPen(QColor(paleta_atual().primaria), 4))
             pintor.setBrush(Qt.NoBrush)
@@ -171,6 +177,13 @@ class CenaItens(QGraphicsView):
         figuras = self.caixas_livres() if self.segurada else self.pecas_livres()
         return mais_proximo([self._area(f) for f in figuras], x, y, self.perfil.tolerancia_alvo_px)
 
+    def realcar(self, ids) -> None:
+        ids = set(ids)
+        for figura in (*self.pecas.values(), *self.caixas.values()):
+            if figura.realcado != (figura.id in ids):
+                figura.realcado = figura.id in ids
+                figura.update()
+
     def marcar_foco(self, id: str | None) -> None:
         for figura in (*self.pecas.values(), *self.caixas.values()):
             if figura.focado != (figura.id == id):
@@ -248,6 +261,7 @@ class CenaItens(QGraphicsView):
                     "tipo": p.tipo,
                     "posicao": posicao(p),
                     "disponivel": not p.encaixada,
+                    "realcado": p.realcado,
                 }
                 for p in self.pecas.values()
             ],

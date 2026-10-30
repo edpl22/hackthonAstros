@@ -5,11 +5,15 @@ from PySide6.QtCore import QEvent, QPointF, Qt
 from PySide6.QtGui import QMouseEvent
 from PySide6.QtWidgets import QApplication
 
+from app.atividades.base import Contexto
 from app.atividades.treino import logica
 from app.atividades.treino.tela import TelaTreino
 from app.entrada import mao_simulada
 from app.entrada.camera import CameraNula
+from app.nucleo.audio import ServicoAudio
 from app.nucleo.perfis import PERFIS, combinar
+from app.nucleo.registro import Registro
+from app.nucleo.sessao import Sessao
 
 # --- lógica pura -----------------------------------------------------------
 
@@ -53,11 +57,18 @@ def test_ids_estaveis():
 @pytest.fixture
 def tela(qtbot, monkeypatch):
     monkeypatch.setenv("ATLAS_SEM_ANIMACAO", "1")
-    t = TelaTreino(CameraNula)
+    contexto = Contexto(Registro(":memory:"), ServicoAudio(backend="nulo"), Sessao(), CameraNula)
+    t = TelaTreino(contexto)
     qtbot.addWidget(t)
     t.resize(1280, 720)
     t.show()
     return t
+
+
+def _iniciar(tela, perfil, **opcoes):
+    """Abre a atividade e passa do momento "O que vamos fazer" para a atividade."""
+    tela.iniciar(perfil, **opcoes)
+    tela.comecar()
 
 
 def _mouse(cena, tipo, ponto, botoes):
@@ -125,7 +136,7 @@ def _mao(tela, peca, caixa):
 def _completar(tela, jogar):
     letras = tela.rodada.letras
     jogar(tela, logica.id_peca(letras[1], 1), logica.id_caixa(0))  # erro proposital
-    assert tela.ultimo_anuncio.startswith("A peça B voltou")
+    assert tela.ultimo_anuncio.startswith("A letra B voltou")
     assert not tela.cena.pecas[logica.id_peca(letras[1], 1)].encaixada
     for i, letra in enumerate(letras):
         jogar(tela, logica.id_peca(letra, i), logica.id_caixa(i))
@@ -142,7 +153,7 @@ def test_completa_o_treino_com_cada_entrada(tela, qtbot, modo):
         "varredura": _varredura(qtbot),
         "mao": _mao,
     }
-    tela.iniciar(PERFIS["padrao"], semente=3, varredura=modo == "varredura")
+    _iniciar(tela, PERFIS["padrao"], semente=3, varredura=modo == "varredura")
     _completar(tela, jogadas[modo])
     esperado = {"mao": "camera", "varredura": "varredura", "teclado": "teclado"}.get(modo, "mouse")
     assert tela.estado()["modo_entrada"] == esperado
@@ -150,7 +161,7 @@ def test_completa_o_treino_com_cada_entrada(tela, qtbot, modo):
 
 def test_mao_com_permanencia_perfil_motor(tela):
     perfil = combinar(["motor"])
-    tela.iniciar(perfil, semente=3)
+    _iniciar(tela, perfil, semente=3)
     letras = tela.rodada.letras
     for i, letra in enumerate(letras):
         # Sem pinça: a criança só para a mão sobre a peça e depois sobre a caixa.
@@ -165,32 +176,34 @@ def test_mao_com_permanencia_perfil_motor(tela):
 
 
 def test_perfil_muda_a_quantidade_de_pecas(tela):
-    tela.iniciar(PERFIS["tea"], semente=1)
+    _iniciar(tela, PERFIS["tea"], semente=1)
     assert len(tela.cena.pecas) == 3
-    tela.iniciar(PERFIS["padrao"], semente=1)
+    _iniciar(tela, PERFIS["padrao"], semente=1)
     assert len(tela.cena.pecas) == 4
 
 
 def test_estado_tem_ids_estaveis(tela):
-    tela.iniciar(PERFIS["padrao"], semente=1)
+    _iniciar(tela, PERFIS["padrao"], semente=1)
     estado = tela.estado()
     assert [i["id"] for i in estado["itens"]] == ["peca-a-0", "peca-b-1", "peca-c-2", "peca-d-3"]
     assert [a["id"] for a in estado["alvos"]] == ["caixa-1", "caixa-2", "caixa-3", "caixa-4"]
-    assert estado["instrucao"] == "Pegue a peça A. Coloque na caixa A."
+    assert estado["instrucao"] == "Pegue a letra A. Coloque na caixa da letra A."
 
 
 def test_soltar_fora_devolve_a_peca(tela):
-    tela.iniciar(PERFIS["padrao"], semente=1)
+    _iniciar(tela, PERFIS["padrao"], semente=1)
     cena = tela.cena
     origem = cena.centro("peca-a-0")
     _mouse(cena, QEvent.MouseButtonPress, origem, Qt.LeftButton)
     _mouse(cena, QEvent.MouseMove, (640, 40), Qt.LeftButton)
     _mouse(cena, QEvent.MouseButtonRelease, (640, 40), Qt.NoButton)
     assert cena.centro("peca-a-0") == origem
-    assert "fora" in tela.ultimo_anuncio
+    assert tela.ultimo_anuncio == "A letra A voltou para o lugar."
+    assert tela.ctx.registro.listar_tentativas() == []  # cair fora não conta como resposta
 
 
 def test_esc_pausa(tela, qtbot):
-    tela.iniciar(PERFIS["padrao"], semente=1)
+    _iniciar(tela, PERFIS["padrao"], semente=1)
     with qtbot.waitSignal(tela.barramento.pausar):
         qtbot.keyClick(tela.cena, Qt.Key_Escape)
+    assert tela.pausada
