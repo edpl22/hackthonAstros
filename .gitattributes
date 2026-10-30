@@ -1,0 +1,5 @@
+*.wav binary
+*.png binary
+*.task binary
+*.ttf binary
+*.sh text eol=lf
