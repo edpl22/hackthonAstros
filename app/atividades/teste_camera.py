@@ -22,7 +22,7 @@ from PySide6.QtWidgets import (
 from app.entrada.camera import CameraNula
 from app.entrada.mao import EstadoMao, RastreadorMao
 from app.nucleo.conteudo import texto
-from app.nucleo.tema import PALETA_PADRAO
+from app.nucleo.tema import paleta_atual
 from app.telas.comum import botao_voltar, rotulo
 from app.telas.indicador_camera import IndicadorCamera
 
@@ -35,7 +35,7 @@ class Cena(QGraphicsView):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        p = PALETA_PADRAO
+        p = paleta_atual()
         self.setScene(QGraphicsScene(self))
         self.setFrameShape(QFrame.NoFrame)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
@@ -115,11 +115,13 @@ class TelaTesteCamera(QWidget):
 
     # --- ciclo de vida -----------------------------------------------------
 
-    def iniciar(self) -> None:
+    def iniciar(self, perfil=None) -> None:
         if self.camera is not None:
             return
         self.rastreador = RastreadorMao()
-        self.camera = self.fabrica_camera(mostrar_miniatura=True)
+        # A miniatura da câmera fica desligada no perfil TEA (menos estímulo visual).
+        miniatura = perfil.miniatura_camera if perfil is not None else True
+        self.camera = self.fabrica_camera(mostrar_miniatura=miniatura)
         self.camera.pontos.connect(self.ao_receber_pontos)
         self.camera.fps.connect(self._ao_receber_fps)
         self.camera.estado.connect(self.indicador.mostrar)

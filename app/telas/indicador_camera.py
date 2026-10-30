@@ -9,7 +9,7 @@ from PySide6.QtGui import QColor, QPainter, QPen
 from PySide6.QtWidgets import QHBoxLayout, QLabel, QWidget
 
 from app.nucleo.conteudo import texto
-from app.nucleo.tema import PALETA_PADRAO
+from app.nucleo.tema import paleta_atual
 
 FRASES = {
     "ligada": "teste_camera.camera_ligada",
@@ -28,7 +28,7 @@ class _Ponto(QWidget):
     def paintEvent(self, _evento):
         pintor = QPainter(self)
         pintor.setRenderHint(QPainter.Antialiasing)
-        cor = QColor(PALETA_PADRAO.primaria if self.cheio else PALETA_PADRAO.texto)
+        cor = QColor(paleta_atual().primaria if self.cheio else paleta_atual().texto)
         pintor.setPen(QPen(cor, 3))
         pintor.setBrush(cor if self.cheio else Qt.NoBrush)
         pintor.drawEllipse(QRectF(2, 2, DIAMETRO, DIAMETRO))

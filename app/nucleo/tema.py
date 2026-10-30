@@ -77,9 +77,12 @@ def carregar_fonte() -> str:
     return familia or FONTE_RESERVA
 
 
-def folha_estilo(p: Paleta, familia: str, escala: float = 1.0) -> str:
+def folha_estilo(p: Paleta, familia: str, escala: float = 1.0, contorno: int = 3) -> str:
     def px(valor: float) -> int:
         return round(valor * escala)
+
+    borda = 2 if contorno <= 3 else contorno - 1
+    foco = max(4, contorno)
 
     return f"""
     QWidget {{
@@ -96,36 +99,98 @@ def folha_estilo(p: Paleta, familia: str, escala: float = 1.0) -> str:
     QLabel#instrucao {{
         font-size: {px(INSTRUCAO_PX)}px;
     }}
-    QPushButton {{
+    QPushButton, QToolButton {{
         background: {p.superficie};
         color: {p.texto};
-        border: 2px solid {p.apoio};
+        border: {borda}px solid {p.apoio};
         border-radius: 12px;
         padding: {px(14)}px {px(30)}px;
         min-height: {px(64)}px;
         min-width: {px(64)}px;
     }}
-    QPushButton:hover {{
-        border: 2px solid {p.primaria};
+    QPushButton:hover, QToolButton:hover {{
+        border: {borda}px solid {p.primaria};
     }}
-    QPushButton:focus {{
-        border: 4px solid {p.primaria};
-        padding: {px(12)}px {px(28)}px;
+    QPushButton:focus, QToolButton:focus {{
+        border: {foco}px solid {p.primaria};
+        padding: {px(14) - (foco - borda)}px {px(30) - (foco - borda)}px;
     }}
-    QPushButton:pressed {{
+    QPushButton:pressed, QToolButton:pressed, QToolButton:checked {{
         background: {p.destaque};
     }}
     QPushButton#grande {{
         font-size: {px(INSTRUCAO_PX)}px;
         font-weight: bold;
-        min-width: {px(280)}px;
-        min-height: {px(160)}px;
+        min-width: {px(240)}px;
+        min-height: {px(150)}px;
+    }}
+    QToolButton {{
+        padding: {px(10)}px;
+    }}
+    QToolButton:focus {{
+        padding: {px(10) - (foco - borda)}px;
+    }}
+    QToolButton:checked {{
+        border: {foco}px solid {p.texto};
+        padding: {px(10) - (foco - borda)}px;
+    }}
+    QLineEdit {{
+        background: {p.superficie};
+        border: {borda}px solid {p.apoio};
+        border-radius: 8px;
+        padding: {px(8)}px;
+        min-height: {px(48)}px;
+    }}
+    QLineEdit:focus {{
+        border: {foco}px solid {p.primaria};
+    }}
+    QCheckBox {{
+        spacing: {px(12)}px;
+        min-height: {px(48)}px;
+    }}
+    QCheckBox::indicator {{
+        width: {px(32)}px;
+        height: {px(32)}px;
+    }}
+    QCheckBox:focus {{
+        border: {foco}px solid {p.primaria};
+        border-radius: 8px;
+    }}
+    QListWidget {{
+        background: {p.superficie};
+        border: {borda}px solid {p.apoio};
+        border-radius: 8px;
+    }}
+    QListWidget::item:selected {{
+        background: {p.destaque};
+        color: {p.texto};
     }}
     """
 
 
-def aplicar(app: QApplication, paleta: Paleta = PALETA_PADRAO, escala: float = 1.0) -> str:
+_paleta_atual = PALETA_PADRAO
+
+
+def paleta_atual() -> Paleta:
+    """Paleta em uso, para os itens desenhados à mão (QPainter / QGraphicsScene)."""
+    return _paleta_atual
+
+
+def paleta_do_perfil(perfil) -> Paleta:
+    return PALETA_ALTO_CONTRASTE if perfil.alto_contraste else PALETA_PADRAO
+
+
+def aplicar(app: QApplication, perfil=None) -> str:
+    """Aplica fonte, paleta, escala, contornos e espaçamento de letras do perfil."""
+    from app.nucleo.perfis import PADRAO
+
+    global _paleta_atual
+    perfil = perfil or PADRAO
+    _paleta_atual = paleta_do_perfil(perfil)
     familia = carregar_fonte()
-    app.setFont(QFont(familia, round(CORPO_PX * escala)))
-    app.setStyleSheet(folha_estilo(paleta, familia, escala))
+    fonte = QFont(familia, round(CORPO_PX * perfil.escala))
+    if perfil.espacamento_letras:
+        fonte.setLetterSpacing(QFont.PercentageSpacing, 100 + perfil.espacamento_letras * 100)
+    app.setFont(fonte)
+    app.setStyleSheet(folha_estilo(_paleta_atual, familia, perfil.escala, perfil.contorno_px))
     return familia
