@@ -13,7 +13,7 @@
 - [x] `baixar_modelo.py` e `baixar_fonte.py` executados; modelo e fonte commitados
 - [x] `atlas verificar` completo e `atlas demo` mínimo (4 capturas da navegação + `relatorio.md`)
 - [x] `Dockerfile`, `docker-compose.yml`, `.dockerignore`; job `docker` no CI
-- [ ] `docker compose run --rm verificar` e `demo` funcionando numa build limpa
+- [x] `docker compose run --rm verificar`, `demo` e `teste` funcionando numa build limpa (imagem base com 1,2 GB)
 - [ ] **Aceite:** o usuário testa a câmera com `python -m app.main`
 
 ## Etapa 1b — Empacotamento, Release e GHCR

@@ -1,13 +1,13 @@
 # Atlas sem tela: `atlas verificar`, `atlas demo` e os testes rodam aqui sem webcam e sem áudio.
-FROM python:3.11-slim-bookworm
+# Dois estágios: `base` (padrão, usado por verificar/demo/teste/agente) e `gui` (acrescenta
+# Xvfb + noVNC para ver a interface real no navegador). Separar mantém a imagem base menor.
 
-# Bibliotecas do Qt (offscreen e xcb para o modo gui), fontes e ferramentas do modo gui (noVNC).
+FROM python:3.11-slim-bookworm AS base
+
+# Bibliotecas que o Qt precisa no modo offscreen, fontes e o tini (init do contêiner).
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        libegl1 libgl1 libxkbcommon0 libdbus-1-3 libfontconfig1 libglib2.0-0 fonts-dejavu-core \
-        xvfb x11vnc novnc websockify tini \
-        libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 \
-        libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 libxkbcommon-x11-0 \
+        libegl1 libgl1 libxkbcommon0 libdbus-1-3 libfontconfig1 libglib2.0-0 fonts-dejavu-core tini \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -31,3 +31,14 @@ RUN mkdir -p /saida /dados
 
 ENTRYPOINT ["tini", "--", "atlas"]
 CMD ["verificar"]
+
+
+FROM base AS gui
+
+# Plugin xcb do Qt + tela virtual (Xvfb) servida no navegador pelo noVNC.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        xvfb x11vnc novnc websockify \
+        libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 \
+        libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 libxkbcommon-x11-0 \
+    && rm -rf /var/lib/apt/lists/*

@@ -1,6 +1,9 @@
-# Todos os serviços usam a mesma imagem; o build roda uma vez e o cache serve aos demais.
+# Os serviços sem tela usam a mesma imagem (estágio `base`); o build roda uma vez e o cache serve
+# aos demais. O serviço `gui` usa o estágio `gui`, que acrescenta Xvfb e noVNC.
 x-atlas: &atlas
-  build: .
+  build:
+    context: .
+    target: base
   image: atlas:local
 
 services:
@@ -19,6 +22,9 @@ services:
     stdin_open: true
     command: ["agente", "silabas"]
   gui:
-    <<: *atlas
+    build:
+      context: .
+      target: gui
+    image: atlas:gui
     command: ["gui"]
     ports: ["6080:6080"]

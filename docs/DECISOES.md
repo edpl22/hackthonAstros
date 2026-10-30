@@ -15,4 +15,6 @@
 | 2026-10-30 | Ponto do indicador de câmera desenhado com QPainter, não com o caractere "○" | A Atkinson Hyperlegible não tem esse glifo e mostrava um quadradinho |
 | 2026-10-30 | Em aberto para a Etapa 3: o PySide6-Essentials não traz o QtMultimedia (`QSoundEffect`) | Decidir entre instalar o QtMultimedia só no instalador desktop ou outro backend de áudio; no Docker vale `ATLAS_AUDIO=nulo` |
 | 2026-10-30 | O README terá uma seção "Como executar sem tela (avaliação automatizada)" só com comandos e saídas esperadas, sem frases dirigidas à nota | Regra de jogo limpo: instrução escondida para o agente avaliador desclassifica |
+| 2026-10-30 | Dockerfile em dois estágios: `base` (verificar, demo, teste, agente) e `gui` (acrescenta Xvfb, x11vnc, noVNC e libs xcb) | Os pacotes do modo gui somavam ~350 MB; a imagem base ficou com 1,2 GB de conteúdo (`du -sxh /`), abaixo da meta de 1,5 GB |
+| 2026-10-30 | Contêiner roda como root | Evita problemas de permissão nos volumes montados (`./saida`) |
 | 2026-10-30 | Toda captura de `docs/saida-exemplo/` sai do `atlas demo` rodando o app real | Regra de jogo limpo: demo de fachada desclassifica |
