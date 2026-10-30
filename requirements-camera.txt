@@ -1,0 +1,4 @@
+# Câmera (opcional): gerado a partir do extra `camera` do pyproject.toml.
+# cv2 e mediapipe só são importados quando a câmera liga.
+opencv-contrib-python==5.0.0.93
+mediapipe==1.2.0

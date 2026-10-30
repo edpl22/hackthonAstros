@@ -32,3 +32,6 @@ dist/
 Thumbs.db
 .idea/
 .vscode/
+
+# Saídas dos modos sem tela (o exemplo commitado fica em docs/saida-exemplo/)
+saida/
