@@ -4,7 +4,7 @@
 - [x] Acesso ao `edpl22/hackthonAstros` conferido (privado, permissão de escrita)
 - [x] Estrutura de pastas, `.gitignore`, `pyproject.toml`, `requirements*.txt`, `CLAUDE.md`, `DECISOES.md`, `PROGRESSO.md`, `README.md` (rascunho), `LICENSE`, `CREDITOS.md`
 - [x] `ci.yml`: ubuntu, Python 3.11, libs do Qt, offscreen, `ruff check` e `pytest`
-- [ ] **Aceite:** CI verde no repositório privado
+- [x] **Aceite:** CI verde no repositório privado
 
 ## Etapa 1a — Esqueleto + câmera (local)
 - [ ] Janela principal, tema, fonte e navegação Início → Matérias → Trilhas
