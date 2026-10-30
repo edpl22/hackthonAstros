@@ -1,6 +1,6 @@
 # Núcleo: interface, modos sem tela e testes. Não inclui a câmera.
 # Gerado a partir do pyproject.toml (dependencies + dev) com as versões testadas.
-PySide6-Essentials==6.12.0
+PySide6-Essentials==6.11.3
 pytest==9.2.0
 pytest-qt==4.5.0
 ruff==0.17.3

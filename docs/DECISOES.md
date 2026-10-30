@@ -5,7 +5,7 @@
 | 2026-10-30 | Trabalhar por etapas, com aprovação do usuário ao fim de cada uma | Pedido do usuário: seguir gradualmente |
 | 2026-10-30 | O M1 foi dividido em 1a (esqueleto, câmera, CLI mínima, Docker) e 1b (PyInstaller, Release, GHCR) | Validar câmera e Docker antes de lidar com o empacotamento, que é onde mais coisa quebra |
 | 2026-10-30 | Usar `opencv-contrib-python` no lugar de `opencv-python` em `requirements-camera.txt` | O mediapipe já depende do contrib; ter os dois instala dois `cv2` conflitantes |
-| 2026-10-30 | Versões fixadas: PySide6-Essentials 6.12.0, mediapipe 1.2.0, opencv-contrib 5.0.0.93 | Últimas compatíveis com Python 3.11; a Tasks API (`HandLandmarker`) existe no mediapipe 1.2.0 |
+| 2026-10-30 | Versões fixadas: PySide6-Essentials 6.11.3 (ver abaixo), mediapipe 1.2.0, opencv-contrib 5.0.0.93 | Últimas compatíveis com Python 3.11; a Tasks API (`HandLandmarker`) existe no mediapipe 1.2.0 |
 | 2026-10-30 | `QT_QPA_PLATFORM=offscreen` definido também em `tests/conftest.py` | Os testes rodam iguais no CI e no Windows local, sem abrir janelas |
 | 2026-10-30 | Especificação trocada pela versão "desktop + Docker": PySide6-Essentials, CLI `atlas`, dependências em dois níveis | O agente de IA que avalia Tech roda o README sem tela e sem webcam |
 | 2026-10-30 | `requirements.txt` = núcleo + ferramentas de teste; `requirements-camera.txt` = opencv + mediapipe (o antigo `requirements-dev.txt` saiu) | A imagem Docker roda os testes, e os modos sem tela não podem depender da câmera |
@@ -26,4 +26,5 @@
 | 2026-10-30 | Varredura liga por opção da atividade (`varredura=True`), não sozinha no perfil motor | O perfil motor já usa permanência; ligar a varredura será uma opção na área do adulto |
 | 2026-10-30 | Esc só emite `pausar` (e anuncia) por enquanto; a tela de Pausa entra com a `AtividadeBase` na Etapa 3 | Mantém a etapa no escopo combinado |
 | 2026-10-30 | Formulário da área do adulto dentro de uma área com rolagem | Em 1280 x 720 o formulário não cabia e os itens se sobrepunham (visto na captura) |
+| 2026-10-30 | PySide6-Essentials fixado em 6.11.3 (6.12.0 excluída no `pyproject.toml`) | No Linux, a 6.12.0 tira uma referência do `None` a cada `setPos`/`setVisible` de item de cena; com a mão (milhares de quadros) o Python abortava ao finalizar. Reproduzido no Docker, 6.11.3 e 6.10.3 sem o bug; `tests/test_qt_refcount.py` vigia |
 | 2026-10-30 | Toda captura de `docs/saida-exemplo/` sai do `atlas demo` rodando o app real | Regra de jogo limpo: demo de fachada desclassifica |
