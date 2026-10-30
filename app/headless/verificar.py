@@ -64,6 +64,9 @@ def checar_conteudo() -> Checagem:
         partes.append(f"{len(frases)} grupos de frases")
         trilhas = json.loads(caminhos.conteudo("trilhas.json").read_text(encoding="utf-8"))
         partes.append(f"{sum(len(t) for t in trilhas.values())} trilhas")
+        from app.nucleo.perfis import PERFIS
+
+        partes.append(f"{len(PERFIS)} perfis")
         palavras = caminhos.conteudo("palavras.json")
         if palavras.exists():
             partes.append(f"{len(json.loads(palavras.read_text(encoding='utf-8')))} palavras")

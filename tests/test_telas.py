@@ -1,9 +1,11 @@
 import pytest
 from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QApplication, QCheckBox, QPushButton, QToolButton
 
 from app.entrada import mao
 from app.entrada.camera import CameraNula
 from app.janela import JanelaPrincipal
+from app.nucleo.registro import Registro
 
 
 class CameraFalsa(CameraNula):
@@ -24,9 +26,10 @@ class CameraFalsa(CameraNula):
 
 
 @pytest.fixture
-def janela(qtbot):
+def janela(qtbot, monkeypatch):
+    monkeypatch.setenv("ATLAS_SEM_ANIMACAO", "1")
     CameraFalsa.instancias = []
-    j = JanelaPrincipal(fabrica_camera=CameraFalsa)
+    j = JanelaPrincipal(fabrica_camera=CameraFalsa, registro=Registro(":memory:"))
     qtbot.addWidget(j)
     j.resize(1280, 720)
     j.show()
@@ -42,42 +45,100 @@ def _mao_em(x, y, pinca=False):
     return pontos
 
 
+def _visitante(janela):
+    return janela.inicio.botoes[-1]
+
+
 def test_navegacao_inicio_materias_trilhas(janela, qtbot):
     assert janela.pilha.currentWidget() is janela.inicio
-    qtbot.mouseClick(janela.inicio.botao_comecar, Qt.LeftButton)
+    assert _visitante(janela).text() == "Visitante"
+    qtbot.mouseClick(_visitante(janela), Qt.LeftButton)
     assert janela.pilha.currentWidget() is janela.materias
     qtbot.mouseClick(janela.materias.botoes["matematica"], Qt.LeftButton)
     assert janela.pilha.currentWidget() is janela.trilhas
-    assert [b.text() for b in janela.trilhas.botoes] == ["Teste da mão"]
+    assert [b.text() for b in janela.trilhas.botoes] == ["Treino de arrastar", "Teste da mão"]
     qtbot.mouseClick(janela.trilhas.botao_voltar, Qt.LeftButton)
     assert janela.pilha.currentWidget() is janela.materias
 
 
 def test_navegacao_por_teclado(janela, qtbot):
-    qtbot.keyClick(janela.inicio.botao_comecar, Qt.Key_Space)
+    qtbot.keyClick(_visitante(janela), Qt.Key_Space)
     assert janela.pilha.currentWidget() is janela.materias
     assert janela.materias.botoes["portugues"].hasFocus()
 
 
+def test_area_do_adulto_so_abre_segurando(janela, qtbot):
+    botao = janela.inicio.adulto.botao
+    janela.inicio.adulto.timer.setInterval(50)
+    qtbot.mouseClick(botao, Qt.LeftButton)  # clique rápido não abre
+    assert janela.pilha.currentWidget() is janela.inicio
+    qtbot.mousePress(botao, Qt.LeftButton)
+    qtbot.waitUntil(lambda: janela.pilha.currentWidget() is janela.adulto, timeout=1000)
+    qtbot.mouseRelease(botao, Qt.LeftButton)
+
+
+def test_cadastrar_aluno_e_jogar_com_os_perfis_dele(janela, qtbot):
+    adulto = janela.adulto
+    janela.ir_para(adulto)
+    adulto.apelido.setText("Lia")
+    adulto.botoes_avatar["sapo"].setChecked(True)
+    adulto.caixas_perfil["baixa_visao"].setChecked(True)
+    qtbot.mouseClick(adulto.botao_salvar, Qt.LeftButton)
+    assert adulto.aviso.text() == "Aluno salvo."
+    assert [a.apelido for a in janela.registro.listar_alunos()] == ["Lia"]
+
+    qtbot.mouseClick(adulto.botao_voltar, Qt.LeftButton)
+    lia = janela.inicio.botoes[0]
+    assert lia.text() == "Lia" and not lia.icon().isNull()
+    qtbot.mouseClick(lia, Qt.LeftButton)
+    assert janela.sessao.perfil.escala == 1.75
+    assert "#FFFFFF" in QApplication.instance().styleSheet()  # alto contraste
+
+    janela.abrir_atividade("treino", semente=1)
+    assert len(janela.atividades["treino"].cena.pecas) == 3  # baixa visão: até 3 itens
+
+
+def test_adulto_nao_salva_sem_apelido(janela, qtbot):
+    janela.ir_para(janela.adulto)
+    qtbot.mouseClick(janela.adulto.botao_salvar, Qt.LeftButton)
+    assert janela.adulto.aviso.text() == "Escreva um apelido."
+    assert janela.registro.listar_alunos() == []
+
+
+def test_adulto_edita_e_apaga(janela, qtbot):
+    janela.registro.salvar_aluno("Rui", "gato", ["tea"])
+    janela.adulto.recarregar()
+    janela.adulto.lista.setCurrentRow(0)
+    assert janela.adulto.caixas_perfil["tea"].isChecked()
+    qtbot.mouseClick(janela.adulto.botao_apagar, Qt.LeftButton)
+    assert janela.registro.listar_alunos() == []
+
+
 def test_trilhas_escondem_atividades_que_nao_existem(janela):
     janela.abrir_materia("portugues")
-    assert [b.text() for b in janela.trilhas.botoes] == ["Teste da mão"]
+    assert [b.text() for b in janela.trilhas.botoes] == ["Treino de arrastar", "Teste da mão"]
 
 
 def test_camera_liga_so_dentro_da_atividade(janela, qtbot):
     janela.abrir_materia("portugues")
     assert CameraFalsa.instancias == []
-    qtbot.mouseClick(janela.trilhas.botoes[0], Qt.LeftButton)
+    qtbot.mouseClick(janela.trilhas.botoes[1], Qt.LeftButton)
     tela = janela.atividades["teste_camera"]
     assert janela.pilha.currentWidget() is tela
     camera = CameraFalsa.instancias[-1]
-    assert camera.ligada
+    assert camera.ligada and camera.mostrar_miniatura
     assert tela.indicador.accessibleName() == "Câmera ligada"
 
     qtbot.mouseClick(tela.botao_voltar, Qt.LeftButton)
     assert not camera.ligada
     assert tela.camera is None
     assert tela.indicador.accessibleName() == "Câmera desligada"
+
+
+def test_tea_desliga_a_miniatura_da_camera(janela):
+    janela.escolher_aluno(None, ["tea"])
+    janela.abrir_atividade("teste_camera")
+    assert CameraFalsa.instancias[-1].mostrar_miniatura is False
 
 
 def test_teste_da_mao_mostra_cursor_e_pinca(janela):
@@ -99,16 +160,18 @@ def test_teste_da_mao_mostra_cursor_e_pinca(janela):
     assert tela.rotulo_mao.text() == "Mão: não vejo"
 
 
-def test_esc_sai_da_atividade(janela, qtbot):
+def test_esc_sai_do_teste_da_mao(janela, qtbot):
     janela.abrir_materia("portugues")
     janela.abrir_atividade("teste_camera")
     qtbot.keyClick(janela.atividades["teste_camera"], Qt.Key_Escape)
     assert janela.pilha.currentWidget() is janela.trilhas
 
 
-def test_botoes_tem_nome_acessivel(janela):
-    from PySide6.QtWidgets import QPushButton
-
+def test_todo_controle_tem_nome_acessivel(janela):
+    janela.registro.salvar_aluno("Ana", "gato", [])
+    janela.abrir_inicio()
     janela.abrir_materia("matematica")
-    for botao in janela.findChildren(QPushButton):
-        assert botao.accessibleName(), botao.text()
+    janela.abrir_atividade("treino", semente=1)
+    for tipo in (QPushButton, QToolButton, QCheckBox):
+        for controle in janela.findChildren(tipo):
+            assert controle.accessibleName(), controle.text()

@@ -1,10 +1,15 @@
 """Janela principal: uma pilha de telas e a navegação entre elas."""
 
-from PySide6.QtWidgets import QMainWindow, QStackedWidget
+from PySide6.QtWidgets import QApplication, QMainWindow, QStackedWidget
 
 from app.atividades.teste_camera import TelaTesteCamera
+from app.atividades.treino.tela import TelaTreino
 from app.entrada.camera import fabrica_padrao
+from app.nucleo import tema
 from app.nucleo.conteudo import texto
+from app.nucleo.registro import Registro
+from app.nucleo.sessao import Sessao
+from app.telas.adulto import TelaAdulto
 from app.telas.inicio import TelaInicio
 from app.telas.materias import TelaMaterias
 from app.telas.trilhas import TelaTrilhas
@@ -13,31 +18,41 @@ MARGEM = 24
 
 
 class JanelaPrincipal(QMainWindow):
-    def __init__(self, fabrica_camera=None, parent=None):
+    def __init__(self, fabrica_camera=None, registro=None, parent=None):
         super().__init__(parent)
         self.setWindowTitle(texto("app.nome"))
         self.setMinimumSize(1024, 700)
+        fabrica = fabrica_camera or fabrica_padrao()
+        self.registro = registro or Registro()
+        self.sessao = Sessao(self)
 
         self.inicio = TelaInicio()
+        self.adulto = TelaAdulto(self.registro)
         self.materias = TelaMaterias()
-        self.atividades = {"teste_camera": TelaTesteCamera(fabrica_camera or fabrica_padrao())}
+        self.atividades = {
+            "treino": TelaTreino(fabrica),
+            "teste_camera": TelaTesteCamera(fabrica),
+        }
         self.trilhas = TelaTrilhas(self.atividades.keys())
 
         self.pilha = QStackedWidget()
-        for tela in (self.inicio, self.materias, self.trilhas, *self.atividades.values()):
+        telas = (self.inicio, self.adulto, self.materias, self.trilhas, *self.atividades.values())
+        for tela in telas:
             tela.layout().setContentsMargins(MARGEM, MARGEM, MARGEM, MARGEM)
             self.pilha.addWidget(tela)
         self.setCentralWidget(self.pilha)
 
-        self.inicio.comecar.connect(lambda: self.ir_para(self.materias))
-        self.materias.voltar.connect(lambda: self.ir_para(self.inicio))
+        self.inicio.escolheu.connect(self.escolher_aluno)
+        self.inicio.abrir_adulto.connect(lambda: self.ir_para(self.adulto))
+        self.adulto.voltar.connect(self.abrir_inicio)
+        self.materias.voltar.connect(self.abrir_inicio)
         self.materias.escolheu.connect(self.abrir_materia)
         self.trilhas.voltar.connect(lambda: self.ir_para(self.materias))
         self.trilhas.escolheu.connect(self.abrir_atividade)
         for atividade in self.atividades.values():
             atividade.voltar.connect(lambda: self.ir_para(self.trilhas))
 
-        self.ir_para(self.inicio)
+        self.abrir_inicio()
 
     def ir_para(self, tela) -> None:
         atual = self.pilha.currentWidget()
@@ -47,14 +62,32 @@ class JanelaPrincipal(QMainWindow):
         self.pilha.setCurrentWidget(tela)
         tela.focar()
 
+    def abrir_inicio(self) -> None:
+        self.sessao.definir(None)
+        self._aplicar_tema()
+        self.inicio.mostrar(self.registro.listar_alunos())
+        self.ir_para(self.inicio)
+
+    def escolher_aluno(self, aluno, perfis=None) -> None:
+        """Aluno cadastrado usa os perfis dele; visitante usa `perfis` (padrão se vazio)."""
+        self.sessao.definir(aluno, perfis)
+        self._aplicar_tema()
+        self.ir_para(self.materias)
+
+    def _aplicar_tema(self) -> None:
+        app = QApplication.instance()
+        if app is not None:
+            tema.aplicar(app, self.sessao.perfil)
+
     def abrir_materia(self, materia: str) -> None:
-        self.trilhas.mostrar(materia)
+        self.trilhas.mostrar(materia, self.sessao.perfil.escala)
         self.ir_para(self.trilhas)
 
-    def abrir_atividade(self, atividade_id: str) -> None:
+    def abrir_atividade(self, atividade_id: str, **opcoes) -> None:
         atividade = self.atividades[atividade_id]
         self.ir_para(atividade)
-        atividade.iniciar()
+        atividade.iniciar(self.sessao.perfil, **opcoes)
+        atividade.focar()
 
     def closeEvent(self, evento):
         for atividade in self.atividades.values():

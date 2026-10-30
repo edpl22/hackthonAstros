@@ -7,8 +7,41 @@
   },
   "inicio": {
     "titulo": "Atlas",
-    "subtitulo": "Vamos aprender juntos.",
+    "quem_joga": "Quem vai jogar?",
+    "visitante": "Visitante",
+    "adulto": "Área do adulto: segure",
     "comecar": "Começar"
+  },
+  "adulto": {
+    "titulo": "Área do adulto",
+    "alunos": "Alunos",
+    "novo": "Novo aluno",
+    "apelido": "Apelido (sem nome completo)",
+    "avatar": "Bicho",
+    "perfis": "Perfis de apoio",
+    "salvar": "Salvar aluno",
+    "apagar_aluno": "Apagar este aluno",
+    "salvo": "Aluno salvo.",
+    "apagado": "Aluno apagado.",
+    "erro_apelido": "Escreva um apelido."
+  },
+  "avatares": {
+    "gato": "Gato",
+    "cachorro": "Cachorro",
+    "peixe": "Peixe",
+    "passaro": "Pássaro",
+    "sapo": "Sapo",
+    "tartaruga": "Tartaruga"
+  },
+  "perfis": {
+    "padrao": "Padrão",
+    "tea": "TEA (autismo)",
+    "tdah": "TDAH",
+    "dislexia": "Dislexia",
+    "baixa_visao": "Baixa visão",
+    "daltonismo": "Daltonismo",
+    "motor": "Dificuldade motora",
+    "cegueira": "Cegueira (parcial)"
   },
   "materias": {
     "instrucao": "Escolha a matéria.",
@@ -28,13 +61,31 @@
     "pinca_fechada": "Pinça: fechada",
     "pinca_aberta": "Pinça: aberta"
   },
+  "treino": {
+    "instrucao": "Pegue a peça {letra}. Coloque na caixa {letra}.",
+    "terminou": "Terminou! Todas as peças estão nas caixas.",
+    "tentar_de_novo": "Vamos tentar de novo."
+  },
+  "anuncio": {
+    "pegou": "Peça {item} pega.",
+    "encaixou": "Peça {item} colocada na caixa {alvo}.",
+    "voltou": "A peça {item} voltou para o lugar. Vamos tentar de novo.",
+    "soltou_fora": "Peça {item} solta fora das caixas.",
+    "nada_para_pegar": "Nenhuma peça neste ponto.",
+    "pausou": "Atividade pausada.",
+    "continuou": "Atividade continuando."
+  },
   "demo": {
     "titulo_relatorio": "Relatório da demonstração do Atlas",
     "navegacao": {
-      "inicio": "Tela inicial aberta.",
-      "materias": "Botão Começar escolhido. Tela de matérias aberta.",
+      "inicio": "Tela Quem vai jogar aberta.",
+      "aluno_exemplo": "Bia (exemplo)",
+      "adulto": "Área do adulto: cadastro de um aluno de exemplo com os perfis TEA e dislexia.",
+      "inicio_aluno": "Aluno salvo. Ele aparece na tela Quem vai jogar.",
+      "materias": "Visitante escolhido. Tela de matérias aberta.",
       "trilhas": "Português escolhido. Tela de trilhas aberta.",
       "teste_mao": "Teste da mão aberto. Sem webcam, a câmera aparece como desligada."
-    }
+    },
+    "treino_inicio": "Treino de arrastar aberto."
   }
 }
