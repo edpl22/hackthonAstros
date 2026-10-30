@@ -11,6 +11,7 @@ PACOTES = [
     "app.atividades.silabas",
     "app.atividades.quantidades",
     "app.atividades.pizza",
+    "app.headless",
 ]
 
 
