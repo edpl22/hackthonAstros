@@ -26,6 +26,10 @@ def _criar_parser() -> argparse.ArgumentParser:
     demo.add_argument("--saida", default="saida", help="pasta de saida (padrao: ./saida)")
     demo.add_argument("--tamanho", default="1280x720", help="tamanho da janela, ex.: 1280x720")
 
+    agente = sub.add_parser("agente", help="joga uma atividade por JSON Lines (stdin/stdout)")
+    agente.add_argument("atividade", help="ex.: treino")
+    agente.add_argument("--perfil", default="", help="perfis separados por virgula: tea,dislexia")
+
     perfis = sub.add_parser("perfis", help="mostra os perfis e as regras de combinacao em JSON")
     perfis.add_argument("--combinar", metavar="LISTA", help="ex.: tea,dislexia")
     return parser
@@ -67,6 +71,11 @@ def main(argv: list[str] | None = None) -> int:
             from app.headless.verificar import executar
 
             return executar()
+        if args.comando == "agente":
+            from app.headless.agente import executar
+            from app.nucleo.perfis import ler_lista
+
+            return executar(args.atividade, ler_lista(args.perfil))
         if args.comando == "demo":
             from app.headless.demo import executar
             from app.nucleo.perfis import ler_lista

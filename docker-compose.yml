@@ -20,7 +20,7 @@ services:
   agente:
     <<: *atlas
     stdin_open: true
-    command: ["agente", "silabas"]
+    command: ["agente", "treino"]  # vira "silabas" quando o Ímã das Sílabas existir (Etapa 4)
   gui:
     build:
       context: .
