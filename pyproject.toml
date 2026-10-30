@@ -1,0 +1,40 @@
+[project]
+name = "atlas"
+version = "0.0.0"
+description = "Português e matemática com o corpo, adaptado ao perfil de cada aluno."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "PySide6>=6.7",
+    # mediapipe já depende de opencv-contrib-python; usar o mesmo pacote evita dois cv2.
+    "opencv-contrib-python>=4.10",
+    "mediapipe>=0.10.14",
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.6",
+    "pytest>=8.0",
+    "pytest-qt>=4.4",
+]
+audio = [
+    "pyttsx3>=2.90",
+    "google-cloud-texttospeech>=2.16",
+]
+empacotamento = [
+    "pyinstaller>=6.6",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["build", "dist"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+qt_api = "pyside6"

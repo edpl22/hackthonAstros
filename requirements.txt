@@ -1,0 +1,6 @@
+# Gerado a partir do pyproject.toml com as versões testadas (Python 3.11, Windows).
+# Usado pelo CI e pelo PyInstaller.
+PySide6==6.12.0
+opencv-contrib-python==5.0.0.93
+mediapipe==1.2.0
+numpy==2.4.6

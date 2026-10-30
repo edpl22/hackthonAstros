@@ -1,0 +1,34 @@
+# Ambiente Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Empacotamento
+build/
+dist/
+*.spec.bak
+
+# Segredos (nunca commitar)
+.env
+.env.*
+*credentials*.json
+*service-account*.json
+*-sa.json
+*.pem
+*.key
+
+# Dados locais do app
+*.db
+*.sqlite3
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
