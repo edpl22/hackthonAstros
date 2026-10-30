@@ -13,8 +13,22 @@ Requer Python 3.11.
 ```bash
 py -3.11 -m venv .venv
 .venv\Scripts\activate
-pip install -r requirements-dev.txt
-python -m app.main
+pip install -r requirements.txt -r requirements-camera.txt
+pip install --no-deps .
+atlas              # interface gráfica
+atlas verificar    # confere o ambiente
+atlas demo         # capturas e relatório em ./saida
+```
+
+Sem webcam, `requirements-camera.txt` é opcional: o Atlas usa mouse, toque e teclado.
+
+## Docker
+
+```bash
+docker compose build
+docker compose run --rm verificar
+docker compose run --rm demo
+docker compose run --rm teste
 ```
 
 ## Testes
