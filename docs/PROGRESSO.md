@@ -23,13 +23,18 @@
 - [ ] **Aceite:** o usuário baixa o zip da Release, abre e vê o cursor seguindo a mão
 
 ## Etapa 2 — Perfis e camada de entrada
-- [ ] `perfis.py` com combinação de perfis + testes
-- [ ] `tema.py` (escala, contraste, espaçamento) + teste de contraste WCAG
-- [ ] `eventos.py`, `ponteiro.py`, `teclado.py`, `varredura.py`
-- [ ] `mao.py` (One Euro, histerese, permanência, área ativa) com testes
-- [ ] `camera.py` com fallback, `cursor.py` com o anel de permanência
-- [ ] Área do adulto (segurar 2 s): criar aluno e escolher perfis
-- [ ] **Aceite:** testes verdes e capturas (adulto; perfis padrão, TEA e baixa visão)
+- [x] `perfis.py`: 8 perfis, combinação "a opção mais acessível vence" + testes; `atlas perfis [--combinar]`
+- [x] `tema.py` aplica o perfil (escala, alto contraste, contornos, espaçamento de letras) + teste WCAG
+- [x] `eventos.py` (barramento), `alvos.py`, `ponteiro.py` (arrastar e clique-clique), `teclado.py`, `varredura.py`
+- [x] `mao.py` com permanência; `mao_entrada.py` (pinça e permanência no barramento); `cursor.py` com anel
+- [x] `mao_simulada.py` + `conteudo/simulacao_mao.json` (pontos sintéticos pelo `mao.py` real)
+- [x] `camera.py`: reduz para 480 x 360 abaixo de 15 fps; miniatura desligada no perfil TEA
+- [x] `anuncio.py` (frase de cada evento) e `registro.py` (alunos: apelido, bicho, perfis)
+- [x] Área do adulto (segurar 2 s): criar, editar e apagar aluno, escolher perfis; 6 avatares SVG
+- [x] "Quem vai jogar?" com os alunos e o Visitante
+- [x] Treino de arrastar: atividade simples sobre o barramento, completada por mouse, clique-clique, teclado, varredura e mão simulada (com erro proposital)
+- [x] `atlas demo` com `--perfil` e `--entrada`
+- [x] **Aceite:** 132 testes verdes; capturas da área do adulto e do treino nos perfis padrão, TEA, baixa visão e dislexia revisadas
 
 ## Etapa 3 — Núcleo das atividades
 - [ ] `AtividadeBase` (3 momentos, Agora/Depois, Pausa, pistas, ajuste de nível)

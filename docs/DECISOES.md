@@ -17,4 +17,13 @@
 | 2026-10-30 | O README terá uma seção "Como executar sem tela (avaliação automatizada)" só com comandos e saídas esperadas, sem frases dirigidas à nota | Regra de jogo limpo: instrução escondida para o agente avaliador desclassifica |
 | 2026-10-30 | Dockerfile em dois estágios: `base` (verificar, demo, teste, agente) e `gui` (acrescenta Xvfb, x11vnc, noVNC e libs xcb) | Os pacotes do modo gui somavam ~350 MB; a imagem base ficou com 1,2 GB de conteúdo (`du -sxh /`), abaixo da meta de 1,5 GB |
 | 2026-10-30 | Contêiner roda como root | Evita problemas de permissão nos volumes montados (`./saida`) |
+| 2026-10-30 | Nova atividade "Treino de arrastar" (peças A–D nas caixas A–D) | Valida a camada de entrada com uma atividade real antes das três do MVP, ensina a criança a pegar e soltar, e vira a base da cena do Ímã das Sílabas |
+| 2026-10-30 | Perfil ganhou campos extras: `aviso_troca_atividade`, `contorno_px`, `silabas_alternadas`, `resposta_por_escolha`, `varredura_disponivel`, `descrever_foco`, `miniatura_camera` | A tabela de perfis cita esses comportamentos; cada um vira um campo que combina pela mesma regra |
+| 2026-10-30 | Na combinação, `som_celebracao` e `miniatura_camera`: False vence; entrada: teclado > permanência > ponteiro | Desligar estímulo é o mais acessível; teclado atende cegueira, que é a necessidade mais restritiva |
+| 2026-10-30 | A mão simulada gera os 21 pontos a partir de passos ("ir até a peça B", "fechar a pinça"), em vez de guardar pontos crus no JSON | O roteiro funciona em qualquer tamanho e perfil; os pontos ainda passam pelo `mao.py` real (filtro, área ativa, pinça) |
+| 2026-10-30 | Cena das atividades com tamanho lógico fixo 1280 x 720, escalada para caber na janela | Coordenadas iguais no demo, no agente e na tela; o mouse é convertido com `mapToScene` |
+| 2026-10-30 | Modos sem tela usam `ATLAS_SEM_ANIMACAO=1` | Capturas e testes determinísticos; na interface, as animações seguem com até 250 ms (0 com "reduzir movimento") |
+| 2026-10-30 | Varredura liga por opção da atividade (`varredura=True`), não sozinha no perfil motor | O perfil motor já usa permanência; ligar a varredura será uma opção na área do adulto |
+| 2026-10-30 | Esc só emite `pausar` (e anuncia) por enquanto; a tela de Pausa entra com a `AtividadeBase` na Etapa 3 | Mantém a etapa no escopo combinado |
+| 2026-10-30 | Formulário da área do adulto dentro de uma área com rolagem | Em 1280 x 720 o formulário não cabia e os itens se sobrepunham (visto na captura) |
 | 2026-10-30 | Toda captura de `docs/saida-exemplo/` sai do `atlas demo` rodando o app real | Regra de jogo limpo: demo de fachada desclassifica |

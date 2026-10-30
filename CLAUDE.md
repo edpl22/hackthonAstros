@@ -29,7 +29,8 @@ py -3.11 -m venv .venv                                   # Python 3.11 (o mediap
 .venv/Scripts/python -m pip install --no-deps -e .       # instala o comando `atlas`
 atlas                       # interface gráfica (igual a `atlas gui` ou `python -m app.main`)
 atlas verificar             # confere o ambiente; termina com "RESULTADO: pronto"
-atlas demo todas --saida saida   # capturas PNG, relatorio.md, eventos.jsonl
+atlas demo todas --saida saida [--perfil tea,dislexia] [--entrada mouse|teclado|varredura|mao-simulada]
+atlas perfis [--combinar tea,dislexia]   # JSON dos perfis e das regras
 .venv/Scripts/ruff check .
 .venv/Scripts/python -m pytest   # roda em offscreen (tests/conftest.py)
 docker compose build
@@ -67,7 +68,7 @@ docs/         DECISOES.md, PROGRESSO.md (depois: ARQUITETURA.md, AVALIACAO.md, s
 | 0. Repositório | concluída |
 | 1a. Esqueleto, câmera, `atlas verificar`/`demo` mínimos, Docker | concluída |
 | 1b. Empacotamento, Release e imagem no GHCR | pendente |
-| 2. Perfis e entrada | pendente |
+| 2. Perfis e entrada | concluída |
 | 3. Núcleo das atividades, demo e agente completos | pendente |
 | 4. Ímã das Sílabas | pendente |
 | 5. Mesa de Quantidades | pendente |
