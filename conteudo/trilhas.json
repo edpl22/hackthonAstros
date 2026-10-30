@@ -1,0 +1,11 @@
+{
+  "portugues": [
+    {"id": "silabas", "nome": "Juntar sílabas", "atividade": "silabas"},
+    {"id": "teste_mao", "nome": "Teste da mão", "atividade": "teste_camera"}
+  ],
+  "matematica": [
+    {"id": "quantidades", "nome": "Contar e comparar", "atividade": "quantidades"},
+    {"id": "fracoes", "nome": "Frações com pizza", "atividade": "pizza"},
+    {"id": "teste_mao", "nome": "Teste da mão", "atividade": "teste_camera"}
+  ]
+}

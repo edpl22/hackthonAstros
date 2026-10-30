@@ -1,0 +1,40 @@
+{
+  "app": {
+    "nome": "Atlas"
+  },
+  "comum": {
+    "voltar": "Voltar"
+  },
+  "inicio": {
+    "titulo": "Atlas",
+    "subtitulo": "Vamos aprender juntos.",
+    "comecar": "Começar"
+  },
+  "materias": {
+    "instrucao": "Escolha a matéria.",
+    "portugues": "Português",
+    "matematica": "Matemática"
+  },
+  "trilhas": {
+    "instrucao": "Escolha o que fazer."
+  },
+  "teste_camera": {
+    "instrucao": "Mostre a mão para a câmera. Junte o polegar e o indicador.",
+    "camera_ligada": "Câmera ligada",
+    "camera_ligando": "Ligando a câmera",
+    "camera_desligada": "Câmera desligada",
+    "mao_presente": "Mão: vejo sua mão",
+    "mao_ausente": "Mão: não vejo",
+    "pinca_fechada": "Pinça: fechada",
+    "pinca_aberta": "Pinça: aberta"
+  },
+  "demo": {
+    "titulo_relatorio": "Relatório da demonstração do Atlas",
+    "navegacao": {
+      "inicio": "Tela inicial aberta.",
+      "materias": "Botão Começar escolhido. Tela de matérias aberta.",
+      "trilhas": "Português escolhido. Tela de trilhas aberta.",
+      "teste_mao": "Teste da mão aberto. Sem webcam, a câmera aparece como desligada."
+    }
+  }
+}
