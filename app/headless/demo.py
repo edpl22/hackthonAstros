@@ -20,6 +20,7 @@ from app.entrada.camera import CameraNula
 from app.headless.relatorio import Passo, escrever
 from app.janela import JanelaPrincipal
 from app.nucleo import tema
+from app.nucleo.audio import ServicoAudio
 from app.nucleo.conteudo import texto
 from app.nucleo.registro import Registro
 
@@ -105,19 +106,37 @@ JOGADAS = {
 # --- roteiros ------------------------------------------------------------------
 
 
+PISTAS = {
+    1: "1 - repetir a instrucao",
+    2: "2 - realcar a peca e a caixa",
+    3: "3 - mostrar o modelo",
+}
+
+
 class Execucao:
     def __init__(self, app, pasta: Path, perfis: list[str], entrada: str, tamanho):
         self.app, self.pasta, self.perfis, self.entrada = app, pasta, perfis, entrada
         self.tamanho = tamanho
         self.passos: list[Passo] = []
         self.eventos: list[dict] = []
+        self.tentativas: list[dict] = []
+        self.audio_log: list[str] = []
 
     def nova_janela(self) -> JanelaPrincipal:
-        janela = JanelaPrincipal(fabrica_camera=CameraNula, registro=Registro(":memory:"))
+        janela = JanelaPrincipal(
+            fabrica_camera=CameraNula,  # o demo nunca liga a webcam
+            registro=Registro(":memory:"),  # banco só desta execução
+            audio=ServicoAudio(backend="nulo"),  # registra o que tocaria
+        )
         janela.resize(*self.tamanho)
         janela.show()
         _processar(self.app)
         return janela
+
+    def fechar(self, janela) -> None:
+        self.tentativas.extend(janela.registro.listar_tentativas())
+        self.audio_log.extend(janela.audio.log)
+        janela.close()
 
     def capturar(self, janela, nome, evento, frase, tipo_erro="", pista="") -> None:
         _processar(self.app)
@@ -150,9 +169,13 @@ def roteiro_navegacao(ex: Execucao) -> None:
     ex.capturar(janela, "trilhas-portugues", "escolher Portugues", texto("demo.navegacao.trilhas"))
     janela.abrir_atividade("teste_camera")
     ex.capturar(janela, "teste-mao", "abrir Teste da mao", texto("demo.navegacao.teste_mao"))
-    for nome in ("inicio", "materias", "trilhas", "teste_mao"):
+    for nome in ("inicio", "adulto", "materias", "trilhas", "teste_mao"):
         ex.registrar("navegacao", evento=nome)
-    janela.close()
+    ex.fechar(janela)
+
+
+def _ultima_tentativa(janela) -> dict:
+    return janela.registro.listar_tentativas()[-1]
 
 
 def roteiro_treino(ex: Execucao) -> None:
@@ -162,32 +185,37 @@ def roteiro_treino(ex: Execucao) -> None:
     janela.abrir_atividade("treino", semente=SEMENTE, varredura=ex.entrada == "varredura")
     tela = janela.atividades["treino"]
     tela.anunciou.connect(
-        lambda frase: ex.registrar(
-            "treino", entrada=tela.barramento.modo_entrada, anuncio=frase
-        )
+        lambda frase: ex.registrar("treino", entrada=tela.barramento.modo_entrada, anuncio=frase)
     )
-    ex.capturar(janela, "treino-inicio", "abrir Treino de arrastar", texto("demo.treino_inicio"))
+    momento_1 = "momento 1: o que vamos fazer"
+    ex.capturar(janela, "treino-apresentacao", momento_1, tela.instrucao.text())
+    tela.comecar()
+    ex.capturar(janela, "treino-atividade", "momento 2: comecar", tela.instrucao.text())
 
     letras = tela.rodada.letras
     jogar = JOGADAS[ex.entrada]
-    # Erro proposital: a peça B vai para a caixa A.
-    jogar(tela, treino.id_peca(letras[1], 1), treino.id_caixa(0), 0)
-    ex.capturar(
-        janela, "treino-erro", f"{ex.entrada}: peca B na caixa A", tela.ultimo_anuncio,
-        tipo_erro="troca de letra (B no lugar de A)", pista="a peca volta; instrucao repetida",
-    )
+    peca_b, caixa_a = treino.id_peca(letras[1], 1), treino.id_caixa(0)
+    # Erro proposital, duas vezes: a peça B vai para a caixa A.
+    for n_pista, nome in ((1, "treino-erro-pista1"), (2, "treino-erro-pista2")):
+        jogar(tela, peca_b, caixa_a, 0)
+        tentativa = _ultima_tentativa(janela)
+        ex.capturar(
+            janela, nome, f"{ex.entrada}: peca B na caixa A", tela.ultimo_anuncio,
+            tipo_erro=tentativa["tipo_erro"], pista=PISTAS[n_pista],
+        )
+    tela.pausar()
+    ex.capturar(janela, "treino-pausa", "Pausa (Esc)", texto("base.pausado"))
+    tela.continuar()
     for i, letra in enumerate(letras):
         jogar(tela, treino.id_peca(letra, i), treino.id_caixa(i), i + 1)
         if i == 0:
             ex.capturar(
                 janela, "treino-acerto", f"{ex.entrada}: peca A na caixa A", tela.ultimo_anuncio
             )
-    ex.capturar(
-        janela, "treino-fim", f"{ex.entrada}: todas as pecas colocadas", tela.instrucao.text()
-    )
+    ex.capturar(janela, "treino-fim", "momento 3: terminou", tela.texto_fim_detalhe.text())
     estado = tela.estado()
     ex.registrar("treino", evento="estado_final", concluida=estado["concluida"])
-    janela.close()
+    ex.fechar(janela)
 
 
 ROTEIROS = {"navegacao": roteiro_navegacao, "treino": roteiro_treino}
@@ -222,10 +250,13 @@ def executar(
     (pasta / "eventos.jsonl").write_text(
         "".join(json.dumps(e, ensure_ascii=False) + "\n" for e in ex.eventos), encoding="utf-8"
     )
-    # Os registros de tentativas e de áudio entram com o núcleo das atividades (Etapa 3).
-    (pasta / "tentativas.json").write_text("[]\n", encoding="utf-8")
-    (pasta / "audio.log").write_text("", encoding="utf-8")
+    (pasta / "tentativas.json").write_text(
+        json.dumps(ex.tentativas, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    (pasta / "audio.log").write_text("".join(f"{linha}\n" for linha in ex.audio_log), "utf-8")
 
+    erros = sum(not t["correta"] for t in ex.tentativas)
     print(f"demo {roteiro}: {len(ex.passos)} capturas; perfil {perfis_txt}; entrada {entrada}")
+    print(f"tentativas: {len(ex.tentativas)} ({erros} com erro); audio: {len(ex.audio_log)} falas")
     print(f"relatorio: {pasta / 'relatorio.md'}")
     return 0

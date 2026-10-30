@@ -76,7 +76,7 @@ def checar_conteudo() -> Checagem:
 
 
 def checar_audio() -> Checagem:
-    backend = os.environ.get("ATLAS_AUDIO", "qt")
+    backend = os.environ.get("ATLAS_AUDIO", "sistema")
     pasta = caminhos.asset("audio")
     quantidade = len(list(pasta.glob("*.wav"))) if pasta.is_dir() else 0
     if quantidade == 0:

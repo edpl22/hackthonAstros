@@ -58,16 +58,21 @@ def test_demo_gera_evidencias(tmp_path):
 
     capturas = sorted(p.name for p in saida.glob("captura-*.png"))
     assert capturas[0] == "captura-01-inicio.png"
-    assert len(capturas) == 10
+    assert len(capturas) == 13
     relatorio = (saida / "relatorio.md").read_text(encoding="utf-8")
     for captura in capturas:
         assert captura in relatorio
-    assert "troca de letra" in relatorio  # o erro proposital aparece no relatório
+    # O erro proposital aparece no relatório com o tipo de erro e as duas pistas.
+    assert "letra_trocada" in relatorio
+    assert "1 - repetir a instrucao" in relatorio and "2 - realcar" in relatorio
     eventos = _ler_eventos(saida)
     assert eventos[-1] == {"n": len(eventos), "roteiro": "treino", "evento": "estado_final",
                            "concluida": True}
-    assert json.loads((saida / "tentativas.json").read_text("utf-8")) == []
-    assert (saida / "audio.log").exists()
+    tentativas = json.loads((saida / "tentativas.json").read_text("utf-8"))
+    assert [t["correta"] for t in tentativas] == [False, False, True, True, True, True]
+    assert tentativas[0]["tipo_erro"] == "letra_trocada" and tentativas[1]["pistas"] == 2
+    audio = (saida / "audio.log").read_text("utf-8").splitlines()
+    assert audio and all(linha.startswith("toca ") for linha in audio)
 
 
 @pytest.mark.parametrize("entrada", ["teclado", "varredura", "mao-simulada"])
