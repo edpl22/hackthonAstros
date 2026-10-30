@@ -1,0 +1,156 @@
+"""Câmera numa QThread: OpenCV captura, MediaPipe acha a mão, sinais levam os pontos.
+
+OpenCV e MediaPipe só são importados dentro de `run()`, para o app abrir rápido.
+Nenhum quadro é salvo: cada imagem vive só dentro do laço.
+"""
+
+import importlib.util
+import sys
+import time
+
+from PySide6.QtCore import QObject, QThread, Signal
+from PySide6.QtGui import QImage
+
+from app.nucleo import caminhos
+
+LARGURA, ALTURA = 640, 480
+MINIATURA = (160, 120)
+TEMPO_MAX_ABRIR_S = 3.0
+INTERVALO_FPS_S = 0.5
+
+
+class Camera(QThread):
+    # lista de 21 (x, y, z) normalizados (já espelhados) e se há mão no quadro
+    pontos = Signal(object, bool)
+    fps = Signal(float)
+    # "ligando", "ligada", "indisponivel" ou "desligada"
+    estado = Signal(str)
+    miniatura = Signal(QImage)
+
+    def __init__(self, indice: int = 0, mostrar_miniatura: bool = False, parent=None):
+        super().__init__(parent)
+        self.indice = indice
+        self.mostrar_miniatura = mostrar_miniatura
+
+    def parar(self) -> None:
+        self.requestInterruption()
+        self.wait(2000)
+
+    def _abrir_captura(self, cv2):
+        if sys.platform == "win32":
+            captura = cv2.VideoCapture(self.indice, cv2.CAP_DSHOW)
+        else:
+            captura = cv2.VideoCapture(self.indice)
+        captura.set(cv2.CAP_PROP_FRAME_WIDTH, LARGURA)
+        captura.set(cv2.CAP_PROP_FRAME_HEIGHT, ALTURA)
+        captura.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # só o quadro mais recente
+        return captura
+
+    def _criar_detector(self):
+        import mediapipe as mp
+        from mediapipe.tasks.python import BaseOptions
+        from mediapipe.tasks.python.vision import (
+            HandLandmarker,
+            HandLandmarkerOptions,
+            RunningMode,
+        )
+
+        # Lido como bytes: o caminho do modelo pode ter acentos, que o MediaPipe não aceita.
+        modelo = caminhos.asset("modelos", "hand_landmarker.task").read_bytes()
+        opcoes = HandLandmarkerOptions(
+            base_options=BaseOptions(model_asset_buffer=modelo),
+            running_mode=RunningMode.VIDEO,
+            num_hands=1,
+        )
+        return mp, HandLandmarker.create_from_options(opcoes)
+
+    def run(self) -> None:
+        self.estado.emit("ligando")
+        try:
+            import cv2
+
+            mp, detector = self._criar_detector()
+        except Exception:
+            self.estado.emit("indisponivel")
+            return
+
+        captura = self._abrir_captura(cv2)
+        try:
+            self._laco(cv2, mp, detector, captura)
+        finally:
+            captura.release()
+            detector.close()
+            self.estado.emit("desligada")
+
+    def _laco(self, cv2, mp, detector, captura) -> None:
+        inicio = time.monotonic()
+        ligada = False
+        ultimo_ts_ms = -1
+        quadros, marca_fps = 0, time.monotonic()
+
+        while not self.isInterruptionRequested():
+            ok, quadro = captura.read() if captura.isOpened() else (False, None)
+            agora = time.monotonic()
+            if not ok:
+                if not ligada and agora - inicio > TEMPO_MAX_ABRIR_S:
+                    self.estado.emit("indisponivel")
+                    return
+                self.msleep(30)
+                continue
+            if not ligada:
+                ligada = True
+                self.estado.emit("ligada")
+
+            quadro = cv2.flip(quadro, 1)  # espelho: a mão direita aparece à direita
+            rgb = cv2.cvtColor(quadro, cv2.COLOR_BGR2RGB)
+
+            # O MediaPipe exige timestamps em ms sempre crescentes.
+            ts_ms = max(int((agora - inicio) * 1000), ultimo_ts_ms + 1)
+            ultimo_ts_ms = ts_ms
+            resultado = detector.detect_for_video(
+                mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb), ts_ms
+            )
+            if resultado.hand_landmarks:
+                lista = [(p.x, p.y, p.z) for p in resultado.hand_landmarks[0]]
+                self.pontos.emit(lista, True)
+            else:
+                self.pontos.emit([], False)
+
+            if self.mostrar_miniatura:
+                pequena = cv2.resize(rgb, MINIATURA)
+                altura, largura = pequena.shape[:2]
+                imagem = QImage(pequena.data, largura, altura, 3 * largura, QImage.Format_RGB888)
+                self.miniatura.emit(imagem.copy())
+
+            quadros += 1
+            if agora - marca_fps >= INTERVALO_FPS_S:
+                self.fps.emit(quadros / (agora - marca_fps))
+                quadros, marca_fps = 0, agora
+
+
+class CameraNula(QObject):
+    """Mesma interface da `Camera`, sem câmera: usada sem opencv/mediapipe, nos testes e no demo."""
+
+    pontos = Signal(object, bool)
+    fps = Signal(float)
+    estado = Signal(str)
+    miniatura = Signal(QImage)
+
+    def __init__(self, mostrar_miniatura: bool = False, parent=None):
+        super().__init__(parent)
+        self.mostrar_miniatura = mostrar_miniatura
+
+    def start(self) -> None:
+        self.estado.emit("indisponivel")
+
+    def parar(self) -> None:
+        self.estado.emit("desligada")
+
+
+def pacotes_disponiveis() -> bool:
+    """Confere se opencv e mediapipe estão instalados, sem importá-los."""
+    return all(importlib.util.find_spec(nome) is not None for nome in ("cv2", "mediapipe"))
+
+
+def fabrica_padrao():
+    return Camera if pacotes_disponiveis() else CameraNula
