@@ -15,7 +15,7 @@ def test_oito_perfis_prontos():
 def test_valores_da_especificacao():
     assert (PERFIS["padrao"].velocidade, PERFIS["padrao"].max_itens) == (0.5, 4)
     assert PERFIS["tea"].velocidade == 0 and PERFIS["tea"].max_itens == 3
-    assert PERFIS["tea"].som_celebracao is False and PERFIS["tea"].aviso_troca_atividade
+    assert PERFIS["tea"].miniatura_camera is False and PERFIS["tea"].aviso_troca_atividade
     assert PERFIS["tdah"].um_passo_por_vez and PERFIS["tdah"].rodada_itens == 5
     assert PERFIS["dislexia"].espacamento_letras == 0.12 and PERFIS["dislexia"].escala == 1.2
     assert PERFIS["baixa_visao"].escala == 1.75 and PERFIS["baixa_visao"].contorno_px == 5
@@ -41,8 +41,8 @@ def test_tea_com_dislexia():
     assert p.velocidade == 0  # menor vence
     assert p.max_itens == 3  # menor vence
     assert p.escala == 1.2  # maior vence
-    assert p.audio_auto  # True vence
-    assert p.som_celebracao is False  # False vence
+    assert p.silabas_alternadas  # True vence
+    assert p.miniatura_camera is False  # False vence
     assert p.espacamento_letras == 0.12
 
 

@@ -44,21 +44,6 @@ def desenhar(pintor: QPainter, tipo: str, lado: float) -> None:
         pintor.drawArc(r, 60 * 16, 300 * 16)
         topo = QPointF(r.center().x() + r.width() * 0.25, r.top() + r.height() * 0.07)
         pintor.drawPolyline(QPolygonF([topo + QPointF(-9, -6), topo, topo + QPointF(-3, 10)]))
-    elif tipo == "ouvir":  # alto-falante
-        pintor.setBrush(QColor(p.texto))
-        pintor.drawPolygon(QPolygonF([
-            QPointF(r.left(), r.top() + r.height() * 0.35),
-            QPointF(r.left() + r.width() * 0.25, r.top() + r.height() * 0.35),
-            QPointF(r.left() + r.width() * 0.5, r.top()),
-            QPointF(r.left() + r.width() * 0.5, r.bottom()),
-            QPointF(r.left() + r.width() * 0.25, r.top() + r.height() * 0.65),
-            QPointF(r.left(), r.top() + r.height() * 0.65),
-        ]))
-        pintor.setBrush(Qt.NoBrush)
-        for k in (0.3, 0.55):
-            onda = QRectF(r.center().x() - r.width() * k, r.center().y() - r.height() * k,
-                          2 * r.width() * k, 2 * r.height() * k)
-            pintor.drawArc(onda, -45 * 16, 90 * 16)
     elif tipo == "pausa":  # duas barras
         pintor.setBrush(QColor(p.texto))
         largura = r.width() * 0.28

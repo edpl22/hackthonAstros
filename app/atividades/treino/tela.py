@@ -71,7 +71,9 @@ class TelaTreino(AtividadeBase):
         return self.rodada.letras.index(letra.upper())
 
     def _ao_pegar(self, peca_id: str) -> None:
-        self._anunciar(anuncio.frase("pegou", item=self._letra(peca_id)), falar=False)
+        letra = self._letra(peca_id)
+        self.falar(letra.upper())  # ao pegar, a voz diz o nome da letra
+        self._anunciar(anuncio.frase("pegou", item=letra))
 
     def _ao_soltar(self, peca_id: str, caixa_id) -> None:
         letra = self._letra(peca_id)

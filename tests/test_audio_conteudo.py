@@ -4,7 +4,6 @@ from pathlib import Path
 
 from app.nucleo import audio, caminhos
 from app.nucleo.audio import ServicoAudio
-from app.nucleo.conteudo import texto
 
 RAIZ = Path(__file__).resolve().parent.parent
 
@@ -31,7 +30,7 @@ def test_backend_nulo_registra_o_que_tocaria(qtbot):
     servico = ServicoAudio(backend="nulo")
     legendas = []
     servico.legenda.connect(legendas.append)
-    frase = texto("base.terminou")
+    frase = "bola"  # palavra do Ímã das Sílabas, que tem WAV
     servico.falar(frase)
     servico.falar("Frase que não tem áudio.")
     assert servico.log[0].startswith("toca ") and servico.log[0].endswith(".wav")
@@ -42,8 +41,8 @@ def test_backend_nulo_registra_o_que_tocaria(qtbot):
 def test_pausa_silencia(qtbot):
     servico = ServicoAudio(backend="nulo")
     servico.silenciar(True)
-    servico.falar(texto("base.terminou"))
-    assert servico.log == [f"silenciado: {texto('base.terminou')}"]
+    servico.falar("bola")
+    assert servico.log == ["silenciado: bola"]
 
 
 def test_volume_multiplica_as_amostras():
@@ -78,21 +77,6 @@ def test_volume_limitado():
     assert servico.volume == 1.0
     servico.definir_volume(-1)
     assert servico.volume == 0.0
-
-
-def test_frase_composta_junta_os_trechos_que_tem_audio():
-    servico = ServicoAudio(backend="nulo")
-    voltou = texto("anuncio.voltou").format(item="B")
-    instrucao = texto("treino.instrucao").format(letra="A")
-    arquivos, faltando = servico.arquivos_de(f"{voltou} {instrucao}")
-    assert arquivos == [servico.arquivo_de(voltou), servico.arquivo_de(instrucao)]
-    assert faltando == []
-    # Trecho sem WAV fica só na legenda; o resto ainda é falado.
-    arquivos, faltando = servico.arquivos_de(f"Frase nova sem audio. {instrucao}")
-    assert arquivos == [servico.arquivo_de(instrucao)]
-    assert faltando == ["Frase nova sem audio."]
-    servico.falar(f"Frase nova sem audio. {instrucao}")
-    assert servico.log[-1].endswith("| so legenda: Frase nova sem audio.")
 
 
 def test_juntar_wavs_soma_as_duracoes():

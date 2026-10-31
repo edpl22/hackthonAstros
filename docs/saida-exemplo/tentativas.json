@@ -10,10 +10,10 @@
     "tipo_erro": "letra_trocada",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 51,
+    "tempo_ms": 45,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:41"
+    "ts": "2026-10-31T06:02:35"
   },
   {
     "id": 2,
@@ -26,10 +26,10 @@
     "tipo_erro": "letra_trocada",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 96,
+    "tempo_ms": 86,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:41"
+    "ts": "2026-10-31T06:02:35"
   },
   {
     "id": 3,
@@ -42,10 +42,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 192,
+    "tempo_ms": 179,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:42"
+    "ts": "2026-10-31T06:02:35"
   },
   {
     "id": 4,
@@ -58,10 +58,10 @@
     "tipo_erro": null,
     "pistas": 0,
     "precisou_modelo": false,
-    "tempo_ms": 43,
+    "tempo_ms": 44,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:42"
+    "ts": "2026-10-31T06:02:35"
   },
   {
     "id": 5,
@@ -77,7 +77,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:42"
+    "ts": "2026-10-31T06:02:35"
   },
   {
     "id": 6,
@@ -93,7 +93,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:42"
+    "ts": "2026-10-31T06:02:35"
   },
   {
     "id": 1,
@@ -109,7 +109,7 @@
     "tempo_ms": 48,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:42"
+    "ts": "2026-10-31T06:02:35"
   },
   {
     "id": 2,
@@ -125,7 +125,7 @@
     "tempo_ms": 95,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:42"
+    "ts": "2026-10-31T06:02:35"
   },
   {
     "id": 3,
@@ -138,10 +138,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 140,
+    "tempo_ms": 138,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:42"
+    "ts": "2026-10-31T06:02:35"
   },
   {
     "id": 4,
@@ -154,10 +154,10 @@
     "tipo_erro": null,
     "pistas": 0,
     "precisou_modelo": false,
-    "tempo_ms": 53,
+    "tempo_ms": 40,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:42"
+    "ts": "2026-10-31T06:02:35"
   },
   {
     "id": 5,
@@ -173,7 +173,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:42"
+    "ts": "2026-10-31T06:02:35"
   },
   {
     "id": 6,
@@ -186,10 +186,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 49,
+    "tempo_ms": 44,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:42"
+    "ts": "2026-10-31T06:02:35"
   },
   {
     "id": 1,
@@ -202,10 +202,10 @@
     "tipo_erro": "um_a_mais_ou_menos",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 50,
+    "tempo_ms": 47,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:43"
+    "ts": "2026-10-31T06:02:36"
   },
   {
     "id": 2,
@@ -218,10 +218,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 98,
+    "tempo_ms": 101,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:43"
+    "ts": "2026-10-31T06:02:36"
   },
   {
     "id": 3,
@@ -237,7 +237,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:43"
+    "ts": "2026-10-31T06:02:36"
   },
   {
     "id": 4,
@@ -250,10 +250,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 51,
+    "tempo_ms": 56,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:43"
+    "ts": "2026-10-31T06:02:36"
   },
   {
     "id": 5,
@@ -266,10 +266,10 @@
     "tipo_erro": "operacao_trocada",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 45,
+    "tempo_ms": 47,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:43"
+    "ts": "2026-10-31T06:02:36"
   },
   {
     "id": 6,
@@ -282,10 +282,10 @@
     "tipo_erro": "um_a_mais_ou_menos",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 88,
+    "tempo_ms": 90,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:43"
+    "ts": "2026-10-31T06:02:36"
   },
   {
     "id": 7,
@@ -298,10 +298,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 134,
+    "tempo_ms": 139,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:43"
+    "ts": "2026-10-31T06:02:36"
   },
   {
     "id": 1,
@@ -317,7 +317,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:44"
+    "ts": "2026-10-31T06:02:37"
   },
   {
     "id": 2,
@@ -330,10 +330,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 51,
+    "tempo_ms": 47,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:44"
+    "ts": "2026-10-31T06:02:37"
   },
   {
     "id": 3,
@@ -349,7 +349,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:44"
+    "ts": "2026-10-31T06:02:37"
   },
   {
     "id": 4,
@@ -362,10 +362,10 @@
     "tipo_erro": "confundiu_numerador_denominador",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 60,
+    "tempo_ms": 57,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:44"
+    "ts": "2026-10-31T06:02:37"
   },
   {
     "id": 5,
@@ -378,10 +378,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 127,
+    "tempo_ms": 125,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:44"
+    "ts": "2026-10-31T06:02:37"
   },
   {
     "id": 6,
@@ -397,6 +397,6 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T02:16:44"
+    "ts": "2026-10-31T06:02:37"
   }
 ]

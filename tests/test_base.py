@@ -82,7 +82,7 @@ def test_tres_momentos_e_faixa_agora_depois(tela):
 
 def test_botoes_da_atividade_tem_nome_acessivel(tela):
     _abrir(tela)
-    for botao in (tela.botao_voltar, tela.botao_pausa, tela.botao_ouvir, tela.botao_comecar,
+    for botao in (tela.botao_voltar, tela.botao_pausa, tela.botao_comecar,
                   tela.botao_proximo, tela.botao_sim, tela.botao_nao):
         assert botao.accessibleName()
 
@@ -192,32 +192,19 @@ def test_esc_pausa(tela, qtbot):
 # --- áudio e perfis -------------------------------------------------------------------
 
 
-def test_ouvir_le_a_instrucao(tela, qtbot):
-    _abrir(tela)
-    qtbot.mouseClick(tela.botao_ouvir, Qt.LeftButton)
-    arquivo = tela.ctx.audio.arquivo_de(tela.instrucao_atual())
-    assert tela.ctx.audio.log[-1] == f"toca {arquivo}"
+def test_voz_so_diz_as_letras_pegas(tela):
+    _abrir(tela, ["dislexia", "cegueira"])  # nenhum perfil lê instrução ou retorno em voz
+    assert tela.ctx.audio.log == []
+    _acertar_todas(tela)
+    letras = tela.rodada.letras
+    assert tela.ctx.audio.log == [f"toca {tela.ctx.audio.arquivo_de(letra)}" for letra in letras]
+    assert all(tela.ctx.audio.arquivo_de(letra) for letra in letras)
 
 
-def test_audio_automatico_na_dislexia(tela):
-    _abrir(tela, ["dislexia"])
-    falas = [linha for linha in tela.ctx.audio.log]
-    assert len(falas) == 2  # apresentação e instrução, sem a criança pedir
-
-
-def test_tea_sem_som_de_celebracao_e_com_aviso(tela):
+def test_tea_com_aviso_de_troca(tela):
     _abrir(tela, ["tea"])
     _acertar_todas(tela)
-    arquivo_terminou = tela.ctx.audio.arquivo_de(texto("base.terminou"))
-    assert f"toca {arquivo_terminou}" not in tela.ctx.audio.log
     assert texto("base.aviso_troca") in tela.texto_fim_detalhe.text()
-
-
-def test_padrao_comemora(tela):
-    _abrir(tela)
-    _acertar_todas(tela)
-    arquivo_terminou = tela.ctx.audio.arquivo_de(texto("base.terminou"))
-    assert f"toca {arquivo_terminou}" in tela.ctx.audio.log
 
 
 # --- registro ------------------------------------------------------------------------

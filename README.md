@@ -61,7 +61,7 @@ No Windows: `py -3.11 -m venv .venv` e `.venv\Scripts\activate`. No Linux sem in
 | `captura-NN-<passo>.png` | A tela real em cada passo, nos 3 momentos de cada atividade |
 | `tentativas.json` | O registro de cada resposta: item, resposta, se acertou, tipo de erro, pistas, se precisou do modelo, tempo, entrada e perfis |
 | `eventos.jsonl` | Um evento por linha, com a frase narrada e a entrada usada |
-| `audio.log` | Cada áudio que tocaria (no Docker não há som; frases sem WAV ficam só na legenda) |
+| `audio.log` | Cada áudio que tocaria (no Docker não há som). Só o português tem voz: a letra ou a sílaba pega e a palavra pronta |
 
 Os roteiros têm **erros propositais**. Eles mostram a resposta neutra ("Vamos tentar de novo"), as pistas graduais (1ª repete a instrução, 2ª realça, 3ª mostra o modelo) e a classificação do erro: `ordem_trocada`, `silaba_de_outra_palavra`, `par_surdo_sonoro`, `tonica_errada`, `letra_trocada`, `um_a_mais_ou_menos`, `operacao_trocada`, `digitos_invertidos`, `comparacao_errada`, `somou_denominadores`, `contou_fatias_errado`, `confundiu_numerador_denominador`.
 
@@ -155,7 +155,7 @@ python -m app.main
 | --- | --- |
 | Ímã das Sílabas (português): 15 palavras, 4 níveis, sílaba tônica | Pronta |
 | Treino de arrastar (alfabeto inteiro em blocos de 4 letras, maiúsculas e minúsculas) | Pronto |
-| Teste da mão (câmera) | Pronto |
+| Teste da mão (câmera), no canto inferior esquerdo da tela inicial | Pronto |
 | Mesa de Quantidades (matemática): montar, comparar, somar e subtrair até 20 | Pronta (sem o modo Par/ímpar) |
 | Pizza de Frações (matemática): montar, somar, frações impróprias, barra de chocolate | Pronta |
 | Instaladores Windows e macOS e imagem Docker pronta (GHCR) | Publicados a cada versão (Releases) |

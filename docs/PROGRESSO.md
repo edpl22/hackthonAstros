@@ -91,3 +91,4 @@
 - [x] Treino de arrastar com o alfabeto inteiro (blocos de 4 letras, voz com o nome da letra)
 - [x] `verificar_readme.sh` passou num clone limpo; tag `v1.0.1` com os zips e `ghcr.io/edpl22/atlas:v1.0.1`/`latest`, conferidos sem login
 - [x] Pausa de 150 ms antes de cada fala (Bluetooth/HDMI); Piper avaliado e não adotado por licença; tag `v1.0.2` conferida sem login
+- [x] Voz só no português (letra, sílaba, palavra), sem o botão Ouvir; treino só em Português; Teste da mão na tela inicial; áudio de 52 MB para 3 MB; capturas regeneradas

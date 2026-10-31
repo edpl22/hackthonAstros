@@ -19,7 +19,6 @@ from PySide6.QtGui import QColor, QPainter
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
-    QSizePolicy,
     QStackedWidget,
     QVBoxLayout,
     QWidget,
@@ -168,15 +167,7 @@ class AtividadeBase(QWidget):
         topo.addWidget(self.botao_pausa)
 
         self.instrucao = rotulo("", "instrucao")
-        self.botao_ouvir = botao(texto("base.ouvir_curto"))
-        self.botao_ouvir.setAccessibleName(texto("base.ouvir"))
-        self.botao_ouvir.setToolTip(texto("base.ouvir"))
-        self.botao_ouvir.setIcon(icones.icone("ouvir"))
-        self.botao_ouvir.setIconSize(QSize(28, 28))
-        self.botao_ouvir.clicked.connect(self.ouvir)
-        self.botao_ouvir.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         linha_instrucao = QHBoxLayout()
-        linha_instrucao.addWidget(self.botao_ouvir)
         linha_instrucao.addWidget(self.instrucao, 1)
         linha_instrucao.addStretch()  # segura o lugar quando a instrução some
         linha_instrucao.addWidget(self.indicador)
@@ -313,8 +304,6 @@ class AtividadeBase(QWidget):
         # 4. legenda limpa a cada atividade aberta
         self.legenda.clear()
         self.ultimo_anuncio = ""
-        if self.perfil.audio_auto:
-            self.falar(self.texto_apresentacao())
         self.camera = self.ctx.fabrica_camera(mostrar_miniatura=False)
         self.camera.pontos.connect(self._receber_pontos)
         self.camera.estado.connect(self.indicador.mostrar)
@@ -379,8 +368,6 @@ class AtividadeBase(QWidget):
             return
         self._ir_para(ATIVIDADE)
         self._inicio_item = self.relogio()
-        if self.perfil.audio_auto:
-            self.falar(self.instrucao_atual())
 
     def concluir(self) -> None:
         """A subclasse chama quando a rodada termina."""
@@ -396,8 +383,6 @@ class AtividadeBase(QWidget):
         self.botao_proximo.setVisible(not self.oferece_desafio)
         if self._acao_nivel == progresso.VOLTAR_NIVEL:
             self._anunciar(texto("base.nivel_voltou"))
-        elif self.perfil.som_celebracao:
-            self.falar(texto("base.terminou"))
         self._acao_nivel = None
         (self.botao_sim if self.oferece_desafio else self.botao_proximo).setFocus()
 
@@ -428,7 +413,7 @@ class AtividadeBase(QWidget):
         self.camada_pausa.show()
         self.camada_pausa.raise_()
         self.camada_pausa.botao_continuar.setFocus()
-        self._anunciar(anuncio.frase("pausou"), falar=False)
+        self._anunciar(anuncio.frase("pausou"))
 
     def continuar(self) -> None:
         if not self.pausada:
@@ -439,7 +424,7 @@ class AtividadeBase(QWidget):
         self.camada_pausa.hide()
         if isinstance(self.entrada_teclado, EntradaVarredura) and self.momento == ATIVIDADE:
             self.entrada_teclado.ligar()
-        self._anunciar(anuncio.frase("continuou"), falar=False)
+        self._anunciar(anuncio.frase("continuou"))
         self.focar()
 
     def keyPressEvent(self, evento):
@@ -458,17 +443,14 @@ class AtividadeBase(QWidget):
         else:
             self.instrucao.setText(texto(f"{self.id_atividade}.terminou"))
 
-    def ouvir(self) -> None:
-        self.falar(self.instrucao.text())
-
     def falar(self, frase: str) -> None:
+        """Voz só no português: a letra ou a sílaba pega e a palavra pronta."""
         self.ctx.audio.falar(frase)
 
-    def _anunciar(self, frase: str, falar: bool = True) -> None:
+    def _anunciar(self, frase: str) -> None:
+        """Instruções e retornos aparecem na legenda, sem voz."""
         self.ultimo_anuncio = frase
         self.legenda.setText(frase)
-        if falar:
-            self.falar(frase)
         self.anunciou.emit(frase)
 
     def pistas_de(self, item: str) -> Pistas:

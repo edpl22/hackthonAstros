@@ -207,7 +207,7 @@ class TelaPizza(AtividadeBase):
             peca.update()
             self.fracao.setText(f"{self._escolhidas()}/{self.rodada.corte}")
             self._centralizar(self.fracao, 520, 470)
-            self._anunciar(_frase("fracao", fracao=self.fracao.text()), falar=False)
+            self._anunciar(_frase("fracao", fracao=self.fracao.text()))
         else:
             self._ao_escolher(peca_id)
 

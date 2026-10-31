@@ -1,11 +1,11 @@
 """Mesa de Quantidades sobre a AtividadeBase.
 
 Nível 1 (Montar): objetos no cesto, uma bandeja e o cartão "Pronto"; o número da bandeja
-muda e é falado a cada objeto ("três maçãs").
+muda e aparece na legenda a cada objeto ("três maçãs").
 Nível 2 (Comparar): as bandejas vêm cheias, os objetos são ligados um a um por linhas e a
 sobra fica com hachura, contorno grosso e o texto "sobrou".
 Níveis 3 e 4 (Resolver): as bandejas mostram a conta; a criança escolhe entre 3 cartões.
-Pista 2: os objetos acendem um a um enquanto a voz conta.
+Pista 2: os objetos acendem um a um.
 """
 
 from PySide6.QtCore import QTimer
@@ -200,7 +200,7 @@ class TelaQuantidades(AtividadeBase):
             self.barramento.soltar.emit()
             self._ao_escolher(peca_id)
             return
-        self._anunciar(_frase("pegou", quantidade=logica.quantidade(1, self.conjunto)), falar=False)
+        self._anunciar(_frase("pegou", quantidade=logica.quantidade(1, self.conjunto)))
 
     def _ao_soltar(self, peca_id: str, caixa_id) -> None:
         peca = self.cena.pecas[peca_id]
@@ -210,7 +210,7 @@ class TelaQuantidades(AtividadeBase):
         self.cena.encaixar(peca_id, caixa_id)
         contados = self._contados()
         self._numero(BANDEJA_A, contados)
-        self._anunciar(logica.quantidade(contados, self.conjunto))  # "três maçãs", com voz
+        self._anunciar(logica.quantidade(contados, self.conjunto))  # "três maçãs", na legenda
 
     def _ao_escolher(self, peca_id: str) -> None:
         r = self.rodada
@@ -246,12 +246,11 @@ class TelaQuantidades(AtividadeBase):
     # --- pistas -------------------------------------------------------------------------
 
     def realcar(self, item: str) -> None:
-        """Pista 2: os objetos acendem um a um enquanto a voz conta."""
+        """Pista 2: os objetos acendem um a um."""
         objetos = [
             p.id for p in self.cena.pecas.values()
             if p.tipo == "objeto" and (p.encaixada or self.rodada.montar)
         ]
-        self.falar(texto("quantidades.pista_contar"))
         if self._timer_pista is not None:
             self._timer_pista.stop()
         if self.perfil.reduzir_movimento or _sem_animacao():

@@ -152,7 +152,7 @@ class TelaSilabas(AtividadeBase):
             self.barramento.soltar.emit()  # no nível 4 pegar já é escolher
             self._ao_escolher(id_bolha)
             return
-        self._anunciar(_frase("pegou", silaba=self._rotulo(bolha)), falar=False)
+        self._anunciar(_frase("pegou", silaba=self._rotulo(bolha)))
 
     def _ao_soltar(self, id_bolha: str, caixa_id) -> None:
         if self.rodada.tonica:
@@ -162,7 +162,7 @@ class TelaSilabas(AtividadeBase):
         rotulo = self._rotulo(bolha)
         if caixa_id is None:  # caiu fora: não é resposta, só volta
             self.cena.devolver(id_bolha)
-            self._anunciar(_frase("soltou_fora", silaba=rotulo), falar=False)
+            self._anunciar(_frase("soltou_fora", silaba=rotulo))
             return
         pos = int(caixa_id.split("-")[1]) - 1
         tipo_erro = logica.conferir(self.rodada, pos, bolha.silaba)
@@ -223,7 +223,6 @@ class TelaSilabas(AtividadeBase):
         else:
             self.cena.encaixar(bolha.id, logica.id_caixa(pos))
             self.rodada.colocadas[pos] = bolha.silaba
-        self.falar(logica.fala_da_bolha(self.rodada, bolha))
 
     def estado_area(self) -> dict:
         return {

@@ -142,7 +142,9 @@ def test_pegar_toca_a_silaba_e_palavra_pronta_toca_a_palavra(tela):
     tela.barramento.apontar.emit(*tela.cena.centro("caixa-1"))
     tela.barramento.soltar.emit()
     _jogar_bus(tela, _bolha(tela, "LA"), "caixa-2")
-    assert f"toca {audio.arquivo_de('bola')}" in audio.log
+    # Só a sílaba pega e a palavra pronta têm voz; instruções e retornos ficam na legenda.
+    assert audio.log == [f"toca {audio.arquivo_de(fala)}" for fala in ("bó", "la", "bola")]
+    assert all(audio.arquivo_de(fala) for fala in ("bó", "la", "bola"))
 
 
 def test_distratora_classificada(tela):

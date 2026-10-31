@@ -3,7 +3,7 @@
 ## O problema e a resposta
 
 Numa turma de alfabetização convivem crianças com TEA, TDAH, dislexia, baixa visão, daltonismo e dificuldade motora. Hoje, para incluir cada uma, o professor precisa adaptar a mesma atividade várias vezes, ou a criança faz outra coisa, longe da turma.
-O Atlas inverte isso: **uma atividade, vários perfis**. O professor marca os perfis do aluno uma vez (só apelido e um bicho, sem dados pessoais) e cada atividade se ajusta sozinha: quantidade de itens, velocidade, tamanho, contraste, espaçamento das letras, áudio automático, forma de entrada.
+O Atlas inverte isso: **uma atividade, vários perfis**. O professor marca os perfis do aluno uma vez (só apelido e um bicho, sem dados pessoais) e cada atividade se ajusta sozinha: quantidade de itens, velocidade, tamanho, contraste, espaçamento das letras, forma de entrada.
 A criança joga com o corpo (pinça na frente da câmera), com toque, mouse, teclado ou varredura com uma tecla. O roteiro é sempre o mesmo (explicação, atividade, fim), o erro é neutro e vem com pistas graduais.
 Cada resposta vira um registro com o tipo de erro (por exemplo, `par_surdo_sonoro`), que vira uma sugestão concreta para o professor.
 
@@ -40,8 +40,8 @@ Todas as capturas e saídas de `docs/saida-exemplo/` foram geradas pelo app real
 - **Matemática:** a Mesa de Quantidades está pronta sem o modo Par/ímpar; na Pizza de Frações o corte é sorteado (a criança não o escolhe) e as fatias não são arrastadas para uma terceira pizza.
 - **Interface remota no navegador (noVNC):** não implementada; use os instaladores, o Docker sem tela ou o Python.
 - **Câmera real:** não é testável sem webcam. Foi testada manualmente por uma pessoa do time num notebook com Windows; em avaliação automática, vale a mão simulada.
-- **Voz:** sintética (eSpeak NG), compreensível mas robótica. Com credencial do Google Cloud, `scripts/gerar_audio.py --provedor google --refazer` troca todos os WAV.
+- **Voz:** só no português (a letra ou a sílaba pega e a palavra pronta); instruções e retornos aparecem na legenda. Sintética (eSpeak NG), compreensível mas robótica. Com credencial do Google Cloud, `scripts/gerar_audio.py --provedor google --refazer` troca todos os WAV.
 - **Áudio no Docker:** não há som; o `audio.log` registra o que tocaria.
 - **Baixa visão em janela pequena:** em 1280 x 720 a área da atividade fica pequena, porque a instrução e a legenda grandes ocupam duas linhas. Em tela cheia (1366 x 768 ou maior) isso não acontece.
 - **Instaladores:** não são assinados (o Windows e o macOS pedem confirmação na primeira abertura) e o de macOS é só para Apple Silicon. A Release testa cada executável com `verificar --completo` e `demo silabas` antes de publicar.
-- **Cegueira (parcial):** áudio automático e uso por teclado; ainda não há descrição em áudio de cada item focado.
+- **Cegueira (parcial):** uso por teclado e leitor de tela pelos nomes acessíveis; as instruções não são lidas em voz (decisão do time: voz só para letra, sílaba e palavra).

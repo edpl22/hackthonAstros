@@ -167,7 +167,8 @@ def roteiro_navegacao(ex: Execucao) -> None:
     ex.capturar(janela, "materias", "escolher visitante", texto("demo.navegacao.materias"))
     janela.materias.botoes["portugues"].click()
     ex.capturar(janela, "trilhas-portugues", "escolher Portugues", texto("demo.navegacao.trilhas"))
-    janela.abrir_atividade("teste_camera")
+    janela.abrir_inicio()
+    janela.inicio.teste_mao.click()  # canto inferior esquerdo da tela inicial
     ex.capturar(janela, "teste-mao", "abrir Teste da mao", texto("demo.navegacao.teste_mao"))
     for nome in ("inicio", "adulto", "materias", "trilhas", "teste_mao"):
         ex.registrar("navegacao", evento=nome)

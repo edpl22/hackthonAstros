@@ -15,9 +15,7 @@ class Perfil:
     escala: float = 1.0  # 1.0 a 2.0
     alto_contraste: bool = False
     paleta_segura: bool = False  # hachuras e símbolos em toda distinção
-    audio_auto: bool = False  # lê a instrução sem a criança pedir
     reduzir_movimento: bool = False  # animações com duração 0
-    som_celebracao: bool = True
     modo_entrada_preferido: str = "ponteiro"  # ponteiro | permanencia | teclado
     tolerancia_alvo_px: int = 24
     tempo_permanencia_ms: int = 800
@@ -45,14 +43,12 @@ PERFIS: dict[str, Perfil] = {
         PADRAO,
         velocidade=0.0,
         max_itens=3,
-        som_celebracao=False,
         aviso_troca_atividade=True,
         miniatura_camera=False,
     ),
     "tdah": replace(PADRAO, um_passo_por_vez=True, max_itens=3, rodada_itens=5),
     "dislexia": replace(
         PADRAO,
-        audio_auto=True,
         espacamento_letras=0.12,
         escala=1.2,
         silabas_alternadas=True,
@@ -67,9 +63,7 @@ PERFIS: dict[str, Perfil] = {
         tempo_permanencia_ms=1200,
         varredura_disponivel=True,
     ),
-    "cegueira": replace(
-        PADRAO, audio_auto=True, descrever_foco=True, modo_entrada_preferido="teclado"
-    ),
+    "cegueira": replace(PADRAO, descrever_foco=True, modo_entrada_preferido="teclado"),
 }
 
 # Como cada campo combina. "Mais acessível" = menos estímulo, mais tamanho, mais tempo, mais ajuda.
@@ -81,7 +75,7 @@ MAIOR_VENCE = (
     "espacamento_letras",
     "contorno_px",
 )
-FALSO_VENCE = ("som_celebracao", "miniatura_camera")  # desligar é o mais acessível
+FALSO_VENCE = ("miniatura_camera",)  # desligar é o mais acessível
 # Os demais campos booleanos: True vence.
 # Entrada: teclado atende cegueira; permanência atende motor; ponteiro é o padrão.
 PRIORIDADE_ENTRADA = ("teclado", "permanencia", "ponteiro")

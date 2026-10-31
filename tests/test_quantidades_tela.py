@@ -55,15 +55,15 @@ def _cartao_errado(tela):
 # --- Montar ---------------------------------------------------------------------------
 
 
-def test_montar_conta_e_fala_cada_objeto(tela):
+def test_montar_conta_cada_objeto_sem_voz(tela):
     _abrir(tela, logica.MONTAR)
     meta = tela.rodada.a
     for _ in range(meta):
         _arrastar(tela, _objetos_livres(tela)[0], BANDEJA_A)
     assert tela.estado()["bandejas"] == {BANDEJA_A: meta}
     assert tela.numeros[BANDEJA_A].text() == str(meta)
-    falado = logica.quantidade(meta, tela.conjunto)
-    assert tela.ctx.audio.log[-1] == f"toca {tela.ctx.audio.arquivo_de(falado)}"
+    assert tela.legenda.text() == logica.quantidade(meta, tela.conjunto)  # "três maçãs"
+    assert tela.ctx.audio.log == []  # matemática não tem voz
     tela.barramento.escolher.emit("cartao-pronto")
     assert tela.momento == FIM
     assert tela.ctx.registro.listar_tentativas()[-1]["resposta"] == str(meta)
@@ -151,7 +151,7 @@ def test_pista_2_acende_os_objetos(tela):
         tela.barramento.escolher.emit(_cartao_errado(tela))
     acesos = [p for p in tela.cena.pecas.values() if p.realcado and p.tipo == "objeto"]
     assert len(acesos) == tela.rodada.a + tela.rodada.b
-    assert "Vamos contar juntos." in " ".join(tela.ctx.audio.log) or tela.ctx.audio.log
+    assert tela.ctx.audio.log == []
 
 
 def test_conjunto_escolhido_pelo_professor(tela):

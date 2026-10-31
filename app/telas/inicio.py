@@ -1,6 +1,7 @@
 """Tela inicial "Quem vai jogar?": um botão por aluno (bicho + apelido) e o Visitante.
 
 A área do adulto abre só segurando o botão por 2 s, para a criança não entrar sem querer.
+O Teste da mão fica no canto inferior esquerdo: serve para qualquer matéria.
 """
 
 from PySide6.QtCore import QSize, Qt, QTimer, Signal
@@ -37,6 +38,7 @@ class BotaoSegurar(QWidget):
 class TelaInicio(QWidget):
     escolheu = Signal(object)  # Aluno ou None (visitante)
     abrir_adulto = Signal()
+    abrir_teste_mao = Signal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -51,7 +53,10 @@ class TelaInicio(QWidget):
 
         self.adulto = BotaoSegurar(texto("inicio.adulto"))
         self.adulto.segurou.connect(self.abrir_adulto)
+        self.teste_mao = botao(texto("inicio.teste_mao"))
+        self.teste_mao.clicked.connect(self.abrir_teste_mao)
         rodape = QHBoxLayout()
+        rodape.addWidget(self.teste_mao)
         rodape.addStretch()
         rodape.addWidget(self.adulto)
 
@@ -97,7 +102,8 @@ class TelaInicio(QWidget):
             anterior = b
             self.botoes.append(b)
         if anterior is not None:
-            QWidget.setTabOrder(anterior, self.adulto.botao)
+            QWidget.setTabOrder(anterior, self.teste_mao)
+        QWidget.setTabOrder(self.teste_mao, self.adulto.botao)
 
     def focar(self) -> None:
         self.botoes[0].setFocus()

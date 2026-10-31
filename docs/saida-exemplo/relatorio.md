@@ -7,7 +7,7 @@
 | 03 inicio-com-aluno | salvar aluno | Aluno salvo. Ele aparece na tela Quem vai jogar. | [captura-03-inicio-com-aluno.png](captura-03-inicio-com-aluno.png) | — | — |
 | 04 materias | escolher visitante | Visitante escolhido. Tela de matérias aberta. | [captura-04-materias.png](captura-04-materias.png) | — | — |
 | 05 trilhas-portugues | escolher Portugues | Português escolhido. Tela de trilhas aberta. | [captura-05-trilhas-portugues.png](captura-05-trilhas-portugues.png) | — | — |
-| 06 teste-mao | abrir Teste da mao | Teste da mão aberto. Sem webcam, a câmera aparece como desligada. | [captura-06-teste-mao.png](captura-06-teste-mao.png) | — | — |
+| 06 teste-mao | abrir Teste da mao | Teste da mão aberto pela tela inicial. Sem webcam, a câmera aparece como desligada. | [captura-06-teste-mao.png](captura-06-teste-mao.png) | — | — |
 | 07 treino-apresentacao | momento 1: o que vamos fazer | Vamos levar cada letra para a caixa da mesma letra. | [captura-07-treino-apresentacao.png](captura-07-treino-apresentacao.png) | — | — |
 | 08 treino-atividade | momento 2: comecar | Pegue a letra A. Coloque na caixa da letra A. | [captura-08-treino-atividade.png](captura-08-treino-atividade.png) | — | — |
 | 09 treino-erro-pista1 | mouse: peca B na caixa A | A letra B voltou para o lugar. Vamos tentar de novo. Pegue a letra A. Coloque na caixa da letra A. | [captura-09-treino-erro-pista1.png](captura-09-treino-erro-pista1.png) | letra_trocada | 1 - repetir a instrucao |

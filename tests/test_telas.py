@@ -56,7 +56,7 @@ def test_navegacao_inicio_materias_trilhas(janela, qtbot):
     assert janela.pilha.currentWidget() is janela.materias
     qtbot.mouseClick(janela.materias.botoes["matematica"], Qt.LeftButton)
     assert janela.pilha.currentWidget() is janela.trilhas
-    esperado = ["Treino de arrastar", "Contar e comparar", "Frações com pizza", "Teste da mão"]
+    esperado = ["Contar e comparar", "Frações com pizza"]  # treino e teste da mão saíram
     assert [b.text() for b in janela.trilhas.botoes] == esperado
     qtbot.mouseClick(janela.trilhas.botao_voltar, Qt.LeftButton)
     assert janela.pilha.currentWidget() is janela.materias
@@ -117,15 +117,14 @@ def test_adulto_edita_e_apaga(janela, qtbot):
 
 def test_trilhas_escondem_atividades_que_nao_existem(janela):
     janela.abrir_materia("portugues")
-    esperado = ["Treino de arrastar", "Juntar sílabas", "Teste da mão"]
+    esperado = ["Treino de arrastar", "Juntar sílabas"]
     assert [b.text() for b in janela.trilhas.botoes] == esperado
 
 
-def test_camera_liga_so_dentro_da_atividade(janela, qtbot):
-    janela.abrir_materia("portugues")
+def test_teste_da_mao_abre_pela_tela_inicial(janela, qtbot):
     assert CameraFalsa.instancias == []
-    botao_teste = next(b for b in janela.trilhas.botoes if b.text() == "Teste da mão")
-    qtbot.mouseClick(botao_teste, Qt.LeftButton)
+    assert janela.inicio.teste_mao.text() == "Teste da mão"
+    qtbot.mouseClick(janela.inicio.teste_mao, Qt.LeftButton)
     tela = janela.atividades["teste_camera"]
     assert janela.pilha.currentWidget() is tela
     camera = CameraFalsa.instancias[-1]
@@ -133,6 +132,7 @@ def test_camera_liga_so_dentro_da_atividade(janela, qtbot):
     assert tela.indicador.accessibleName() == "Câmera ligada"
 
     qtbot.mouseClick(tela.botao_voltar, Qt.LeftButton)
+    assert janela.pilha.currentWidget() is janela.inicio  # volta para onde abriu
     assert not camera.ligada
     assert tela.camera is None
     assert tela.indicador.accessibleName() == "Câmera desligada"
@@ -164,10 +164,9 @@ def test_teste_da_mao_mostra_cursor_e_pinca(janela):
 
 
 def test_esc_sai_do_teste_da_mao(janela, qtbot):
-    janela.abrir_materia("portugues")
-    janela.abrir_atividade("teste_camera")
+    janela.inicio.teste_mao.click()
     qtbot.keyClick(janela.atividades["teste_camera"], Qt.Key_Escape)
-    assert janela.pilha.currentWidget() is janela.trilhas
+    assert janela.pilha.currentWidget() is janela.inicio
 
 
 def test_todo_controle_tem_nome_acessivel(janela):

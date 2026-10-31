@@ -60,6 +60,7 @@ class JanelaPrincipal(QMainWindow):
 
         self.inicio.escolheu.connect(self.escolher_aluno)
         self.inicio.abrir_adulto.connect(lambda: self.ir_para(self.adulto))
+        self.inicio.abrir_teste_mao.connect(lambda: self.abrir_atividade("teste_camera"))
         self.adulto.voltar.connect(self.abrir_inicio)
         self.adulto.abrir_painel.connect(self.abrir_painel)
         self.painel.voltar.connect(lambda: self.ir_para(self.adulto))
@@ -67,8 +68,11 @@ class JanelaPrincipal(QMainWindow):
         self.materias.escolheu.connect(self.abrir_materia)
         self.trilhas.voltar.connect(lambda: self.ir_para(self.materias))
         self.trilhas.escolheu.connect(self.abrir_atividade)
-        for atividade in self.atividades.values():
-            atividade.voltar.connect(lambda: self.ir_para(self.trilhas))
+        for nome, atividade in self.atividades.items():
+            if nome == "teste_camera":  # abre pela tela inicial e volta para ela
+                atividade.voltar.connect(self.abrir_inicio)
+            else:
+                atividade.voltar.connect(lambda: self.ir_para(self.trilhas))
 
         self.abrir_inicio()
 

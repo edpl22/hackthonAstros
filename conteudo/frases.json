@@ -10,6 +10,7 @@
     "quem_joga": "Quem vai jogar?",
     "visitante": "Visitante",
     "adulto": "Área do adulto: segure",
+    "teste_mao": "Teste da mão",
     "comecar": "Começar"
   },
   "adulto": {
@@ -77,8 +78,6 @@
     "momento_fim": "Fim",
     "momento_nova_rodada": "Nova rodada",
     "comecar": "Começar",
-    "ouvir": "Ouvir a instrução",
-    "ouvir_curto": "Ouvir",
     "pausa": "Pausa",
     "pausado": "Pausa. A atividade está parada.",
     "continuar": "Continuar",
@@ -128,7 +127,6 @@
     "instrucao_comparar": "Compare as bandejas. A da esquerda é maior, menor ou igual à da direita?",
     "instrucao_conta": "Quanto é {a} {sinal} {b}? Escolha o cartão.",
     "terminou": "A mesa está certa.",
-    "pista_contar": "Vamos contar juntos.",
     "sobrou": "sobrou",
     "tirar": "tirar estas",
     "bandeja-a": "bandeja da esquerda",
@@ -185,7 +183,7 @@
       "inicio_aluno": "Aluno salvo. Ele aparece na tela Quem vai jogar.",
       "materias": "Visitante escolhido. Tela de matérias aberta.",
       "trilhas": "Português escolhido. Tela de trilhas aberta.",
-      "teste_mao": "Teste da mão aberto. Sem webcam, a câmera aparece como desligada."
+      "teste_mao": "Teste da mão aberto pela tela inicial. Sem webcam, a câmera aparece como desligada."
     },
     "treino_inicio": "Treino de arrastar aberto.",
     "painel": "Painel do professor com a Turma de demonstração (6 alunos fictícios)."

@@ -62,6 +62,7 @@ docs/         DECISOES.md, PROGRESSO.md (depois: ARQUITETURA.md, AVALIACAO.md, s
 - As atividades só escutam o barramento `app/nucleo/eventos.py` e nunca sabem qual entrada foi usada (mouse, teclado, câmera, demo ou agente).
 - Toda regra fica em funções puras testadas (`mao.py`, `erros.py`, `progresso.py`, `logica.py` de cada atividade). Os widgets só desenham e repassam eventos.
 - Frases mostradas à criança ficam em `conteudo/frases.json`, nunca no código.
+- Voz só no português: a letra pega, a sílaba pega e a palavra pronta (`AtividadeBase.falar`). Instruções e retornos vão para a legenda (`_anunciar`), sem voz.
 - Interface: PySide6-Essentials, Widgets + QGraphicsView. Não usar QML.
 - `cv2` e `mediapipe` são opcionais e só são importados dentro de funções de `entrada/camera.py` (garantido por `tests/test_dependencias.py`). Sem eles, `CameraNula` assume.
 - Nenhuma chamada de rede e nenhum `cv2.imwrite` em `app/` (garantido por `tests/test_privacidade.py`).
