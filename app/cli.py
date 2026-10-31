@@ -5,7 +5,7 @@ import json
 import os
 import sys
 
-ROTEIROS = ("navegacao", "treino", "silabas", "todas")
+ROTEIROS = ("navegacao", "treino", "silabas", "quantidades", "todas")
 ENTRADAS = ("mouse", "teclado", "varredura", "mao-simulada")
 
 

@@ -269,7 +269,96 @@ def roteiro_silabas(ex: Execucao) -> None:
     ex.fechar(janela)
 
 
-ROTEIROS = {"navegacao": roteiro_navegacao, "treino": roteiro_treino, "silabas": roteiro_silabas}
+def _escolher(tela, ex, peca_id) -> None:
+    """Escolhe um cartão com a entrada da execução (pegar um cartão já é escolher)."""
+    cena = tela.cena
+    if ex.entrada == "mouse":
+        _mouse(cena, QEvent.MouseButtonPress, cena.centro(peca_id), Qt.LeftButton)
+        _mouse(cena, QEvent.MouseButtonRelease, cena.centro(peca_id), Qt.NoButton)
+    elif ex.entrada == "mao-simulada":
+        mao_simulada.reproduzir(tela.entrada_mao, cena, passos=[
+            {"ir_para": peca_id, "ms": 600}, {"esperar": 300},
+            {"pinca": True, "ms": 300}, {"pinca": False, "ms": 300},
+        ])
+    else:
+        tecla = Qt.Key_Return if ex.entrada == "teclado" else Qt.Key_A
+        avancar = tela.entrada_teclado.avancar
+        _focar_e_selecionar(tela, peca_id, avancar, lambda: QTest.keyClick(cena, tecla))
+
+
+def roteiro_quantidades(ex: Execucao) -> None:
+    from app.atividades.quantidades import logica as mesa
+
+    janela = ex.nova_janela()
+    janela.escolher_aluno(None, ex.perfis)
+    janela.abrir_materia("matematica")
+    tela = janela.atividades["quantidades"]
+    jogar = JOGADAS[ex.entrada]
+    varredura = ex.entrada == "varredura"
+
+    def cartao(certo: bool) -> str:
+        r = tela.rodada
+        return next(c.id for c in r.cartoes if (c.valor == r.certo) == certo)
+
+    # Montar: um objeto a mais (erro proposital), depois a quantidade certa.
+    janela.abrir_atividade("quantidades", semente=SEMENTE, varredura=varredura, nivel=mesa.MONTAR)
+    tela.anunciou.connect(
+        lambda frase: ex.registrar(
+            "quantidades", entrada=tela.barramento.modo_entrada, anuncio=frase
+        )
+    )
+    ex.capturar(janela, "mesa-apresentacao", "momento 1: o que vamos fazer", tela.instrucao.text())
+    tela.comecar()
+    meta = tela.rodada.a
+
+    def colocar(n):
+        for _ in range(n):
+            livre = next(p.id for p in tela.cena.pecas.values()
+                         if p.tipo == "objeto" and not p.encaixada)
+            jogar(tela, livre, "bandeja-a", 0)
+
+    colocar(meta + 1)
+    ex.capturar(janela, "mesa-montar", f"{ex.entrada}: {meta + 1} objetos na bandeja",
+                tela.ultimo_anuncio)
+    _escolher(tela, ex, "cartao-pronto")
+    tentativa = _ultima_tentativa(janela)
+    ex.capturar(janela, "mesa-montar-erro", "Pronto com um a mais", tela.ultimo_anuncio,
+                tipo_erro=tentativa["tipo_erro"], pista=PISTAS[1])
+    colocar(meta)
+    _escolher(tela, ex, "cartao-pronto")
+    ex.capturar(janela, "mesa-montar-fim", f"{meta} objetos e Pronto", tela.ultimo_anuncio)
+
+    # Comparar: liga um a um, marca a sobra; escolhe errado e depois certo.
+    janela.abrir_atividade("quantidades", semente=6, varredura=varredura, nivel=mesa.COMPARAR)
+    tela.comecar()
+    _escolher(tela, ex, cartao(False))
+    tentativa = _ultima_tentativa(janela)
+    ex.capturar(janela, "mesa-comparar-erro", "comparar: cartao errado", tela.ultimo_anuncio,
+                tipo_erro=tentativa["tipo_erro"], pista=PISTAS[1])
+    _escolher(tela, ex, cartao(True))
+
+    # Resolver até 20: dois cartões errados (pista 1 e pista 2) e o certo.
+    janela.abrir_atividade("quantidades", semente=SEMENTE, varredura=varredura, nivel=mesa.CONTAS)
+    tela.comecar()
+    ex.capturar(janela, "mesa-conta", f"conta: {tela.estado()['conta']}", tela.instrucao.text())
+    errados = [c.id for c in tela.rodada.cartoes if c.valor != tela.rodada.certo]
+    for n_pista, errado in enumerate(errados, start=1):
+        _escolher(tela, ex, errado)
+        tentativa = _ultima_tentativa(janela)
+        ex.capturar(janela, f"mesa-conta-pista{n_pista}", f"cartao {tentativa['resposta']}",
+                    tela.ultimo_anuncio, tipo_erro=tentativa["tipo_erro"], pista=PISTAS[n_pista])
+    _escolher(tela, ex, cartao(True))
+    ex.capturar(janela, "mesa-conta-fim", "cartao certo", tela.ultimo_anuncio)
+    ex.registrar("quantidades", evento="estado_final", concluida=tela.estado()["concluida"])
+    ex.fechar(janela)
+
+
+ROTEIROS = {
+    "navegacao": roteiro_navegacao,
+    "treino": roteiro_treino,
+    "silabas": roteiro_silabas,
+    "quantidades": roteiro_quantidades,
+}
 
 
 def _ler_tamanho(tamanho: str) -> tuple[int, int]:

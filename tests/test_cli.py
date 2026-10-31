@@ -58,16 +58,16 @@ def test_demo_gera_evidencias(tmp_path):
 
     capturas = sorted(p.name for p in saida.glob("captura-*.png"))
     assert capturas[0] == "captura-01-inicio.png"
-    assert len(capturas) == 22  # navegação 6 + treino 7 + sílabas 9
+    assert len(capturas) == 31  # navegação 6 + treino 7 + sílabas 9 + mesa 9
     relatorio = (saida / "relatorio.md").read_text(encoding="utf-8")
     for captura in capturas:
         assert captura in relatorio
     # Os erros propositais aparecem no relatório com o tipo de erro e as pistas.
-    for tipo in ("letra_trocada", "ordem_trocada", "tonica_errada"):
+    for tipo in ("letra_trocada", "ordem_trocada", "tonica_errada", "um_a_mais_ou_menos"):
         assert tipo in relatorio
     assert "1 - repetir a instrucao" in relatorio and "2 - realcar" in relatorio
     eventos = _ler_eventos(saida)
-    assert eventos[-1] == {"n": len(eventos), "roteiro": "silabas", "evento": "estado_final",
+    assert eventos[-1] == {"n": len(eventos), "roteiro": "quantidades", "evento": "estado_final",
                            "concluida": True}
     tentativas = json.loads((saida / "tentativas.json").read_text("utf-8"))
     treino = [t for t in tentativas if t["atividade"] == "treino"]
