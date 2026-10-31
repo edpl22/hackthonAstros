@@ -91,7 +91,26 @@
     "nivel_voltou": "Vamos fazer um pouco mais fácil.",
     "aviso_troca": "Quando terminar, você pode fazer outra rodada ou voltar.",
     "pista_realce": "Olhe o que está marcado.",
-    "pista_modelo": "Veja como se faz."
+    "pista_modelo": "Veja como se faz.",
+    "tentar_de_novo": "Vamos tentar de novo."
+  },
+  "silabas": {
+    "habilidade": "formar palavras com sílabas",
+    "habilidade_tonica": "achar a sílaba tônica",
+    "apresentacao": "Vamos montar a palavra da figura com as bolhas de sílabas.",
+    "apresentacao_tonica": "Vamos achar a sílaba mais forte da palavra.",
+    "instrucao": "Pegue a bolha {silaba}. Coloque na {ordinal} caixa.",
+    "instrucao_tonica": "Ouça a palavra {palavra}. Qual bolha é a mais forte?",
+    "terminou": "A palavra está pronta.",
+    "ordinais": "primeira,segunda,terceira",
+    "caixa": "{ordinal} caixa",
+    "pegou": "Você pegou a bolha {silaba}.",
+    "encaixou": "Bolha {silaba} colocada na {ordinal} caixa.",
+    "voltou": "A bolha {silaba} voltou para o lugar. Vamos tentar de novo.",
+    "soltou_fora": "A bolha {silaba} voltou para o lugar.",
+    "tonica_certa": "Isso. {silaba} é a sílaba mais forte de {palavra}.",
+    "tonica_errada": "{silaba} não é a mais forte. Vamos tentar de novo.",
+    "nada_para_pegar": "Nenhuma bolha neste ponto."
   },
   "treino": {
     "habilidade": "reconhecer letras",

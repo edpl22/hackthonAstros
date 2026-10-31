@@ -16,6 +16,7 @@ class Paleta:
     destaque: str
     apoio: str
     superficie: str  # fundo dos botões e alvos
+    alternada: str  # dislexia: preenchimento das sílabas alternadas (sempre com sublinhado)
 
 
 PALETA_PADRAO = Paleta(
@@ -25,6 +26,7 @@ PALETA_PADRAO = Paleta(
     destaque="#D9A441",
     apoio="#8FA9C7",
     superficie="#FFFFFF",
+    alternada="#8FA9C7",
 )
 
 PALETA_ALTO_CONTRASTE = Paleta(
@@ -34,6 +36,7 @@ PALETA_ALTO_CONTRASTE = Paleta(
     destaque="#D9A441",
     apoio="#000000",
     superficie="#FFFFFF",
+    alternada="#BFD0E3",
 )
 
 # Pares texto/fundo usados nas telas; o teste de contraste confere todos.
@@ -43,6 +46,7 @@ PARES_DE_TEXTO = (
     ("primaria", "fundo"),
     ("primaria", "superficie"),
     ("texto", "destaque"),
+    ("texto", "alternada"),
 )
 
 CORPO_PX = 24

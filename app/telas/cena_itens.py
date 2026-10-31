@@ -2,21 +2,27 @@
 
 Só escuta o barramento (apontar, pegar, soltar) e avisa a atividade por sinais. Não decide
 se uma jogada está certa: a atividade decide e chama `encaixar` ou `devolver`.
-A cena tem tamanho lógico fixo (1280 x 720) e é escalada para caber na janela.
+A cena tem tamanho lógico fixo (1280 x 560) e é escalada para caber na janela.
 """
 
+import math
 import os
 
-from PySide6.QtCore import QPointF, QPropertyAnimation, QRectF, Qt, Signal
+from PySide6.QtCore import QPointF, QPropertyAnimation, QRectF, Qt, QTimer, Signal
 from PySide6.QtGui import QBrush, QColor, QFont, QPainter, QPen
+from PySide6.QtSvgWidgets import QGraphicsSvgItem
 from PySide6.QtWidgets import QFrame, QGraphicsObject, QGraphicsScene, QGraphicsView
 
 from app.entrada.alvos import Area, mais_proximo
 from app.entrada.cursor import CursorMao
+from app.nucleo import caminhos
 from app.nucleo.tema import paleta_atual
 
-LARGURA, ALTURA = 1280, 720
+# Mais larga que 16:9: é o formato da área que sobra abaixo da faixa e da instrução.
+LARGURA, ALTURA = 1280, 560
 DURACAO_MS = 250  # animações sempre até 300 ms
+PX_POR_S_NA_VELOCIDADE_1 = 40  # bolhas flutuam a velocidade x 40 px/s
+QUADRO_MS = 33
 
 
 def _sem_animacao() -> bool:
@@ -39,21 +45,29 @@ class _Figura(QGraphicsObject):
     def _quadro(self) -> QRectF:
         return QRectF(-self.lado / 2, -self.lado / 2, self.lado, self.lado)
 
+    def _contorno(self, pintor, margem: float) -> None:
+        r = self._quadro().adjusted(-margem, -margem, margem, margem)
+        if getattr(self, "forma", "") == "redondo":
+            pintor.drawEllipse(r)
+        else:
+            pintor.drawRoundedRect(r, 12, 12)
+
     def _desenhar_foco(self, pintor) -> None:
         if self.realcado:  # pista: contorno duplo grosso, forma e não só cor
             pintor.setPen(QPen(QColor(paleta_atual().primaria), 6))
             pintor.setBrush(Qt.NoBrush)
-            pintor.drawRoundedRect(self._quadro().adjusted(-6, -6, 6, 6), 12, 12)
-            pintor.drawRoundedRect(self._quadro().adjusted(-11, -11, 11, 11), 12, 12)
+            self._contorno(pintor, 6)
+            self._contorno(pintor, 11)
         if self.focado:
             pintor.setPen(QPen(QColor(paleta_atual().primaria), 4))
             pintor.setBrush(Qt.NoBrush)
-            pintor.drawRoundedRect(self._quadro().adjusted(-8, -8, 8, 8), 12, 12)
+            self._contorno(pintor, 8)
 
-    def _desenhar_rotulo(self, pintor, tamanho: float) -> None:
+    def _desenhar_rotulo(self, pintor, tamanho: float, sublinhado: bool = False) -> None:
         fonte = QFont(pintor.font())
         fonte.setPixelSize(round(tamanho))
         fonte.setBold(True)
+        fonte.setUnderline(sublinhado)
         pintor.setFont(fonte)
         pintor.setPen(QColor(paleta_atual().texto))
         pintor.drawText(self._quadro(), Qt.AlignCenter, self.rotulo)
@@ -67,15 +81,26 @@ class Peca(_Figura):
         self.segurada = False
         self.encaixada = False
         self.origem = QPointF()
+        self.forma = "quadrado"  # ou "redondo" (bolha)
+        self.alternada = False  # dislexia: sílabas alternam cor e sublinhado
+        self.direcao = QPointF(0, 0)  # para flutuar
         self.setZValue(5)
 
     def paint(self, pintor, _opcao, _widget=None) -> None:
         p = paleta_atual()
         espessura = self.contorno + (3 if self.segurada else 0)
         pintor.setPen(QPen(QColor(p.texto), espessura))
-        pintor.setBrush(QBrush(QColor(p.destaque if self.segurada else p.superficie)))
-        pintor.drawRoundedRect(self._quadro(), 12, 12)
-        self._desenhar_rotulo(pintor, self.lado * 0.5)
+        if self.segurada:
+            fundo = p.destaque
+        else:
+            fundo = p.alternada if self.alternada else p.superficie
+        pintor.setBrush(QBrush(QColor(fundo)))
+        if self.forma == "redondo":
+            pintor.drawEllipse(self._quadro())
+        else:
+            pintor.drawRoundedRect(self._quadro(), 12, 12)
+        tamanho = self.lado * (0.36 if len(self.rotulo) > 2 else 0.42)
+        self._desenhar_rotulo(pintor, tamanho, sublinhado=self.alternada)
         self._desenhar_foco(pintor)
 
 
@@ -85,6 +110,7 @@ class Caixa(_Figura):
     def __init__(self, *args):
         super().__init__(*args)
         self.ocupada_por: str | None = None
+        self.mostrar_rotulo = True
         self.setZValue(1)
 
     def paint(self, pintor, _opcao, _widget=None) -> None:
@@ -95,7 +121,8 @@ class Caixa(_Figura):
         pintor.setPen(caneta)
         pintor.setBrush(QBrush(QColor(p.fundo)))
         pintor.drawRoundedRect(self._quadro(), 12, 12)
-        self._desenhar_rotulo(pintor, self.lado * 0.3)
+        if self.mostrar_rotulo:
+            self._desenhar_rotulo(pintor, self.lado * 0.3)
         self._desenhar_foco(pintor)
 
 
@@ -103,6 +130,7 @@ class CenaItens(QGraphicsView):
     pegou = Signal(str)
     soltou = Signal(str, object)  # id da peça, id da caixa (ou None se caiu fora)
     nada_para_pegar = Signal()
+    escolheu = Signal(str)  # escolha direta por id (cartões, sílaba tônica)
 
     def __init__(self, barramento, perfil, parent=None):
         super().__init__(parent)
@@ -129,7 +157,13 @@ class CenaItens(QGraphicsView):
         barramento.apontar.connect(self._apontar)
         barramento.pegar.connect(self._pegar)
         barramento.soltar.connect(self._soltar)
+        barramento.escolher.connect(self._escolher)
         barramento.segurando = False
+        self._timer_flutuar = QTimer(self)
+        self._timer_flutuar.setInterval(QUADRO_MS)
+        self._timer_flutuar.timeout.connect(self._passo_flutuar)
+        self._regiao_flutuar = QRectF()
+        self._velocidade_px_s = 0.0
 
     # --- montagem ------------------------------------------------------------
 
@@ -137,20 +171,68 @@ class CenaItens(QGraphicsView):
         super().resizeEvent(evento)
         self.fitInView(self.sceneRect(), Qt.KeepAspectRatio)
 
-    def adicionar_peca(self, id: str, rotulo: str, x: float, y: float, lado: float) -> Peca:
-        peca = Peca(id, rotulo, "peca", lado, self.perfil.contorno_px)
+    def adicionar_peca(
+        self, id: str, rotulo: str, x: float, y: float, lado: float,
+        tipo: str = "peca", forma: str = "quadrado", alternada: bool = False,
+    ) -> Peca:
+        peca = Peca(id, rotulo, tipo, lado, self.perfil.contorno_px)
+        peca.forma, peca.alternada = forma, alternada
         peca.setPos(x, y)
         peca.origem = QPointF(x, y)
         self.scene().addItem(peca)
         self.pecas[id] = peca
         return peca
 
-    def adicionar_caixa(self, id: str, rotulo: str, x: float, y: float, lado: float) -> Caixa:
+    def adicionar_caixa(
+        self, id: str, rotulo: str, x: float, y: float, lado: float, mostrar_rotulo: bool = True
+    ) -> Caixa:
         caixa = Caixa(id, rotulo, "caixa", lado, self.perfil.contorno_px)
+        caixa.mostrar_rotulo = mostrar_rotulo
         caixa.setPos(x, y)
         self.scene().addItem(caixa)
         self.caixas[id] = caixa
         return caixa
+
+    def adicionar_figura(self, relativo: str, x: float, y: float, lado: float) -> None:
+        """Figura SVG (não interativa), centrada em (x, y). Escala sem perder nitidez."""
+        figura = QGraphicsSvgItem(str(caminhos.asset(relativo)))
+        tamanho = figura.boundingRect()
+        if tamanho.width() > 0:
+            escala = lado / max(tamanho.width(), tamanho.height())
+            figura.setScale(escala)
+            figura.setPos(x - tamanho.width() * escala / 2, y - tamanho.height() * escala / 2)
+        figura.setZValue(0)
+        self.scene().addItem(figura)
+        self.figura = figura
+
+    def flutuar(self, velocidade: float, regiao: QRectF) -> None:
+        """Peças livres andam devagar dentro da região (velocidade 0..1 do perfil x 40 px/s).
+        Paradas com velocidade 0, "reduzir movimento" ou nos modos sem tela."""
+        if velocidade <= 0 or self.perfil.reduzir_movimento or _sem_animacao():
+            return
+        self._velocidade_px_s = velocidade * PX_POR_S_NA_VELOCIDADE_1
+        self._regiao_flutuar = regiao
+        for i, peca in enumerate(self.pecas.values()):
+            angulo = 0.7 + i * 2.1  # direções diferentes e repetíveis
+            peca.direcao = QPointF(math.cos(angulo), math.sin(angulo))
+        self._timer_flutuar.start()
+
+    def _passo_flutuar(self) -> None:
+        passo = self._velocidade_px_s * QUADRO_MS / 1000
+        r = self._regiao_flutuar
+        for peca in self.pecas_livres():
+            pos = peca.pos() + peca.direcao * passo
+            meio = peca.lado / 2
+            if not r.left() + meio <= pos.x() <= r.right() - meio:
+                peca.direcao.setX(-peca.direcao.x())
+            if not r.top() + meio <= pos.y() <= r.bottom() - meio:
+                peca.direcao.setY(-peca.direcao.y())
+            pos = peca.pos() + peca.direcao * passo
+            peca.setPos(pos)
+            peca.origem = pos  # ao errar, a bolha volta para onde estava flutuando
+
+    def parar_flutuar(self) -> None:
+        self._timer_flutuar.stop()
 
     # --- consultas -----------------------------------------------------------
 
@@ -212,6 +294,10 @@ class CenaItens(QGraphicsView):
         peca.update()
         self.barramento.segurando = True
         self.pegou.emit(id)
+
+    def _escolher(self, id: str) -> None:
+        if id in self.pecas and not self.pecas[id].encaixada:
+            self.escolheu.emit(id)
 
     def _soltar(self) -> None:
         if not self.segurada:

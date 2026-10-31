@@ -30,7 +30,7 @@ from app.entrada.mao_entrada import EntradaMao
 from app.entrada.ponteiro import EntradaPonteiro
 from app.entrada.teclado import EntradaTeclado
 from app.entrada.varredura import EntradaVarredura
-from app.nucleo import anuncio, progresso
+from app.nucleo import anuncio, figuras, progresso
 from app.nucleo.conteudo import texto
 from app.nucleo.eventos import Barramento
 from app.nucleo.perfis import PADRAO
@@ -188,7 +188,11 @@ class AtividadeBase(QWidget):
         self.botao_comecar.clicked.connect(self.comecar)
         lay = QVBoxLayout(self.pagina_apresentacao)
         lay.addStretch()
-        lay.addWidget(icones.Pictograma(APRESENTACAO, 96), alignment=Qt.AlignHCenter)
+        self.icone_apresentacao = icones.Pictograma(APRESENTACAO, 96)
+        self.figura_apresentacao_rotulo = QLabel()
+        self.figura_apresentacao_rotulo.setAlignment(Qt.AlignCenter)
+        lay.addWidget(self.icone_apresentacao, alignment=Qt.AlignHCenter)
+        lay.addWidget(self.figura_apresentacao_rotulo)
         lay.addWidget(self.texto_apresentacao_rotulo)
         lay.addSpacing(24)
         lay.addWidget(self.botao_comecar, alignment=Qt.AlignHCenter)
@@ -260,11 +264,18 @@ class AtividadeBase(QWidget):
     def texto_apresentacao(self) -> str:
         return texto(f"{self.id_atividade}.apresentacao")
 
+    def figura_apresentacao(self) -> str | None:
+        """SVG (relativo a assets/) mostrado no momento "O que vamos fazer"."""
+        return None
+
     def instrucao_atual(self) -> str:
         raise NotImplementedError
 
     def item_atual(self) -> str | None:
         return None
+
+    def habilidade(self) -> str:
+        return texto(f"{self.id_atividade}.habilidade")
 
     def realcar(self, item: str) -> None:
         """Pista 2: realçar o que importa."""
@@ -277,15 +288,31 @@ class AtividadeBase(QWidget):
 
     # --- ciclo de vida -------------------------------------------------------------
 
-    def iniciar(self, perfil=None, semente: int | None = None, varredura: bool = False) -> None:
+    def iniciar(
+        self, perfil=None, semente: int | None = None, varredura: bool = False,
+        nivel: int | None = None, **opcoes,
+    ) -> None:
+        """`nivel` abre direto num nível; `opcoes` vão para a atividade (ex.: palavra="bola")."""
         self.parar()
         self.perfil = perfil or PADRAO
         self.semente = semente
         self.varredura = varredura
+        self.opcoes = opcoes
         self.nivel = ControleNivel(nivel_maximo=self.nivel_maximo)
+        if nivel is not None:
+            self.nivel.nivel = max(1, min(nivel, self.nivel_maximo))
         self._nova_rodada()
         self._ir_para(APRESENTACAO)
         self.texto_apresentacao_rotulo.setText(self.texto_apresentacao())
+        figura = self.figura_apresentacao()
+        self.icone_apresentacao.setVisible(figura is None)
+        self.figura_apresentacao_rotulo.setVisible(figura is not None)
+        if figura:
+            lado = round(160 * min(self.perfil.escala, 1.4))
+            self.figura_apresentacao_rotulo.setPixmap(figuras.pixmap(figura, lado))
+        # 4. legenda limpa a cada atividade aberta
+        self.legenda.clear()
+        self.ultimo_anuncio = ""
         if self.perfil.audio_auto:
             self.falar(self.texto_apresentacao())
         self.camera = self.ctx.fabrica_camera(mostrar_miniatura=False)
@@ -480,7 +507,7 @@ class AtividadeBase(QWidget):
             Tentativa(
                 aluno=sessao.aluno.apelido if sessao.aluno else "visitante",
                 atividade=self.id_atividade,
-                habilidade=texto(f"{self.id_atividade}.habilidade"),
+                habilidade=self.habilidade(),
                 item=item,
                 resposta=resposta,
                 correta=correta,

@@ -116,13 +116,15 @@ def test_adulto_edita_e_apaga(janela, qtbot):
 
 def test_trilhas_escondem_atividades_que_nao_existem(janela):
     janela.abrir_materia("portugues")
-    assert [b.text() for b in janela.trilhas.botoes] == ["Treino de arrastar", "Teste da mão"]
+    esperado = ["Treino de arrastar", "Juntar sílabas", "Teste da mão"]
+    assert [b.text() for b in janela.trilhas.botoes] == esperado
 
 
 def test_camera_liga_so_dentro_da_atividade(janela, qtbot):
     janela.abrir_materia("portugues")
     assert CameraFalsa.instancias == []
-    qtbot.mouseClick(janela.trilhas.botoes[1], Qt.LeftButton)
+    botao_teste = next(b for b in janela.trilhas.botoes if b.text() == "Teste da mão")
+    qtbot.mouseClick(botao_teste, Qt.LeftButton)
     tela = janela.atividades["teste_camera"]
     assert janela.pilha.currentWidget() is tela
     camera = CameraFalsa.instancias[-1]

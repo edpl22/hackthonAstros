@@ -3,6 +3,7 @@
 from PySide6.QtWidgets import QApplication, QMainWindow, QStackedWidget
 
 from app.atividades.base import AtividadeBase, Contexto
+from app.atividades.silabas.tela import TelaSilabas
 from app.atividades.teste_camera import TelaTesteCamera
 from app.atividades.treino.tela import TelaTreino
 from app.entrada.camera import fabrica_padrao
@@ -36,6 +37,7 @@ class JanelaPrincipal(QMainWindow):
         self.materias = TelaMaterias()
         self.atividades = {
             "treino": TelaTreino(self.contexto),
+            "silabas": TelaSilabas(self.contexto),
             "teste_camera": TelaTesteCamera(fabrica),
         }
         self.trilhas = TelaTrilhas(self.atividades.keys())
