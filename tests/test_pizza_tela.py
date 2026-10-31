@@ -10,6 +10,7 @@ from app.atividades.pizza import logica
 from app.atividades.pizza.tela import TelaPizza
 from app.entrada.camera import CameraNula
 from app.headless import agente
+from app.nucleo import erros
 from app.nucleo.audio import ServicoAudio
 from app.nucleo.registro import Registro
 from app.nucleo.sessao import Sessao
@@ -26,8 +27,8 @@ def tela(qtbot, monkeypatch):
     return t
 
 
-def _abrir(tela, nivel, semente=3, **opcoes):
-    tela.ctx.sessao.definir(None)
+def _abrir(tela, nivel, semente=3, perfis=(), **opcoes):
+    tela.ctx.sessao.definir(None, list(perfis))
     tela.iniciar(tela.ctx.sessao.perfil, semente=semente, nivel=nivel, **opcoes)
     tela.comecar()
 
@@ -75,6 +76,30 @@ def test_somar_classifica_e_mostra_a_pista_sobreposta(tela):
     assert tela.fatias["b"][0].centro == tela.fatias["a"][0].centro  # pizzas sobrepostas
     tela.barramento.escolher.emit(f"cartao-{n1 + n2}-{d}")
     assert tela.momento == FIM
+
+
+def test_operar_tem_tres_pratos_com_soma_e_subtracao(tela):
+    _abrir(tela, logica.OPERAR)
+    r = tela.rodada
+    assert len(r.parcelas) == 3 and "-" in r.sinais
+    assert set(tela.fatias) == {"a", "b", "c"}
+    estado = tela.estado()
+    assert estado["modo"] == "operar" and estado["sinais"] == r.sinais
+    assert "−" in tela.instrucao.text()  # sinal de menos de verdade na tela
+    trocada = erros.resultado_fracao(r.parcelas, ["+"] * len(r.sinais))
+    tela.barramento.escolher.emit(f"cartao-{trocada[0]}-{trocada[1]}")
+    tentativa = tela.ctx.registro.listar_tentativas()[-1]
+    assert tentativa["tipo_erro"] == "operacao_trocada"
+    assert tentativa["habilidade"] == "somar e subtrair frações de mesmo denominador"
+    tela.barramento.escolher.emit(f"cartao-{trocada[0]}-{trocada[1]}")  # pista 2
+    assert tela.dica.text() == "As fatias continuam do mesmo tamanho."
+    tela.barramento.escolher.emit(f"cartao-{r.certo[0]}-{r.certo[1]}")
+    assert tela.momento == FIM
+
+
+def test_operar_com_perfil_de_menos_itens_usa_dois_pratos(tela):
+    _abrir(tela, logica.OPERAR, perfis=["tea"])
+    assert len(tela.rodada.parcelas) == 2 and tela.rodada.sinais == ["-"]
 
 
 def test_desafio_mostra_numero_misto(tela):

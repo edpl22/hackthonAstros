@@ -38,12 +38,20 @@
 | 34 pizza-montar-fim | 1 fatias e Pronto | Isso. A resposta é 1/4. | [captura-34-pizza-montar-fim.png](captura-34-pizza-montar-fim.png) | — | — |
 | 35 pizza-somar-pista1 | cartao 4/12 | 4/12 não é a resposta. Vamos tentar de novo. Quanto é 2/6 + 2/6? Escolha o cartão. | [captura-35-pizza-somar-pista1.png](captura-35-pizza-somar-pista1.png) | somou_denominadores | 1 - repetir a instrucao |
 | 36 pizza-somar-pista2 | cartao 6/4 | 6/4 não é a resposta. Vamos tentar de novo. Olhe o que está marcado. | [captura-36-pizza-somar-pista2.png](captura-36-pizza-somar-pista2.png) | confundiu_numerador_denominador | 2 - realcar a peca e a caixa |
-| 37 pizza-desafio-barra | desafio: fracao impropria | Isso. A resposta é 8/6 = 1 e 2/6. | [captura-37-pizza-desafio-barra.png](captura-37-pizza-desafio-barra.png) | — | — |
-| 38 trilhas-matematica | escolher Matematica | Matemática escolhida: Contar e comparar, Frações com pizza e Tabuada Protetora. | [captura-38-trilhas-matematica.png](captura-38-trilhas-matematica.png) | — | — |
-| 39 tabuada-apresentacao | momento 1: o que vamos fazer | Proteja a cidade! Acerte o monstrinho que tem o resultado da conta. Você tem 1 minuto. | [captura-39-tabuada-apresentacao.png](captura-39-tabuada-apresentacao.png) | — | — |
-| 40 tabuada-atividade | conta, relogio de 1 minuto e monstrinhos | Acerte o monstrinho com o resultado de 3 × 1. | [captura-40-tabuada-atividade.png](captura-40-tabuada-atividade.png) | — | — |
-| 41 tabuada-erro | mouse: monstrinho errado (-1) | 2 não é o resultado de 3 × 1. Menos um ponto. Acerte o monstrinho com o resultado de 3 × 1. | [captura-41-tabuada-erro.png](captura-41-tabuada-erro.png) | vizinho_na_tabuada | 1 - repetir a instrucao |
-| 42 tabuada-acertos | mouse: tres acertos (+3) | Isso! 4 × 9 = 36. Mais um ponto. | [captura-42-tabuada-acertos.png](captura-42-tabuada-acertos.png) | — | — |
-| 43 tabuada-camera-desligada | botao da camera: desligar | Câmera desligada. Toque para ligar. | [captura-43-tabuada-camera-desligada.png](captura-43-tabuada-camera-desligada.png) | — | — |
-| 44 tabuada-fim | o tempo acabou | O tempo acabou! Você fez 2 pontos. | [captura-44-tabuada-fim.png](captura-44-tabuada-fim.png) | — | — |
-| 45 painel | painel do professor | Painel do professor com a Turma de demonstração (6 alunos fictícios). | [captura-45-painel.png](captura-45-painel.png) | — | — |
+| 37 pizza-operar-erro | 3/4 - 1/4 + 1/4: cartao 5/4 | 5/4 não é a resposta. Vamos tentar de novo. Quanto é 3/4 − 1/4 + 1/4? Escolha o cartão. | [captura-37-pizza-operar-erro.png](captura-37-pizza-operar-erro.png) | operacao_trocada | 1 - repetir a instrucao |
+| 38 pizza-operar-fim | 3/4 - 1/4 + 1/4: cartao certo | Isso. A resposta é 3/4. | [captura-38-pizza-operar-fim.png](captura-38-pizza-operar-fim.png) | — | — |
+| 39 pizza-desafio-barra | desafio: fracao impropria | Isso. A resposta é 8/6 = 1 e 2/6. | [captura-39-pizza-desafio-barra.png](captura-39-pizza-desafio-barra.png) | — | — |
+| 40 dourado-apresentacao | momento 1: o que vamos fazer | Vamos montar o número com o jogo dourado: cubinho é unidade, barra é dezena, placa é centena e cubo é milhar. | [captura-40-dourado-apresentacao.png](captura-40-dourado-apresentacao.png) | — | — |
+| 41 dourado-atividade | numero, quadro valor de lugar e pilhas | Mostre o número 432 com o jogo dourado. Depois toque em Pronto. | [captura-41-dourado-atividade.png](captura-41-dourado-atividade.png) | — | — |
+| 42 dourado-coluna-errada | mouse: cubinho na coluna Centena | Um cubinho vai na coluna Unidade. A peça voltou para a pilha. | [captura-42-dourado-coluna-errada.png](captura-42-dourado-coluna-errada.png) | — | — |
+| 43 dourado-erro | Pronto com uma unidade a menos | Assim dá 431. Confira: unidades. Mostre o número 432 com o jogo dourado. Depois toque em Pronto. | [captura-43-dourado-erro.png](captura-43-dourado-erro.png) | contou_pecas_errado | 1 - repetir a instrucao |
+| 44 dourado-fim | 432 montado | Isso! Você montou 432. | [captura-44-dourado-fim.png](captura-44-dourado-fim.png) | — | — |
+| 45 dourado-milhar | nivel 3: modelo com cubo, placas, barras e cubinhos | 6.306 | [captura-45-dourado-milhar.png](captura-45-dourado-milhar.png) | — | — |
+| 46 trilhas-matematica | escolher Matematica | Matemática escolhida: Contar e comparar, Frações com pizza e Tabuada Protetora. | [captura-46-trilhas-matematica.png](captura-46-trilhas-matematica.png) | — | — |
+| 47 tabuada-apresentacao | momento 1: o que vamos fazer | Proteja a cidade! Acerte o monstrinho que tem o resultado da conta. Você tem 1 minuto. | [captura-47-tabuada-apresentacao.png](captura-47-tabuada-apresentacao.png) | — | — |
+| 48 tabuada-atividade | conta, relogio de 1 minuto e monstrinhos | Acerte o monstrinho com o resultado de 3 × 1. | [captura-48-tabuada-atividade.png](captura-48-tabuada-atividade.png) | — | — |
+| 49 tabuada-erro | mouse: monstrinho errado (-1) | 2 não é o resultado de 3 × 1. Menos um ponto. Acerte o monstrinho com o resultado de 3 × 1. | [captura-49-tabuada-erro.png](captura-49-tabuada-erro.png) | vizinho_na_tabuada | 1 - repetir a instrucao |
+| 50 tabuada-acertos | mouse: tres acertos (+3) | Isso! 4 × 9 = 36. Mais um ponto. | [captura-50-tabuada-acertos.png](captura-50-tabuada-acertos.png) | — | — |
+| 51 tabuada-camera-desligada | botao da camera: desligar | Câmera desligada. Toque para ligar. | [captura-51-tabuada-camera-desligada.png](captura-51-tabuada-camera-desligada.png) | — | — |
+| 52 tabuada-fim | o tempo acabou | O tempo acabou! Você fez 2 pontos. | [captura-52-tabuada-fim.png](captura-52-tabuada-fim.png) | — | — |
+| 53 painel | painel do professor | Painel do professor com a Turma de demonstração (6 alunos fictícios). | [captura-53-painel.png](captura-53-painel.png) | — | — |

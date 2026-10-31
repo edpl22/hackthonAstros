@@ -1,7 +1,8 @@
 """Pizza de Frações sobre a AtividadeBase.
 
 Nível 1: uma pizza cortada em d fatias; tocar numa fatia escolhe ou devolve; a fração aparece
-embaixo, grande; "Pronto" confere. Níveis 2 e 3: duas pizzas com o mesmo corte e 3 cartões.
+embaixo, grande; "Pronto" confere. Níveis 2 a 4: dois ou três pratos com o mesmo corte, ligados
+por + ou − (nível 3 mistura soma e subtração), e 3 cartões.
 Fatia escolhida: hachura diagonal + contorno grosso (não só cor). Opção: barra de chocolate.
 Pista 2: as pizzas aparecem sobrepostas, com "as fatias continuam do mesmo tamanho".
 """
@@ -19,6 +20,8 @@ from app.nucleo.tema import paleta_atual
 from app.telas.cena_itens import LARGURA, CenaItens, Peca
 
 Y_CARTOES = 490
+X_RESULTADO = 1130
+SINAL_NA_TELA = {"+": "+", "-": "−"}
 
 
 def _frase(chave: str, **dados) -> str:
@@ -154,15 +157,19 @@ class TelaPizza(AtividadeBase):
             self.fracao = self._texto(cena, f"0/{r.corte}", 520, 470, 72)
             cartoes = [(1000, 230)]
         else:
-            (n1, d), (n2, _) = r.parcelas
-            self.fatias = {
-                "a": self._pizza(cena, "a", QPointF(330, 215), 140, n1),
-                "b": self._pizza(cena, "b", QPointF(830, 215), 140, n2),
-            }
-            self._texto(cena, "+", 580, 215, 96)
-            self._texto(cena, f"{n1}/{d}", 330, 395, 48)
-            self._texto(cena, f"{n2}/{d}", 830, 395, 48)
-            self.fracao = self._texto(cena, "= ?", 1110, 215, 72)
+            k = len(r.parcelas)
+            raio = 140 if k == 2 else 105
+            passo = (X_RESULTADO - 140) / k
+            self.fatias = {}
+            for i, (n, d) in enumerate(r.parcelas):
+                x = 60 + passo * (i + 0.5)
+                nome = "abc"[i]
+                self.fatias[nome] = self._pizza(cena, nome, QPointF(x, 215), raio, n)
+                self._texto(cena, f"{n}/{d}", x, 215 + raio + 40, 48)
+                if i:
+                    sinal = SINAL_NA_TELA[r.sinais[i - 1]]
+                    self._texto(cena, sinal, x - passo / 2, 215, 96)
+            self.fracao = self._texto(cena, "= ?", X_RESULTADO, 215, 72)
             n = len(r.cartoes)
             cartoes = [(LARGURA / 2 + (i - (n - 1) / 2) * 200, Y_CARTOES) for i in range(n)]
         for cartao, (x, y) in zip(r.cartoes, cartoes, strict=True):
@@ -180,17 +187,24 @@ class TelaPizza(AtividadeBase):
         if r.montar:
             fatias = "fatia" if r.certo[0] == 1 else "fatias"
             return _frase("instrucao_montar", n=r.certo[0], fatias=fatias, corte=r.corte)
-        (n1, d), (n2, _) = r.parcelas
-        return _frase("instrucao_somar", a=f"{n1}/{d}", b=f"{n2}/{d}")
+        return _frase("instrucao_conta", conta=self._conta_na_tela())
 
     def item_atual(self) -> str | None:
         r = self.rodada
         if r.montar:
             return f"montar-{logica.texto(r.certo)}"
-        return f"soma-{logica.texto(r.parcelas[0])}+{logica.texto(r.parcelas[1])}"
+        prefixo = "conta" if "-" in r.sinais else "soma"
+        return f"{prefixo}-{logica.conta(r).replace(' ', '')}"
+
+    def _conta_na_tela(self) -> str:
+        conta = logica.conta(self.rodada)
+        return conta.replace(" - ", f" {SINAL_NA_TELA['-']} ")
 
     def habilidade(self) -> str:
-        chave = "habilidade_montar" if self.rodada.montar else "habilidade_somar"
+        r = self.rodada
+        if r.montar:
+            return texto("pizza.habilidade_montar")
+        chave = "habilidade_operar" if "-" in r.sinais else "habilidade_somar"
         return texto(f"pizza.{chave}")
 
     # --- jogadas ---------------------------------------------------------------------------
@@ -243,10 +257,16 @@ class TelaPizza(AtividadeBase):
     # --- pistas -----------------------------------------------------------------------------
 
     def realcar(self, item: str) -> None:
-        """Pista 2: as pizzas sobrepostas mostram que o tamanho da fatia não muda."""
+        """Pista 2: as pizzas sobrepostas mostram que o tamanho da fatia não muda. Com três
+        pratos ou subtração, as fatias de cada prato acendem e a frase fica igual."""
         if self.rodada.montar:
             alvo = self.fatias["a"][: self.rodada.certo[0]]
             self.cena.realcar([f.id for f in alvo])
+            return
+        if len(self.fatias) != 2 or "-" in self.rodada.sinais:
+            escolhidas = [f.id for fatias in self.fatias.values() for f in fatias if f.escolhida]
+            self.cena.realcar(escolhidas)
+            self.dica = self._texto(self.cena, texto("pizza.pista_tamanho"), 580, 40, 30)
             return
         for fatia in self.fatias["b"]:
             fatia.setOpacity(0.55)  # transparência que ensina: a fatia de B cobre a de A
@@ -272,11 +292,12 @@ class TelaPizza(AtividadeBase):
     def estado_area(self) -> dict:
         r = self.rodada
         dados = {
-            "modo": {1: "montar", 2: "somar"}.get(r.nivel, "desafio"),
+            "modo": {1: "montar", 2: "somar", 3: "operar"}.get(r.nivel, "desafio"),
             "forma": self.forma,
             "corte": r.corte,
             "fatias_escolhidas": self._escolhidas() if r.montar else None,
             "parcelas": [logica.texto(f) for f in r.parcelas],
+            "sinais": r.sinais,
             **self.cena.estado(),
         }
         return dados

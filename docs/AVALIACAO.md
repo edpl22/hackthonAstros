@@ -24,11 +24,12 @@ Cada resposta vira um registro com o tipo de erro (por exemplo, `par_surdo_sonor
 | O erro é classificado e vira recomendação para o professor | `app/nucleo/erros.py`, `conteudo/recomendacoes.json` | `saida/tentativas.json`, campo `tipo_erro`; `pytest tests/test_progresso_erros.py` |
 | Cada resposta é registrada com os campos pedidos | `app/nucleo/registro.py` | `saida/tentativas.json`; `pytest tests/test_registro.py` |
 | Matemática com objetos: montar, comparar (um a um, sobra marcada) e contas até 20 | `app/atividades/quantidades/` | `atlas demo quantidades`; `pytest tests/test_quantidades_logica.py tests/test_quantidades_tela.py` |
-| Frações: montar, somar com mesmo denominador e impróprias; o erro de somar denominadores é detectado e tratado com pizzas sobrepostas | `app/atividades/pizza/` | `atlas demo pizza`; `pytest tests/test_pizza_logica.py tests/test_pizza_tela.py` |
+| Frações: montar, somar com mesmo denominador, operar com 2 ou 3 pratos (soma e subtração) e impróprias; somar denominadores e trocar a operação são detectados | `app/atividades/pizza/`, `app/nucleo/erros.py` (`classificar_fracao`) | `atlas demo pizza`; `pytest tests/test_pizza_logica.py tests/test_pizza_tela.py` |
+| Valor posicional com jogo dourado: o número é montado por ordem; trocar as ordens e contar uma peça a mais ou a menos são detectados | `app/atividades/dourado/`, `app/nucleo/erros.py` (`classificar_dourado`) | `atlas demo dourado`; `pytest tests/test_dourado.py` |
 | Tabuada com tempo: +1 no monstrinho certo, -1 no errado; erro de somar em vez de multiplicar e de vizinho na tabuada detectados | `app/atividades/tabuada/`, `app/nucleo/erros.py` | `atlas demo tabuada --entrada mao-simulada`; `pytest tests/test_tabuada.py` |
 | Gesto de arminha: indicador esticado e os outros dedos dobrados; o coice rápido para cima dispara na mira de antes do coice | `app/entrada/mao.py` (`eh_arminha`, `DetectorDisparo`), `app/entrada/mao_entrada.py` | `pytest tests/test_tabuada.py -k "arminha or disparo or pinca"` |
 | A câmera pode ser desligada em qualquer atividade sem perder mouse e teclado | `app/atividades/base.py` (`botao_camera`) | `pytest tests/test_base.py -k camera`; captura `tabuada-camera-desligada` |
-| O professor vê quem domina, quem progride e quem precisa de apoio, com uma sugestão concreta | `app/nucleo/painel.py`, `app/telas/painel.py` | `atlas demo painel`; `pytest tests/test_painel.py`; captura `captura-45-painel.png` em `docs/saida-exemplo/` |
+| O professor vê quem domina, quem progride e quem precisa de apoio, com uma sugestão concreta | `app/nucleo/painel.py`, `app/telas/painel.py` | `atlas demo painel`; `pytest tests/test_painel.py`; captura `captura-53-painel.png` em `docs/saida-exemplo/` |
 | Uma IA consegue jogar a atividade sem tela | `app/headless/agente.py` | `echo '{"acao":"estado"}' \| docker compose run --rm -T agente`; `docs/saida-exemplo/agente-respostas.jsonl` |
 | O vídeo nunca sai do computador; nada de rede em execução | `app/entrada/camera.py` | `pytest tests/test_privacidade.py` (proíbe `imwrite` e módulos de rede em `app/`) |
 | OpenCV e MediaPipe são opcionais | `app/entrada/camera.py` | `pytest tests/test_dependencias.py`; o job `testes` do CI roda sem eles |
@@ -40,7 +41,7 @@ Todas as capturas e saídas de `docs/saida-exemplo/` foram geradas pelo app real
 
 ## Limitações conhecidas
 
-- **Matemática:** a Mesa de Quantidades está pronta sem o modo Par/ímpar; na Pizza de Frações o corte é sorteado (a criança não o escolhe) e as fatias não são arrastadas para uma terceira pizza.
+- **Matemática:** a Mesa de Quantidades está pronta sem o modo Par/ímpar; na Pizza de Frações o corte é sorteado (a criança não o escolhe), os pratos de uma conta têm sempre o mesmo denominador e a resposta é escolhida em cartões (as fatias não são arrastadas para um prato de resultado).
 - **Interface remota no navegador (noVNC):** não implementada; use os instaladores, o Docker sem tela ou o Python.
 - **Câmera real:** não é testável sem webcam. Foi testada manualmente por uma pessoa do time num notebook com Windows; em avaliação automática, vale a mão simulada.
 - **Voz:** só no português (a letra ou a sílaba pega e a palavra pronta); instruções e retornos aparecem na legenda. Sintética (eSpeak NG), compreensível mas robótica. Com credencial do Google Cloud, `scripts/gerar_audio.py --provedor google --refazer` troca todos os WAV.

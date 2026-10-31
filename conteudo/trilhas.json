@@ -6,6 +6,7 @@
   "matematica": [
     {"id": "quantidades", "nome": "Contar e comparar", "atividade": "quantidades"},
     {"id": "fracoes", "nome": "Frações com pizza", "atividade": "pizza"},
+    {"id": "dourado", "nome": "Jogo Dourado", "atividade": "dourado"},
     {"id": "tabuada", "nome": "Tabuada Protetora", "atividade": "tabuada"}
   ]
 }

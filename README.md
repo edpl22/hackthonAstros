@@ -33,7 +33,7 @@ Sem build, com a imagem pronta: `docker run --rm ghcr.io/edpl22/atlas:latest ver
 | --- | --- | --- |
 | `docker compose build` | Monta a imagem (Python 3.11, Qt, OpenCV, MediaPipe) | `Image atlas:local Built` |
 | `docker compose run --rm verificar` | Confere o ambiente, uma linha por item | Última linha: `RESULTADO: pronto` |
-| `docker compose run --rm demo` | Joga as atividades por roteiro e salva evidências em `./saida/` | `demo todas: 45 capturas; ...` e `relatorio: /saida/relatorio.md` |
+| `docker compose run --rm demo` | Joga as atividades por roteiro e salva evidências em `./saida/` | `demo todas: 53 capturas; ...` e `relatorio: /saida/relatorio.md` |
 | `docker compose run --rm teste` | Roda a suíte de testes (pytest) | Última linha com `passed` e sem `failed` |
 | `echo ... \| docker compose run --rm -T agente` | Abre o Ímã das Sílabas em BOLA e responde em JSON | 1ª linha `{"pronto": true, ...}`; 2ª linha com o `estado` |
 
@@ -72,7 +72,7 @@ atlas demo silabas --perfil tea,dislexia --entrada teclado --saida ./saida-tea
 atlas perfis --combinar tea,dislexia
 ```
 
-- `demo`: roteiros `navegacao`, `treino`, `silabas`, `quantidades`, `pizza`, `tabuada`, `painel` ou `todas`.
+- `demo`: roteiros `navegacao`, `treino`, `silabas`, `quantidades`, `pizza`, `dourado`, `tabuada`, `painel` ou `todas`.
 - `--perfil`: `padrao`, `tea`, `tdah`, `dislexia`, `baixa_visao`, `daltonismo`, `motor`, `cegueira` (combináveis com vírgula; vence a opção mais acessível).
 - `--entrada`: `mouse`, `teclado`, `varredura` ou `mao-simulada`. A mão simulada gera os 21 pontos de uma mão que aponta, faz pinça e solta, e eles passam pelo mesmo código da câmera (`app/entrada/mao.py`).
 - No Docker, os mesmos argumentos vão depois do serviço: `docker compose run --rm demo demo silabas --perfil tea --saida /saida`.
@@ -81,7 +81,7 @@ A câmera real não é testável sem webcam; o caminho dela é coberto por `--en
 
 ### Protocolo do agente (`atlas agente <atividade>`)
 
-JSON Lines: um pedido JSON por linha no stdin, uma resposta JSON por linha no stdout. Atividades: `silabas` (começa em BOLA; `--palavra janela` troca), `quantidades` (Mesa: `{"acao":"escolher","id":"cartao-7"}`), `pizza` (`fatia-a-0` escolhe uma fatia; `cartao-3-4` escolhe 3/4), `tabuada` (`escolher` com o id de um monstrinho acerta ele) e `treino`.
+JSON Lines: um pedido JSON por linha no stdin, uma resposta JSON por linha no stdout. Atividades: `silabas` (começa em BOLA; `--palavra janela` troca), `quantidades` (Mesa: `{"acao":"escolher","id":"cartao-7"}`), `pizza` (`fatia-a-0` escolhe uma fatia; `cartao-3-4` escolhe 3/4), `dourado` (`pegar` a peça de cima de uma pilha, como `centena-8`, e `soltar` em `coluna-centena`; depois `escolher` `cartao-pronto`), `tabuada` (`escolher` com o id de um monstrinho acerta ele) e `treino`.
 
 | Ação | Exemplo |
 | --- | --- |
@@ -157,7 +157,8 @@ python -m app.main
 | Treino de arrastar (alfabeto inteiro em blocos de 4 letras, maiúsculas e minúsculas) | Pronto |
 | Teste da mão (câmera), no canto inferior esquerdo da tela inicial | Pronto |
 | Mesa de Quantidades (matemática): montar, comparar, somar e subtrair até 20 | Pronta (sem o modo Par/ímpar) |
-| Pizza de Frações (matemática): montar, somar, frações impróprias, barra de chocolate | Pronta |
+| Pizza de Frações (matemática): montar, somar, operar com 2 ou 3 pratos (soma e subtração), frações impróprias, barra de chocolate | Pronta |
+| Jogo Dourado (matemática): montar o número com cubo, placas, barras e cubinhos no quadro valor de lugar, até 9.999 | Pronto |
 | Tabuada Protetora (matemática): 1 minuto, monstrinhos com resultados, +1 no certo e -1 no errado; pelo mouse ou pela "arminha" da mão (coice para cima dispara) | Pronta; os monstrinhos são retângulos (placeholder) |
 | Botão de câmera abaixo do Voltar em toda atividade: começa ligada e desliga a mão quando ela atrapalha | Pronto |
 | Instaladores Windows e macOS e imagem Docker pronta (GHCR) | Publicados a cada versão (Releases) |

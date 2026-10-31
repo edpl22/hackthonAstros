@@ -80,24 +80,53 @@ def classificar_tabuada(resposta: int, a: int, b: int) -> str | None:
     return "outro"
 
 
+# --- Jogo Dourado ---------------------------------------------------------------------
+
+
+def classificar_dourado(na_mesa: dict[str, int], certo: dict[str, int]) -> str | None:
+    """Peças por ordem (milhar, centena, dezena, unidade) na mesa e as do número."""
+    if na_mesa == certo:
+        return None
+    if sorted(na_mesa.values()) == sorted(certo.values()):
+        return "trocou_as_ordens"  # 352 montado como 2 centenas, 5 dezenas e 3 unidades
+    diferencas = [abs(na_mesa[o] - certo[o]) for o in certo]
+    if sorted(diferencas)[-2:] == [0, 1]:
+        return "contou_pecas_errado"  # uma ordem com uma peça a mais ou a menos
+    return "outro"
+
+
 # --- Pizza de Frações -----------------------------------------------------------------
 
 
+def resultado_fracao(parcelas: list[tuple[int, int]], sinais=None) -> tuple[int, int]:
+    """Faz a conta com frações de mesmo denominador: sinais[i] liga a parcela i e a i+1."""
+    sinais = sinais if sinais is not None else ["+"] * (len(parcelas) - 1)
+    numerador = parcelas[0][0]
+    for sinal, (n, _) in zip(sinais, parcelas[1:], strict=True):
+        numerador += n if sinal == "+" else -n
+    return numerador, parcelas[0][1]
+
+
 def classificar_fracao(
-    resposta: tuple[int, int], parcelas: list[tuple[int, int]]
+    resposta: tuple[int, int], parcelas: list[tuple[int, int]], sinais=None
 ) -> str | None:
-    """Soma de frações de mesmo denominador. Frações como (numerador, denominador)."""
-    denominador = parcelas[0][1]
-    certo = (sum(n for n, _ in parcelas), denominador)
+    """Conta com frações de mesmo denominador (soma e subtração). Frações como (num, den)."""
+    sinais = sinais if sinais is not None else ["+"] * (len(parcelas) - 1)
+    certo = resultado_fracao(parcelas, sinais)
+    denominador = certo[1]
     if resposta == certo:
         return None
-    if resposta == (sum(n for n, _ in parcelas), sum(d for _, d in parcelas)):
+    if "+" in sinais and "-" not in sinais and resposta == (
+        certo[0], sum(d for _, d in parcelas)
+    ):
         return "somou_denominadores"
+    if "-" in sinais and resposta == resultado_fracao(parcelas, ["+"] * len(sinais)):
+        return "operacao_trocada"
     if resposta == (certo[1], certo[0]):
         return "confundiu_numerador_denominador"
     if resposta[1] == denominador:
         return "contou_fatias_errado"
-    if resposta[1] and Fraction(*resposta) == Fraction(*certo):
+    if resposta[1] and certo[1] and Fraction(*resposta) == Fraction(*certo):
         return None  # fração equivalente também está certa
     return "outro"
 

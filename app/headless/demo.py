@@ -398,6 +398,18 @@ def roteiro_pizza(ex: Execucao) -> None:
                     tela.ultimo_anuncio, tipo_erro=tentativa["tipo_erro"], pista=PISTAS[n_pista])
     _escolher(tela, ex, cartao(tela.rodada.certo))
 
+    # Operar: três pratos com soma e subtração; primeiro troca a operação, depois acerta.
+    janela.abrir_atividade("pizza", semente=SEMENTE, varredura=varredura, nivel=pizza.OPERAR)
+    tela.comecar()
+    r = tela.rodada
+    trocada = next(c.id for c in r.cartoes if c.valor != r.certo and c.valor[1] == r.corte)
+    _escolher(tela, ex, trocada)
+    tentativa = _ultima_tentativa(janela)
+    ex.capturar(janela, "pizza-operar-erro", f"{pizza.conta(r)}: cartao {tentativa['resposta']}",
+                tela.ultimo_anuncio, tipo_erro=tentativa["tipo_erro"], pista=PISTAS[1])
+    _escolher(tela, ex, cartao(r.certo))
+    ex.capturar(janela, "pizza-operar-fim", f"{pizza.conta(r)}: cartao certo", tela.ultimo_anuncio)
+
     # Desafio na barra de chocolate: a soma passa de uma barra inteira.
     janela.abrir_atividade("pizza", semente=SEMENTE, varredura=varredura, nivel=pizza.DESAFIO,
                            forma="barra")
@@ -405,6 +417,56 @@ def roteiro_pizza(ex: Execucao) -> None:
     _escolher(tela, ex, cartao(tela.rodada.certo))
     ex.capturar(janela, "pizza-desafio-barra", "desafio: fracao impropria", tela.ultimo_anuncio)
     ex.registrar("pizza", evento="estado_final", concluida=tela.estado()["concluida"])
+    ex.fechar(janela)
+
+
+def roteiro_dourado(ex: Execucao) -> None:
+    from app.atividades.dourado import logica as dourado
+    from app.atividades.dourado.tela import id_coluna
+
+    janela = ex.nova_janela()
+    janela.escolher_aluno(None, ex.perfis)
+    janela.abrir_materia("matematica")
+    tela = janela.atividades["dourado"]
+    jogar = JOGADAS[ex.entrada]
+    varredura = ex.entrada == "varredura"
+    janela.abrir_atividade("dourado", semente=SEMENTE, varredura=varredura, nivel=2)
+    tela.anunciou.connect(
+        lambda frase: ex.registrar("dourado", entrada=tela.barramento.modo_entrada, anuncio=frase)
+    )
+    ex.capturar(janela, "dourado-apresentacao", "momento 1: o que vamos fazer",
+                tela.instrucao.text())
+    tela.comecar()
+    ex.capturar(janela, "dourado-atividade", "numero, quadro valor de lugar e pilhas",
+                tela.instrucao.text())
+
+    def levar(ordem, n, coluna=None):
+        for k in range(n):
+            topo = next(i for i in tela.pilhas[ordem] if not tela.cena.pecas[i].encaixada)
+            jogar(tela, topo, id_coluna(coluna or ordem), k)
+
+    certo = dourado.algarismos(tela.rodada.numero)
+    levar("unidade", 1, coluna="centena")  # cubinho na coluna das centenas: volta
+    ex.capturar(janela, "dourado-coluna-errada", f"{ex.entrada}: cubinho na coluna Centena",
+                tela.ultimo_anuncio)
+    for ordem in tela.rodada.ordens:  # uma unidade a menos (erro proposital)
+        levar(ordem, certo[ordem] - (1 if ordem == "unidade" else 0))
+    _escolher(tela, ex, "cartao-pronto")
+    tentativa = _ultima_tentativa(janela)
+    ex.capturar(janela, "dourado-erro", "Pronto com uma unidade a menos", tela.ultimo_anuncio,
+                tipo_erro=tentativa["tipo_erro"], pista=PISTAS[1])
+    levar("unidade", certo["unidade"])
+    _escolher(tela, ex, "cartao-pronto")
+    ex.capturar(janela, "dourado-fim", f"{dourado.texto_numero(tela.rodada.numero)} montado",
+                tela.ultimo_anuncio)
+
+    # Nível 3: o milhar entra com o cubo; o modelo da pista 3 monta o número.
+    janela.abrir_atividade("dourado", semente=SEMENTE, varredura=varredura, nivel=3)
+    tela.comecar()
+    tela.mostrar_modelo(tela.item_atual())
+    ex.capturar(janela, "dourado-milhar", "nivel 3: modelo com cubo, placas, barras e cubinhos",
+                dourado.texto_numero(tela.rodada.numero))
+    ex.registrar("dourado", evento="estado_final", concluida=tela.rodada.concluida)
     ex.fechar(janela)
 
 
@@ -473,6 +535,7 @@ ROTEIROS = {
     "silabas": roteiro_silabas,
     "quantidades": roteiro_quantidades,
     "pizza": roteiro_pizza,
+    "dourado": roteiro_dourado,
     "tabuada": roteiro_tabuada,
     "painel": roteiro_painel,
 }

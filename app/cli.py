@@ -6,7 +6,8 @@ import os
 import sys
 
 ROTEIROS = (
-    "navegacao", "treino", "silabas", "quantidades", "pizza", "tabuada", "painel", "todas",
+    "navegacao", "treino", "silabas", "quantidades", "pizza", "dourado", "tabuada", "painel",
+    "todas",
 )
 ENTRADAS = ("mouse", "teclado", "varredura", "mao-simulada")
 

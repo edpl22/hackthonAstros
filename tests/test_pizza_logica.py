@@ -38,3 +38,25 @@ def test_conferir():
     m = logica.Rodada(logica.MONTAR, 4, [(3, 4)], (3, 4))
     assert logica.conferir_montar(m, 3) is None
     assert logica.conferir_montar(m, 2) == "contou_fatias_errado"
+
+
+@pytest.mark.parametrize("semente", range(30))
+def test_operar_nunca_fica_negativo_nem_passa_de_uma_pizza(semente):
+    r = logica.nova_rodada(logica.OPERAR, semente)
+    assert len(r.parcelas) == 3 and "-" in r.sinais
+    parcial = r.parcelas[0][0]
+    for sinal, (n, _) in zip(r.sinais, r.parcelas[1:], strict=True):
+        parcial += n if sinal == "+" else -n
+        assert parcial >= 1
+    assert r.certo == (parcial, r.corte) and 1 <= parcial <= r.corte
+    valores = [c.valor for c in r.cartoes]
+    assert r.certo in valores and len(set(valores)) == 3
+
+
+def test_conferir_subtracao():
+    r = logica.Rodada(logica.OPERAR, 8, [(5, 8), (2, 8)], (3, 8), sinais=["-"])
+    assert logica.conferir_soma(r, (3, 8)) is None
+    assert logica.conferir_soma(r, (7, 8)) == "operacao_trocada"
+    assert logica.conferir_soma(r, (8, 3)) == "confundiu_numerador_denominador"
+    assert logica.conferir_soma(r, (4, 8)) == "contou_fatias_errado"
+    assert logica.conta(r) == "5/8 - 2/8"

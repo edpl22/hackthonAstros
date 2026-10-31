@@ -55,6 +55,14 @@
     "descricao": "errou qual bandeja tem mais",
     "sugestao": "ligar os objetos das duas bandejas um a um com o dedo e olhar de que lado sobra."
   },
+  "trocou_as_ordens": {
+    "descricao": "trocou as ordens: usou placas, barras e cubinhos com os algarismos fora do lugar",
+    "sugestao": "usar o quadro valor de lugar: apontar cada algarismo da direita para a esquerda dizendo unidade, dezena, centena, milhar."
+  },
+  "contou_pecas_errado": {
+    "descricao": "contou uma peça a mais ou a menos numa ordem",
+    "sugestao": "contar as peças de cada ordem em voz alta, tocando uma por uma, antes de tocar em Pronto."
+  },
   "somou_em_vez_de_multiplicar": {
     "descricao": "somou os dois números em vez de multiplicar",
     "sugestao": "montar a conta como grupos iguais: 3 x 4 são 3 grupos de 4 objetos, contados juntos."

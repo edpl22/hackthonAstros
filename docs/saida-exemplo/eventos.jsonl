@@ -61,10 +61,37 @@
 {"n": 61, "roteiro": "pizza", "entrada": "mouse", "anuncio": "4/12 não é a resposta. Vamos tentar de novo. Quanto é 2/6 + 2/6? Escolha o cartão."}
 {"n": 62, "roteiro": "pizza", "entrada": "mouse", "anuncio": "6/4 não é a resposta. Vamos tentar de novo. Olhe o que está marcado."}
 {"n": 63, "roteiro": "pizza", "entrada": "mouse", "anuncio": "Isso. A resposta é 4/6."}
-{"n": 64, "roteiro": "pizza", "entrada": "mouse", "anuncio": "Isso. A resposta é 8/6 = 1 e 2/6."}
-{"n": 65, "roteiro": "pizza", "evento": "estado_final", "concluida": true}
-{"n": 66, "roteiro": "tabuada", "entrada": "mouse", "anuncio": "2 não é o resultado de 3 × 1. Menos um ponto. Acerte o monstrinho com o resultado de 3 × 1."}
-{"n": 67, "roteiro": "tabuada", "entrada": "mouse", "anuncio": "Isso! 3 × 1 = 3. Mais um ponto."}
-{"n": 68, "roteiro": "tabuada", "entrada": "mouse", "anuncio": "Isso! 3 × 9 = 27. Mais um ponto."}
-{"n": 69, "roteiro": "tabuada", "entrada": "mouse", "anuncio": "Isso! 4 × 9 = 36. Mais um ponto."}
-{"n": 70, "roteiro": "tabuada", "evento": "estado_final", "pontos": 2}
+{"n": 64, "roteiro": "pizza", "entrada": "mouse", "anuncio": "5/4 não é a resposta. Vamos tentar de novo. Quanto é 3/4 − 1/4 + 1/4? Escolha o cartão."}
+{"n": 65, "roteiro": "pizza", "entrada": "mouse", "anuncio": "Isso. A resposta é 3/4."}
+{"n": 66, "roteiro": "pizza", "entrada": "mouse", "anuncio": "Isso. A resposta é 8/6 = 1 e 2/6."}
+{"n": 67, "roteiro": "pizza", "evento": "estado_final", "concluida": true}
+{"n": 68, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Você pegou um cubinho."}
+{"n": 69, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Um cubinho vai na coluna Unidade. A peça voltou para a pilha."}
+{"n": 70, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Você pegou uma placa."}
+{"n": 71, "roteiro": "dourado", "entrada": "mouse", "anuncio": "1 centena"}
+{"n": 72, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Você pegou uma placa."}
+{"n": 73, "roteiro": "dourado", "entrada": "mouse", "anuncio": "2 centenas"}
+{"n": 74, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Você pegou uma placa."}
+{"n": 75, "roteiro": "dourado", "entrada": "mouse", "anuncio": "3 centenas"}
+{"n": 76, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Você pegou uma placa."}
+{"n": 77, "roteiro": "dourado", "entrada": "mouse", "anuncio": "4 centenas"}
+{"n": 78, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Você pegou uma barra."}
+{"n": 79, "roteiro": "dourado", "entrada": "mouse", "anuncio": "1 dezena"}
+{"n": 80, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Você pegou uma barra."}
+{"n": 81, "roteiro": "dourado", "entrada": "mouse", "anuncio": "2 dezenas"}
+{"n": 82, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Você pegou uma barra."}
+{"n": 83, "roteiro": "dourado", "entrada": "mouse", "anuncio": "3 dezenas"}
+{"n": 84, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Você pegou um cubinho."}
+{"n": 85, "roteiro": "dourado", "entrada": "mouse", "anuncio": "1 unidade"}
+{"n": 86, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Assim dá 431. Confira: unidades. Mostre o número 432 com o jogo dourado. Depois toque em Pronto."}
+{"n": 87, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Você pegou um cubinho."}
+{"n": 88, "roteiro": "dourado", "entrada": "mouse", "anuncio": "1 unidade"}
+{"n": 89, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Você pegou um cubinho."}
+{"n": 90, "roteiro": "dourado", "entrada": "mouse", "anuncio": "2 unidades"}
+{"n": 91, "roteiro": "dourado", "entrada": "mouse", "anuncio": "Isso! Você montou 432."}
+{"n": 92, "roteiro": "dourado", "evento": "estado_final", "concluida": true}
+{"n": 93, "roteiro": "tabuada", "entrada": "mouse", "anuncio": "2 não é o resultado de 3 × 1. Menos um ponto. Acerte o monstrinho com o resultado de 3 × 1."}
+{"n": 94, "roteiro": "tabuada", "entrada": "mouse", "anuncio": "Isso! 3 × 1 = 3. Mais um ponto."}
+{"n": 95, "roteiro": "tabuada", "entrada": "mouse", "anuncio": "Isso! 3 × 9 = 27. Mais um ponto."}
+{"n": 96, "roteiro": "tabuada", "entrada": "mouse", "anuncio": "Isso! 4 × 9 = 36. Mais um ponto."}
+{"n": 97, "roteiro": "tabuada", "evento": "estado_final", "pontos": 2}
