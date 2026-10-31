@@ -138,6 +138,20 @@
     "certo": "Isso. A resposta é {resposta}.",
     "errado": "{resposta} não é a resposta. Vamos tentar de novo."
   },
+  "pizza": {
+    "habilidade_montar": "representar frações",
+    "habilidade_somar": "somar frações de mesmo denominador",
+    "apresentacao": "Vamos repartir a pizza em fatias do mesmo tamanho.",
+    "instrucao_montar": "Pegue {n} {fatias} da pizza de {corte} fatias. Depois toque em Pronto.",
+    "instrucao_somar": "Quanto é {a} + {b}? Escolha o cartão.",
+    "terminou": "As frações estão certas.",
+    "fracao": "Você pegou {fracao} da pizza.",
+    "certo": "Isso. A resposta é {resposta}.",
+    "errado": "{resposta} não é a resposta. Vamos tentar de novo.",
+    "pista_tamanho": "As fatias continuam do mesmo tamanho.",
+    "escolha_cartao": "Escolha o cartão.",
+    "toque_pronto": "Depois toque em Pronto."
+  },
   "anuncio": {
     "pegou": "Você pegou a letra {item}.",
     "encaixou": "Letra {item} colocada na caixa da letra {alvo}.",
