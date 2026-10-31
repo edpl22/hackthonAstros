@@ -29,3 +29,29 @@
 {"n": 29, "roteiro": "silabas", "entrada": "mouse", "anuncio": "LA não é a mais forte. Vamos tentar de novo. Ouça a palavra BOLA. Qual bolha é a mais forte?"}
 {"n": 30, "roteiro": "silabas", "entrada": "mouse", "anuncio": "Isso. BO é a sílaba mais forte de BOLA."}
 {"n": 31, "roteiro": "silabas", "evento": "estado_final", "concluida": true}
+{"n": 32, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Você pegou uma maçã."}
+{"n": 33, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "uma maçã"}
+{"n": 34, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Você pegou uma maçã."}
+{"n": 35, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "duas maçãs"}
+{"n": 36, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Você pegou uma maçã."}
+{"n": 37, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "três maçãs"}
+{"n": 38, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Você pegou uma maçã."}
+{"n": 39, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "quatro maçãs"}
+{"n": 40, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Você pegou uma maçã."}
+{"n": 41, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "cinco maçãs"}
+{"n": 42, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Na bandeja tinha cinco maçãs. Vamos tentar de novo. Coloque 4 maçãs na bandeja. Depois toque em Pronto."}
+{"n": 43, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Você pegou uma maçã."}
+{"n": 44, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "uma maçã"}
+{"n": 45, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Você pegou uma maçã."}
+{"n": 46, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "duas maçãs"}
+{"n": 47, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Você pegou uma maçã."}
+{"n": 48, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "três maçãs"}
+{"n": 49, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Você pegou uma maçã."}
+{"n": 50, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "quatro maçãs"}
+{"n": 51, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Isso. Na bandeja tem quatro maçãs."}
+{"n": 52, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Menor não é a resposta. Vamos tentar de novo. Compare as bandejas. A da esquerda é maior, menor ou igual à da direita?"}
+{"n": 53, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Isso. A resposta é maior."}
+{"n": 54, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "11 não é a resposta. Vamos tentar de novo. Quanto é 7 − 4? Escolha o cartão."}
+{"n": 55, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "4 não é a resposta. Vamos tentar de novo. Olhe o que está marcado."}
+{"n": 56, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Isso. A resposta é 3."}
+{"n": 57, "roteiro": "quantidades", "evento": "estado_final", "concluida": true}

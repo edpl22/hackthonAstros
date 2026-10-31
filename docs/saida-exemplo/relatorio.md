@@ -24,3 +24,12 @@
 | 20 silabas-nivel3 | nivel 3: PRATO em minusculas | Pegue a bolha pra. Coloque na primeira caixa. | [captura-20-silabas-nivel3.png](captura-20-silabas-nivel3.png) | — | — |
 | 21 silabas-tonica-erro | nivel 4: escolhe LA | LA não é a mais forte. Vamos tentar de novo. Ouça a palavra BOLA. Qual bolha é a mais forte? | [captura-21-silabas-tonica-erro.png](captura-21-silabas-tonica-erro.png) | tonica_errada | 1 - repetir a instrucao |
 | 22 silabas-tonica-certa | nivel 4: escolhe BO | Isso. BO é a sílaba mais forte de BOLA. | [captura-22-silabas-tonica-certa.png](captura-22-silabas-tonica-certa.png) | — | — |
+| 23 mesa-apresentacao | momento 1: o que vamos fazer | Vamos contar com os objetos da mesa. | [captura-23-mesa-apresentacao.png](captura-23-mesa-apresentacao.png) | — | — |
+| 24 mesa-montar | mouse: 5 objetos na bandeja | cinco maçãs | [captura-24-mesa-montar.png](captura-24-mesa-montar.png) | — | — |
+| 25 mesa-montar-erro | Pronto com um a mais | Na bandeja tinha cinco maçãs. Vamos tentar de novo. Coloque 4 maçãs na bandeja. Depois toque em Pronto. | [captura-25-mesa-montar-erro.png](captura-25-mesa-montar-erro.png) | um_a_mais_ou_menos | 1 - repetir a instrucao |
+| 26 mesa-montar-fim | 4 objetos e Pronto | Isso. Na bandeja tem quatro maçãs. | [captura-26-mesa-montar-fim.png](captura-26-mesa-montar-fim.png) | — | — |
+| 27 mesa-comparar-erro | comparar: cartao errado | Menor não é a resposta. Vamos tentar de novo. Compare as bandejas. A da esquerda é maior, menor ou igual à da direita? | [captura-27-mesa-comparar-erro.png](captura-27-mesa-comparar-erro.png) | comparacao_errada | 1 - repetir a instrucao |
+| 28 mesa-conta | conta: 7 − 4 | Quanto é 7 − 4? Escolha o cartão. | [captura-28-mesa-conta.png](captura-28-mesa-conta.png) | — | — |
+| 29 mesa-conta-pista1 | cartao 11 | 11 não é a resposta. Vamos tentar de novo. Quanto é 7 − 4? Escolha o cartão. | [captura-29-mesa-conta-pista1.png](captura-29-mesa-conta-pista1.png) | operacao_trocada | 1 - repetir a instrucao |
+| 30 mesa-conta-pista2 | cartao 4 | 4 não é a resposta. Vamos tentar de novo. Olhe o que está marcado. | [captura-30-mesa-conta-pista2.png](captura-30-mesa-conta-pista2.png) | um_a_mais_ou_menos | 2 - realcar a peca e a caixa |
+| 31 mesa-conta-fim | cartao certo | Isso. A resposta é 3. | [captura-31-mesa-conta-fim.png](captura-31-mesa-conta-fim.png) | — | — |

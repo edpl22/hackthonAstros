@@ -10,10 +10,10 @@
     "tipo_erro": "letra_trocada",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 42,
+    "tempo_ms": 44,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T00:56:05"
+    "ts": "2026-10-31T01:14:44"
   },
   {
     "id": 2,
@@ -26,10 +26,10 @@
     "tipo_erro": "letra_trocada",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 83,
+    "tempo_ms": 85,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T00:56:05"
+    "ts": "2026-10-31T01:14:44"
   },
   {
     "id": 3,
@@ -42,10 +42,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 170,
+    "tempo_ms": 172,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T00:56:05"
+    "ts": "2026-10-31T01:14:44"
   },
   {
     "id": 4,
@@ -58,10 +58,10 @@
     "tipo_erro": null,
     "pistas": 0,
     "precisou_modelo": false,
-    "tempo_ms": 39,
+    "tempo_ms": 38,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T00:56:05"
+    "ts": "2026-10-31T01:14:44"
   },
   {
     "id": 5,
@@ -77,7 +77,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T00:56:05"
+    "ts": "2026-10-31T01:14:44"
   },
   {
     "id": 6,
@@ -93,7 +93,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T00:56:05"
+    "ts": "2026-10-31T01:14:44"
   },
   {
     "id": 1,
@@ -106,10 +106,10 @@
     "tipo_erro": "ordem_trocada",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 44,
+    "tempo_ms": 45,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T00:56:05"
+    "ts": "2026-10-31T01:14:44"
   },
   {
     "id": 2,
@@ -122,10 +122,10 @@
     "tipo_erro": "silaba_de_outra_palavra",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 88,
+    "tempo_ms": 89,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T00:56:05"
+    "ts": "2026-10-31T01:14:45"
   },
   {
     "id": 3,
@@ -138,10 +138,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 131,
+    "tempo_ms": 133,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T00:56:05"
+    "ts": "2026-10-31T01:14:45"
   },
   {
     "id": 4,
@@ -154,10 +154,10 @@
     "tipo_erro": null,
     "pistas": 0,
     "precisou_modelo": false,
-    "tempo_ms": 41,
+    "tempo_ms": 40,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T00:56:05"
+    "ts": "2026-10-31T01:14:45"
   },
   {
     "id": 5,
@@ -173,7 +173,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T00:56:05"
+    "ts": "2026-10-31T01:14:45"
   },
   {
     "id": 6,
@@ -186,9 +186,121 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 42,
+    "tempo_ms": 41,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T00:56:05"
+    "ts": "2026-10-31T01:14:45"
+  },
+  {
+    "id": 1,
+    "aluno": "visitante",
+    "atividade": "quantidades",
+    "habilidade": "contar e montar quantidades",
+    "item": "montar-4",
+    "resposta": "5",
+    "correta": false,
+    "tipo_erro": "um_a_mais_ou_menos",
+    "pistas": 1,
+    "precisou_modelo": false,
+    "tempo_ms": 44,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T01:14:45"
+  },
+  {
+    "id": 2,
+    "aluno": "visitante",
+    "atividade": "quantidades",
+    "habilidade": "contar e montar quantidades",
+    "item": "montar-4",
+    "resposta": "4",
+    "correta": true,
+    "tipo_erro": null,
+    "pistas": 1,
+    "precisou_modelo": false,
+    "tempo_ms": 89,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T01:14:45"
+  },
+  {
+    "id": 3,
+    "aluno": "visitante",
+    "atividade": "quantidades",
+    "habilidade": "comparar quantidades",
+    "item": "comparar-7x5",
+    "resposta": "menor",
+    "correta": false,
+    "tipo_erro": "comparacao_errada",
+    "pistas": 1,
+    "precisou_modelo": false,
+    "tempo_ms": 0,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T01:14:45"
+  },
+  {
+    "id": 4,
+    "aluno": "visitante",
+    "atividade": "quantidades",
+    "habilidade": "comparar quantidades",
+    "item": "comparar-7x5",
+    "resposta": "maior",
+    "correta": true,
+    "tipo_erro": null,
+    "pistas": 1,
+    "precisou_modelo": false,
+    "tempo_ms": 48,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T01:14:45"
+  },
+  {
+    "id": 5,
+    "aluno": "visitante",
+    "atividade": "quantidades",
+    "habilidade": "somar e subtrair",
+    "item": "conta-7-4",
+    "resposta": "11",
+    "correta": false,
+    "tipo_erro": "operacao_trocada",
+    "pistas": 1,
+    "precisou_modelo": false,
+    "tempo_ms": 38,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T01:14:45"
+  },
+  {
+    "id": 6,
+    "aluno": "visitante",
+    "atividade": "quantidades",
+    "habilidade": "somar e subtrair",
+    "item": "conta-7-4",
+    "resposta": "4",
+    "correta": false,
+    "tipo_erro": "um_a_mais_ou_menos",
+    "pistas": 2,
+    "precisou_modelo": false,
+    "tempo_ms": 78,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T01:14:45"
+  },
+  {
+    "id": 7,
+    "aluno": "visitante",
+    "atividade": "quantidades",
+    "habilidade": "somar e subtrair",
+    "item": "conta-7-4",
+    "resposta": "3",
+    "correta": true,
+    "tipo_erro": null,
+    "pistas": 2,
+    "precisou_modelo": false,
+    "tempo_ms": 119,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T01:14:45"
   }
 ]

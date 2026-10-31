@@ -58,9 +58,13 @@
 - [x] Tag `v0.1.0`
 
 ## Etapa 5 — Mesa de Quantidades
-- [ ] Modos Montar, Resolver, Comparar e Par/ímpar; 3 conjuntos de objetos; erros
-- [ ] **Aceite:** testes da lógica e capturas
-
+- [x] Lógica pura com testes: 4 níveis (Montar, Comparar, Resolver até 10, Resolver até 20), cartões errados com motivo (operação trocada, dígitos invertidos, um a mais)
+- [x] 3 conjuntos de objetos (`objetos.json`) e 3 figuras SVG (maçã, peixe, bolinha de gude); o professor escolhe o conjunto
+- [x] Bandejas com número grande que muda e é falado a cada objeto ("três maçãs"); Comparar liga um a um e marca a sobra com hachura, contorno e "sobrou"; subtração com "tirar estas"
+- [x] Erros classificados (`um_a_mais_ou_menos`, `operacao_trocada`, `digitos_invertidos`, `chute`, `comparacao_errada`) e pista 2 que acende os objetos enquanto a voz conta
+- [x] `atlas demo quantidades` e `atlas agente quantidades`
+- [ ] Modo Par/ímpar (cortado pela ordem de corte da especificação)
+- [x] **Aceite:** testes da lógica e da tela; demo por mouse, teclado e mão simulada; agente monta e conclui
 ## Etapa 6 — Pizza de Frações
 - [ ] Corte, pegar/devolver, soma de mesmo denominador, desafio, barra de chocolate e erros
 - [ ] **Aceite:** testes da lógica e capturas

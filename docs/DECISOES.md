@@ -50,4 +50,12 @@
 | 2026-10-30 | Limitação: baixa visão numa janela de 1280 x 720 deixa a cena pequena (instrução e legenda em duas linhas) | Em tela cheia (1366 x 768 ou maior) a cena cresce; reduzir a letra contrariaria o perfil |
 | 2026-10-30 | `atlas agente silabas` começa sempre em BOLA (`--palavra` troca) | README e avaliadora têm um começo previsível; o sorteio continua nas rodadas seguintes |
 | 2026-10-30 | As 15 figuras foram desenhadas por um subagente de IA com as regras do design system; revisadas por imagem | Tarefa independente, como a especificação sugere; nenhuma figura de terceiros |
+| 2026-10-31 | Mesa em 4 níveis: Montar (com cartão "Pronto"), Comparar, Resolver até 10 e Resolver com subtração até 20 | Os modos da especificação viram a progressão de nível; cada rodada tem uma resposta para registrar |
+| 2026-10-31 | Par/ímpar não implementado | É o 3º item da ordem de corte da especificação; o prazo é sábado 13h |
+| 2026-10-31 | Nos Resolver, as bandejas já vêm montadas; a criança conta e escolhe o cartão | Montar com objetos já é o nível 1; repetir o arrasto de até 20 objetos cansaria e não mudaria o que é avaliado |
+| 2026-10-31 | Cartões errados escolhidos para diagnosticar: operação trocada, dígitos invertidos (pode passar de 20) e um a mais | Cada erro aponta uma causa para o professor |
+| 2026-10-31 | Novo tipo de erro `comparacao_errada` (com recomendação) | O modo Comparar precisava de um erro próprio |
+| 2026-10-31 | No Montar, a resposta errada esvazia a bandeja | Recomeçar a contagem é mais claro do que tirar objetos um a um |
+| 2026-10-31 | Bandeja (`Caixa`) com capacidade e vagas em grade; `ocupada_por` virou propriedade | A Mesa precisa de vários objetos por bandeja sem mudar o treino e o Ímã |
+| 2026-10-31 | O contador de rodadas recomeça a cada abertura da atividade | A mesma semente precisa dar as mesmas rodadas (demo, agente e testes reproduzíveis) |
 | 2026-10-30 | Toda captura de `docs/saida-exemplo/` sai do `atlas demo` rodando o app real | Regra de jogo limpo: demo de fachada desclassifica |
