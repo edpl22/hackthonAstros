@@ -25,6 +25,7 @@ Cada resposta vira um registro com o tipo de erro (por exemplo, `par_surdo_sonor
 | Cada resposta é registrada com os campos pedidos | `app/nucleo/registro.py` | `saida/tentativas.json`; `pytest tests/test_registro.py` |
 | Matemática com objetos: montar, comparar (um a um, sobra marcada) e contas até 20 | `app/atividades/quantidades/` | `atlas demo quantidades`; `pytest tests/test_quantidades_logica.py tests/test_quantidades_tela.py` |
 | Frações: montar, somar com mesmo denominador e impróprias; o erro de somar denominadores é detectado e tratado com pizzas sobrepostas | `app/atividades/pizza/` | `atlas demo pizza`; `pytest tests/test_pizza_logica.py tests/test_pizza_tela.py` |
+| O professor vê quem domina, quem progride e quem precisa de apoio, com uma sugestão concreta | `app/nucleo/painel.py`, `app/telas/painel.py` | `atlas demo painel`; `pytest tests/test_painel.py`; captura `captura-38-painel.png` em `docs/saida-exemplo/` |
 | Uma IA consegue jogar a atividade sem tela | `app/headless/agente.py` | `echo '{"acao":"estado"}' \| docker compose run --rm -T agente`; `docs/saida-exemplo/agente-respostas.jsonl` |
 | O vídeo nunca sai do computador; nada de rede em execução | `app/entrada/camera.py` | `pytest tests/test_privacidade.py` (proíbe `imwrite` e módulos de rede em `app/`) |
 | OpenCV e MediaPipe são opcionais | `app/entrada/camera.py` | `pytest tests/test_dependencias.py`; o job `testes` do CI roda sem eles |
@@ -37,7 +38,7 @@ Todas as capturas e saídas de `docs/saida-exemplo/` foram geradas pelo app real
 ## Limitações conhecidas
 
 - **Matemática:** a Mesa de Quantidades está pronta sem o modo Par/ímpar; na Pizza de Frações o corte é sorteado (a criança não o escolhe) e as fatias não são arrastadas para uma terceira pizza.
-- **Painel do professor ainda não existe:** os dados que ele vai mostrar já são registrados em `tentativas`.
+- **Interface remota no navegador (noVNC):** não implementada; use os instaladores, o Docker sem tela ou o Python.
 - **Câmera real:** não é testável sem webcam. Foi testada manualmente por uma pessoa do time num notebook com Windows; em avaliação automática, vale a mão simulada.
 - **Voz:** sintética (eSpeak NG), compreensível mas robótica. Com credencial do Google Cloud, `scripts/gerar_audio.py --provedor google --refazer` troca todos os WAV.
 - **Áudio no Docker:** não há som; o `audio.log` registra o que tocaria.

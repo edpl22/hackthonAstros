@@ -33,7 +33,7 @@ Sem build, com a imagem pronta: `docker run --rm ghcr.io/edpl22/atlas:latest ver
 | --- | --- | --- |
 | `docker compose build` | Monta a imagem (Python 3.11, Qt, OpenCV, MediaPipe) | `Image atlas:local Built` |
 | `docker compose run --rm verificar` | Confere o ambiente, uma linha por item | Última linha: `RESULTADO: pronto` |
-| `docker compose run --rm demo` | Joga as atividades por roteiro e salva evidências em `./saida/` | `demo todas: 37 capturas; ...` e `relatorio: /saida/relatorio.md` |
+| `docker compose run --rm demo` | Joga as atividades por roteiro e salva evidências em `./saida/` | `demo todas: 38 capturas; ...` e `relatorio: /saida/relatorio.md` |
 | `docker compose run --rm teste` | Roda a suíte de testes (pytest) | Última linha com `passed` e sem `failed` |
 | `echo ... \| docker compose run --rm -T agente` | Abre o Ímã das Sílabas em BOLA e responde em JSON | 1ª linha `{"pronto": true, ...}`; 2ª linha com o `estado` |
 
@@ -72,7 +72,7 @@ atlas demo silabas --perfil tea,dislexia --entrada teclado --saida ./saida-tea
 atlas perfis --combinar tea,dislexia
 ```
 
-- `demo`: roteiros `navegacao`, `treino`, `silabas`, `quantidades`, `pizza` ou `todas`.
+- `demo`: roteiros `navegacao`, `treino`, `silabas`, `quantidades`, `pizza`, `painel` ou `todas`.
 - `--perfil`: `padrao`, `tea`, `tdah`, `dislexia`, `baixa_visao`, `daltonismo`, `motor`, `cegueira` (combináveis com vírgula; vence a opção mais acessível).
 - `--entrada`: `mouse`, `teclado`, `varredura` ou `mao-simulada`. A mão simulada gera os 21 pontos de uma mão que aponta, faz pinça e solta, e eles passam pelo mesmo código da câmera (`app/entrada/mao.py`).
 - No Docker, os mesmos argumentos vão depois do serviço: `docker compose run --rm demo demo silabas --perfil tea --saida /saida`.
@@ -141,7 +141,7 @@ Ids estáveis: `bolha-<sílaba>-<n>`, `caixa-<n>`, `peca-<letra>-<n>`, `objeto-<
 | Mesa de Quantidades (matemática): montar, comparar, somar e subtrair até 20 | Pronta (sem o modo Par/ímpar) |
 | Pizza de Frações (matemática): montar, somar, frações impróprias, barra de chocolate | Pronta |
 | Instaladores Windows e macOS e imagem Docker pronta (GHCR) | Publicados a cada versão (Releases) |
-| Painel do professor | Em construção (os dados já são registrados) |
+| Painel do professor: Domina, Em progresso, Precisa de apoio e recomendações (área do adulto) | Pronto; a turma de demonstração é fictícia e rotulada |
 
 ## Capturas
 

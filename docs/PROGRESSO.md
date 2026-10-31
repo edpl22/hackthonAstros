@@ -74,9 +74,11 @@
 - [x] **Aceite:** testes da lógica e da tela; demo por mouse, teclado e mão simulada; agente monta a fração
 - [x] Tag `v0.2.0`
 ## Etapa 7 — Painel do professor
-- [ ] `seed_demo.py`, painel e recomendações
-- [ ] **Aceite:** captura do painel com a turma de demonstração
-
+- [x] Regras puras com testes (`app/nucleo/painel.py`): Domina, Em progresso, Precisa de apoio nos últimos 10 itens
+- [x] Turma de demonstração (6 alunos fictícios, rotulada na tela) por `scripts/seed_demo.py` ou pelo botão na área do adulto
+- [x] Tela do painel: grade com ícone + texto + contagem, recomendações com o erro mais frequente
+- [x] `atlas demo painel` (captura)
+- [ ] `docker/gui.sh` + noVNC (cortado: primeiro item da ordem de corte)
 ## Etapa 8 — Entrega
 - [x] README de entrega: resumo, "Como executar e avaliar sem tela" (caminhos A, B e C), protocolo do agente, problemas comuns, privacidade, créditos
 - [x] `docs/AVALIACAO.md` (afirmação → onde está → como verificar, limitações) e `docs/ARQUITETURA.md`

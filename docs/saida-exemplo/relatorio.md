@@ -39,3 +39,4 @@
 | 35 pizza-somar-pista1 | cartao 4/12 | 4/12 não é a resposta. Vamos tentar de novo. Quanto é 2/6 + 2/6? Escolha o cartão. | [captura-35-pizza-somar-pista1.png](captura-35-pizza-somar-pista1.png) | somou_denominadores | 1 - repetir a instrucao |
 | 36 pizza-somar-pista2 | cartao 6/4 | 6/4 não é a resposta. Vamos tentar de novo. Olhe o que está marcado. | [captura-36-pizza-somar-pista2.png](captura-36-pizza-somar-pista2.png) | confundiu_numerador_denominador | 2 - realcar a peca e a caixa |
 | 37 pizza-desafio-barra | desafio: fracao impropria | Isso. A resposta é 8/6 = 1 e 2/6. | [captura-37-pizza-desafio-barra.png](captura-37-pizza-desafio-barra.png) | — | — |
+| 38 painel | painel do professor | Painel do professor com a Turma de demonstração (6 alunos fictícios). | [captura-38-painel.png](captura-38-painel.png) | — | — |

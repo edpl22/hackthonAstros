@@ -65,4 +65,7 @@
 | 2026-10-31 | Instaladores: PyInstaller onedir, executável sem console; sem console a saída da CLI vai para `atlas-saida.txt` | A criança não vê janela preta; a Release testa o executável com `verificar --completo` e `demo` antes de publicar |
 | 2026-10-31 | `atlas verificar --completo` carrega o detector da mão de verdade | Prova que OpenCV, MediaPipe e o modelo foram empacotados; o `verificar` normal continua rápido (menos de 5 s) |
 | 2026-10-31 | Instalador macOS gerado no runner `macos-latest` (Apple Silicon) | É o runner disponível; Macs Intel usam o Docker ou o Python |
+| 2026-10-31 | Painel: "item" = tentativas seguidas na mesma pergunta; o estado olha os últimos 10 itens | É como a especificação define "1ª tentativa"; um item repetido depois do acerto conta de novo |
+| 2026-10-31 | Turma de demonstração gerada com semente fixa e rotulada "Turma de demonstração" no título do painel | Dados fictícios declarados (regra de jogo limpo); o gerador fica em `app/nucleo/turma_demo.py` |
+| 2026-10-31 | Interface remota (`docker compose up gui`, noVNC) não implementada; o serviço `gui` saiu do compose | Primeiro item da ordem de corte; os modos sem tela e os instaladores cobrem a avaliação |
 | 2026-10-30 | Toda captura de `docs/saida-exemplo/` sai do `atlas demo` rodando o app real | Regra de jogo limpo: demo de fachada desclassifica |
