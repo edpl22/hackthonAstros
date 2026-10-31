@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- bolinha de gude -->
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="128" cy="128" r="96" fill="#8FA9C7"/>
+    <path d="M60 150 C 96 112 150 176 196 110 C 186 168 120 200 74 176 Z" fill="#2F6F6A"/>
+    <path d="M84 96 C 110 70 150 80 170 66" fill="none" stroke="#D9A441" stroke-width="10"/>
+    <circle cx="94" cy="84" r="14" fill="#FFFFFF"/>
+  </g>
+</svg>

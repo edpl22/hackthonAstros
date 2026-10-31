@@ -1,0 +1,8 @@
+[
+  {"id": "maca", "singular": "maçã", "plural": "maçãs", "feminino": true,
+   "figura": "figuras/objetos/maca.svg"},
+  {"id": "peixe", "singular": "peixe", "plural": "peixes", "feminino": false,
+   "figura": "figuras/objetos/peixe.svg"},
+  {"id": "bolinha", "singular": "bolinha de gude", "plural": "bolinhas de gude", "feminino": true,
+   "figura": "figuras/objetos/bolinha.svg"}
+]

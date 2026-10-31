@@ -50,5 +50,9 @@
   "outro": {
     "descricao": "teve dificuldade nesta habilidade",
     "sugestao": "repetir a atividade junto, com o modelo, e depois deixar a criança fazer sozinha."
+  },
+  "comparacao_errada": {
+    "descricao": "errou qual bandeja tem mais",
+    "sugestao": "ligar os objetos das duas bandejas um a um com o dedo e olhar de que lado sobra."
   }
 }

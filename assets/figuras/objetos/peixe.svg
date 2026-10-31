@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- peixe -->
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M182 128 L 236 84 L 236 172 Z" fill="#2F6F6A"/>
+    <ellipse cx="116" cy="128" rx="88" ry="56" fill="#8FA9C7"/>
+    <path d="M100 74 C 116 46 150 52 158 80" fill="#2F6F6A"/>
+    <path d="M118 108 Q 132 128 118 148" fill="none"/>
+    <circle cx="64" cy="118" r="12" fill="#F6F3EC"/>
+    <circle cx="64" cy="118" r="5" fill="#2A2A2A"/>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- maçã -->
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M128 70 C 96 50 40 66 40 132 C 40 196 86 232 110 226 C 120 224 124 218 128 218 C 132 218 136 224 146 226 C 170 232 216 196 216 132 C 216 66 160 50 128 70 Z" fill="#D9A441"/>
+    <path d="M128 72 C 126 52 132 36 144 26" fill="none"/>
+    <path d="M136 52 C 150 30 182 30 192 40 C 176 58 150 60 136 52 Z" fill="#2F6F6A"/>
+    <path d="M78 110 C 70 128 70 146 76 160" fill="none" stroke="#F6F3EC" stroke-width="8"/>
+  </g>
+</svg>
