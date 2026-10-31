@@ -4,9 +4,13 @@
 
 Na mesma sala, uma criança com TEA, outra com dislexia e outra com baixa visão precisam aprender o mesmo conteúdo, e o professor não tem tempo de refazer cada atividade.
 O Atlas é um software desktop de português e matemática para Educação Infantil ao 4º ano, em que a criança aprende com o corpo: mão na câmera, toque, mouse ou teclado.
-**A mesma atividade se ajusta ao perfil de cada aluno** (TEA, TDAH, dislexia, baixa visão, daltonismo, dificuldade motora, cegueira parcial). O professor só marca os perfis.
+**A mesma atividade se ajusta ao perfil de cada aluno** (TEA, TDAH, dislexia, baixa visão e dificuldade motora; daltonismo e cegueira parcial ainda sem regra própria, veja [Perfis](#perfis)). O professor só marca os perfis.
 É a resposta ao Desafio 01 da Teachy: *"Como podemos ajudar professores, escolas e família a fazerem com que todos os alunos aprendam o mesmo conteúdo, junto com a turma?"*
 Cada jogada vira um registro com o tipo de erro e uma sugestão para o professor. Nada sai do computador.
+
+São sete telas de jogo: em português, o Treino de arrastar (alfabeto) e o Ímã das Sílabas; em matemática, a Mesa de Quantidades, a Pizza de Frações, o Jogo Dourado e a Tabuada Protetora; e o Teste da mão, para conferir a câmera.
+
+**Entregas:** [plano de negócio (PDF)](Atlas_Plano_de_Neg%C3%B3cios%20%281%29.pdf) · [instaladores para Windows e macOS (Releases)](https://github.com/edpl22/hackthonAstros/releases/latest) · imagem Docker `ghcr.io/edpl22/atlas:latest` · [como cada afirmação é verificada](docs/AVALIACAO.md)
 
 ![Ímã das Sílabas: a bolha errada voltou e a pista realça a bolha e a caixa certas](docs/saida-exemplo/captura-17-silabas-erro-distratora.png)
 
@@ -74,7 +78,7 @@ atlas perfis --combinar tea,dislexia
 
 - `demo`: roteiros `navegacao`, `treino`, `silabas`, `quantidades`, `pizza`, `dourado`, `tabuada`, `painel` ou `todas`.
 - `--perfil`: `padrao`, `tea`, `tdah`, `dislexia`, `baixa_visao`, `daltonismo`, `motor`, `cegueira` (combináveis com vírgula; vence a opção mais acessível).
-- `--entrada`: `mouse`, `teclado`, `varredura` ou `mao-simulada`. A mão simulada gera os 21 pontos de uma mão que aponta, faz pinça e solta, e eles passam pelo mesmo código da câmera (`app/entrada/mao.py`).
+- `--entrada`: `mouse`, `teclado`, `varredura` ou `mao-simulada`. A mão simulada gera os 21 pontos de uma mão que aponta, faz pinça e solta (e, na Tabuada, faz a arminha e abaixa o dedão), e eles passam pelo mesmo código da câmera (`app/entrada/mao.py`).
 - No Docker, os mesmos argumentos vão depois do serviço: `docker compose run --rm demo demo silabas --perfil tea --saida /saida`.
 
 A câmera real não é testável sem webcam; o caminho dela é coberto por `--entrada mao-simulada` e pelos testes de `mao.py`.
@@ -129,7 +133,7 @@ Ids estáveis: `bolha-<sílaba>-<n>`, `caixa-<n>`, `peca-<letra>-<n>`, `objeto-<
 - **Pelo código** (Windows, macOS inclusive Intel, Linux): veja [Abrir a interface pelo código](#abrir-a-interface-pelo-código).
 - **Sem webcam:** o Atlas usa mouse, toque e teclado sem nenhuma mensagem de erro; o indicador mostra "Sem câmera". Se a webcam for desconectada no meio da atividade, acontece o mesmo e o jogo continua.
 - **Com webcam:** o instalador já traz a câmera; pelo código, instale `requirements-camera.txt`. A câmera liga só dentro de uma atividade, e o botão com a câmera, abaixo do Voltar, desliga e religa. Junte o polegar e o indicador (pinça) para pegar e abra para soltar; na Tabuada Protetora, faça uma "arminha" com o dedão levantado, mire com o indicador e abaixe o dedão para atirar (o anel em volta do cursor mostra que a arminha está engatilhada).
-- **Teclado:** Tab ou setas movem o foco; Enter ou Espaço pega e solta; Esc pausa.
+- **Teclado:** Tab ou setas movem o foco; Enter ou Espaço pega e solta; Esc pausa. A varredura (o foco passa sozinho de item em item e uma tecla só escolhe) existe nos modos sem tela (`--entrada varredura`); na janela ainda não há como ligá-la.
 - **Leitor de tela:** a legenda embaixo da atividade traz cada instrução e retorno, e o leitor de tela lê o texto dela (a voz gravada é só do português).
 - **Área do adulto:** segure o botão "Área do adulto" por 2 segundos. Lá ficam o cadastro (só apelido e um bicho, nunca o nome completo), os perfis, o volume, a opção de travar o nível, exportar JSON e apagar todos os dados. Trocar o apelido de um aluno leva o histórico dele junto; apagar um aluno apaga também as tentativas dele.
 
@@ -165,6 +169,21 @@ python -m app.main
 | Instaladores Windows e macOS e imagem Docker pronta (GHCR) | Publicados a cada versão (Releases) |
 | Painel do professor: Domina, Em progresso, Precisa de apoio e recomendações (área do adulto) | Pronto; a turma de demonstração é fictícia e rotulada |
 
+## Perfis
+
+O professor marca um ou mais perfis no cadastro do aluno. Combinados, vale a opção mais acessível de cada regra (`atlas perfis --combinar tea,dislexia` mostra o resultado).
+
+| Perfil | O que muda hoje na tela |
+| --- | --- |
+| TEA | Nada se move sozinho, no máximo 3 itens por vez, aviso antes de trocar de atividade, sem a imagem da câmera no Teste da mão |
+| TDAH | No máximo 3 itens por vez |
+| Dislexia | Letras 20% maiores e mais espaçadas, sílabas em cores alternadas |
+| Baixa visão | Tudo 75% maior, alto contraste, contornos mais grossos, no máximo 3 itens |
+| Dificuldade motora | Com a câmera, pegar e soltar parando a mão sobre o alvo (1,2 s), com tolerância maior |
+| Daltonismo e cegueira parcial | Ainda sem regra própria. Para cegueira, o app funciona inteiro pelo teclado e o leitor de tela lê a legenda |
+
+Também já estão declaradas, mas ainda não mudam a tela: um passo por vez e rodadas curtas (TDAH), resposta por escolha (dislexia), paleta segura (daltonismo), descrição do item em foco (cegueira) e varredura na janela (motor).
+
 ## Capturas
 
 | Perfil padrão | Dislexia: sílabas alternadas e espaçamento | Pausa |
@@ -178,7 +197,7 @@ flowchart LR
     subgraph Entradas
         M[Mouse e toque] --> B
         T[Teclado e varredura] --> B
-        C[Câmera: OpenCV + MediaPipe] --> H[mao.py: filtro, pinça, permanência] --> B
+        C[Câmera: OpenCV + MediaPipe] --> H[mao.py: filtro, pinça, arminha, permanência] --> B
         S[Mão simulada] --> H
         A[Agente JSON Lines] --> B
     end

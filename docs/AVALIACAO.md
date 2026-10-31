@@ -48,4 +48,5 @@ Todas as capturas e saídas de `docs/saida-exemplo/` foram geradas pelo app real
 - **Áudio no Docker:** não há som; o `audio.log` registra o que tocaria.
 - **Baixa visão em janela pequena:** em 1280 x 720 a área da atividade fica pequena, porque a instrução e a legenda grandes ocupam duas linhas. Em tela cheia (1366 x 768 ou maior) isso não acontece.
 - **Instaladores:** não são assinados (o Windows e o macOS pedem confirmação na primeira abertura) e o de macOS é só para Apple Silicon. A Release testa cada executável com `verificar --completo` e `demo silabas` antes de publicar.
+- **Perfis ainda parciais:** daltonismo e cegueira não têm regra própria na tela; um passo por vez e rodadas curtas (TDAH), resposta por escolha (dislexia), paleta segura (daltonismo) e descrição do foco (cegueira) estão declarados em `app/nucleo/perfis.py`, mas nenhuma tela os usa ainda; a varredura só é ligada nos modos sem tela (`--entrada varredura`).
 - **Cegueira (parcial):** uso por teclado e leitor de tela pelos nomes acessíveis; as instruções não são lidas em voz (decisão do time: voz só para letra, sílaba e palavra).

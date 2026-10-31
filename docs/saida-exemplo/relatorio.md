@@ -48,7 +48,7 @@
 | 44 dourado-fim | 432 montado | Isso! Você montou 432. | [captura-44-dourado-fim.png](captura-44-dourado-fim.png) | — | — |
 | 45 dourado-milhar | nivel 3: modelo com cubo, placas, barras e cubinhos | 6.306 | [captura-45-dourado-milhar.png](captura-45-dourado-milhar.png) | — | — |
 | 46 trilhas-matematica | escolher Matematica | Matemática escolhida: Contar e comparar, Frações com pizza e Tabuada Protetora. | [captura-46-trilhas-matematica.png](captura-46-trilhas-matematica.png) | — | — |
-| 47 tabuada-apresentacao | momento 1: o que vamos fazer | Proteja a cidade! Acerte o monstrinho que tem o resultado da conta. Você tem 1 minuto. | [captura-47-tabuada-apresentacao.png](captura-47-tabuada-apresentacao.png) | — | — |
+| 47 tabuada-apresentacao | momento 1: o que vamos fazer | Proteja a cidade! Acerte o monstrinho que tem o resultado da conta. Você tem 1 minuto. Com a câmera, faça uma arminha com a mão e abaixe o dedão para atirar. | [captura-47-tabuada-apresentacao.png](captura-47-tabuada-apresentacao.png) | — | — |
 | 48 tabuada-atividade | conta, relogio de 1 minuto e monstrinhos | Acerte o monstrinho com o resultado de 3 × 1. | [captura-48-tabuada-atividade.png](captura-48-tabuada-atividade.png) | — | — |
 | 49 tabuada-erro | mouse: monstrinho errado (-1) | 2 não é o resultado de 3 × 1. Menos um ponto. Acerte o monstrinho com o resultado de 3 × 1. | [captura-49-tabuada-erro.png](captura-49-tabuada-erro.png) | vizinho_na_tabuada | 1 - repetir a instrucao |
 | 50 tabuada-acertos | mouse: tres acertos (+3) | Isso! 4 × 9 = 36. Mais um ponto. | [captura-50-tabuada-acertos.png](captura-50-tabuada-acertos.png) | — | — |

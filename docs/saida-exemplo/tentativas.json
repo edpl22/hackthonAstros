@@ -13,7 +13,7 @@
     "tempo_ms": 43,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:29"
+    "ts": "2026-10-31T13:49:27"
   },
   {
     "id": 2,
@@ -26,10 +26,10 @@
     "tipo_erro": "letra_trocada",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 81,
+    "tempo_ms": 87,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:29"
+    "ts": "2026-10-31T13:49:27"
   },
   {
     "id": 3,
@@ -42,10 +42,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 165,
+    "tempo_ms": 183,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:29"
+    "ts": "2026-10-31T13:49:27"
   },
   {
     "id": 4,
@@ -58,10 +58,10 @@
     "tipo_erro": null,
     "pistas": 0,
     "precisou_modelo": false,
-    "tempo_ms": 39,
+    "tempo_ms": 46,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:29"
+    "ts": "2026-10-31T13:49:27"
   },
   {
     "id": 5,
@@ -77,7 +77,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:29"
+    "ts": "2026-10-31T13:49:27"
   },
   {
     "id": 6,
@@ -93,7 +93,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:29"
+    "ts": "2026-10-31T13:49:27"
   },
   {
     "id": 1,
@@ -106,10 +106,10 @@
     "tipo_erro": "ordem_trocada",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 42,
+    "tempo_ms": 59,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:29"
+    "ts": "2026-10-31T13:49:27"
   },
   {
     "id": 2,
@@ -122,10 +122,10 @@
     "tipo_erro": "silaba_de_outra_palavra",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 84,
+    "tempo_ms": 109,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:29"
+    "ts": "2026-10-31T13:49:27"
   },
   {
     "id": 3,
@@ -138,10 +138,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 126,
+    "tempo_ms": 168,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:29"
+    "ts": "2026-10-31T13:49:28"
   },
   {
     "id": 4,
@@ -154,10 +154,10 @@
     "tipo_erro": null,
     "pistas": 0,
     "precisou_modelo": false,
-    "tempo_ms": 47,
+    "tempo_ms": 58,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:30"
+    "ts": "2026-10-31T13:49:28"
   },
   {
     "id": 5,
@@ -173,7 +173,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:30"
+    "ts": "2026-10-31T13:49:28"
   },
   {
     "id": 6,
@@ -186,10 +186,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 55,
+    "tempo_ms": 52,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:30"
+    "ts": "2026-10-31T13:49:28"
   },
   {
     "id": 1,
@@ -202,10 +202,10 @@
     "tipo_erro": "um_a_mais_ou_menos",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 53,
+    "tempo_ms": 49,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:30"
+    "ts": "2026-10-31T13:49:28"
   },
   {
     "id": 2,
@@ -218,10 +218,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 105,
+    "tempo_ms": 108,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:30"
+    "ts": "2026-10-31T13:49:29"
   },
   {
     "id": 3,
@@ -237,7 +237,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:30"
+    "ts": "2026-10-31T13:49:29"
   },
   {
     "id": 4,
@@ -250,10 +250,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 48,
+    "tempo_ms": 58,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:30"
+    "ts": "2026-10-31T13:49:29"
   },
   {
     "id": 5,
@@ -266,10 +266,10 @@
     "tipo_erro": "operacao_trocada",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 41,
+    "tempo_ms": 54,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:31"
+    "ts": "2026-10-31T13:49:29"
   },
   {
     "id": 6,
@@ -282,10 +282,10 @@
     "tipo_erro": "um_a_mais_ou_menos",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 78,
+    "tempo_ms": 118,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:31"
+    "ts": "2026-10-31T13:49:29"
   },
   {
     "id": 7,
@@ -298,10 +298,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 116,
+    "tempo_ms": 176,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:31"
+    "ts": "2026-10-31T13:49:29"
   },
   {
     "id": 1,
@@ -317,7 +317,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:31"
+    "ts": "2026-10-31T13:49:30"
   },
   {
     "id": 2,
@@ -330,10 +330,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 42,
+    "tempo_ms": 56,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:31"
+    "ts": "2026-10-31T13:49:30"
   },
   {
     "id": 3,
@@ -349,7 +349,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:31"
+    "ts": "2026-10-31T13:49:30"
   },
   {
     "id": 4,
@@ -362,10 +362,10 @@
     "tipo_erro": "confundiu_numerador_denominador",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 52,
+    "tempo_ms": 62,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:31"
+    "ts": "2026-10-31T13:49:30"
   },
   {
     "id": 5,
@@ -378,10 +378,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 112,
+    "tempo_ms": 134,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:31"
+    "ts": "2026-10-31T13:49:30"
   },
   {
     "id": 6,
@@ -397,7 +397,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:31"
+    "ts": "2026-10-31T13:49:30"
   },
   {
     "id": 7,
@@ -410,10 +410,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 52,
+    "tempo_ms": 64,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:31"
+    "ts": "2026-10-31T13:49:30"
   },
   {
     "id": 8,
@@ -429,7 +429,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:32"
+    "ts": "2026-10-31T13:49:30"
   },
   {
     "id": 1,
@@ -442,10 +442,10 @@
     "tipo_erro": "contou_pecas_errado",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 97,
+    "tempo_ms": 161,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:32"
+    "ts": "2026-10-31T13:49:32"
   },
   {
     "id": 2,
@@ -458,10 +458,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 140,
+    "tempo_ms": 218,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:32"
+    "ts": "2026-10-31T13:49:32"
   },
   {
     "id": 1,
@@ -474,10 +474,10 @@
     "tipo_erro": "vizinho_na_tabuada",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 39,
+    "tempo_ms": 41,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:33"
+    "ts": "2026-10-31T13:49:33"
   },
   {
     "id": 2,
@@ -490,10 +490,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 76,
+    "tempo_ms": 95,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:33"
+    "ts": "2026-10-31T13:49:33"
   },
   {
     "id": 3,
@@ -509,7 +509,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:33"
+    "ts": "2026-10-31T13:49:33"
   },
   {
     "id": 4,
@@ -525,6 +525,6 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:56:33"
+    "ts": "2026-10-31T13:49:33"
   }
 ]
