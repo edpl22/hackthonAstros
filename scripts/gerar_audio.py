@@ -33,11 +33,11 @@ TAXA = 22050
 LETRAS = "ABCD"
 
 # Seções de frases.json lidas em voz alta (as demais são da área do adulto ou técnicas).
-SECOES_FALADAS = ("base", "treino", "silabas", "quantidades")
+SECOES_FALADAS = ("base", "treino", "silabas", "quantidades", "pizza")
 CHAVES_SEM_VOZ = {
     "habilidade", "habilidade_tonica", "instrucao", "nivel_subiu", "agora", "depois",
     "ouvir_curto", "ordinais", "habilidade_montar", "habilidade_comparar", "habilidade_contas",
-    "sobrou", "tirar", "bandeja-a", "bandeja-b",
+    "sobrou", "tirar", "bandeja-a", "bandeja-b", "habilidade_somar",
 }
 
 
