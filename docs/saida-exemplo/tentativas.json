@@ -13,7 +13,7 @@
     "tempo_ms": 44,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:44"
+    "ts": "2026-10-31T01:47:31"
   },
   {
     "id": 2,
@@ -26,10 +26,10 @@
     "tipo_erro": "letra_trocada",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 85,
+    "tempo_ms": 83,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:44"
+    "ts": "2026-10-31T01:47:31"
   },
   {
     "id": 3,
@@ -42,10 +42,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 172,
+    "tempo_ms": 167,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:44"
+    "ts": "2026-10-31T01:47:31"
   },
   {
     "id": 4,
@@ -58,10 +58,10 @@
     "tipo_erro": null,
     "pistas": 0,
     "precisou_modelo": false,
-    "tempo_ms": 38,
+    "tempo_ms": 41,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:44"
+    "ts": "2026-10-31T01:47:31"
   },
   {
     "id": 5,
@@ -77,7 +77,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:44"
+    "ts": "2026-10-31T01:47:31"
   },
   {
     "id": 6,
@@ -93,7 +93,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:44"
+    "ts": "2026-10-31T01:47:31"
   },
   {
     "id": 1,
@@ -109,7 +109,7 @@
     "tempo_ms": 45,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:44"
+    "ts": "2026-10-31T01:47:31"
   },
   {
     "id": 2,
@@ -125,7 +125,7 @@
     "tempo_ms": 89,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:45"
+    "ts": "2026-10-31T01:47:31"
   },
   {
     "id": 3,
@@ -138,10 +138,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 133,
+    "tempo_ms": 134,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:45"
+    "ts": "2026-10-31T01:47:31"
   },
   {
     "id": 4,
@@ -154,10 +154,10 @@
     "tipo_erro": null,
     "pistas": 0,
     "precisou_modelo": false,
-    "tempo_ms": 40,
+    "tempo_ms": 43,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:45"
+    "ts": "2026-10-31T01:47:31"
   },
   {
     "id": 5,
@@ -173,7 +173,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:45"
+    "ts": "2026-10-31T01:47:31"
   },
   {
     "id": 6,
@@ -186,10 +186,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 41,
+    "tempo_ms": 40,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:45"
+    "ts": "2026-10-31T01:47:31"
   },
   {
     "id": 1,
@@ -202,10 +202,10 @@
     "tipo_erro": "um_a_mais_ou_menos",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 44,
+    "tempo_ms": 48,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:45"
+    "ts": "2026-10-31T01:47:32"
   },
   {
     "id": 2,
@@ -218,10 +218,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 89,
+    "tempo_ms": 91,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:45"
+    "ts": "2026-10-31T01:47:32"
   },
   {
     "id": 3,
@@ -237,7 +237,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:45"
+    "ts": "2026-10-31T01:47:32"
   },
   {
     "id": 4,
@@ -250,10 +250,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 48,
+    "tempo_ms": 49,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:45"
+    "ts": "2026-10-31T01:47:32"
   },
   {
     "id": 5,
@@ -266,10 +266,10 @@
     "tipo_erro": "operacao_trocada",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 38,
+    "tempo_ms": 42,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:45"
+    "ts": "2026-10-31T01:47:32"
   },
   {
     "id": 6,
@@ -282,10 +282,10 @@
     "tipo_erro": "um_a_mais_ou_menos",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 78,
+    "tempo_ms": 82,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:45"
+    "ts": "2026-10-31T01:47:32"
   },
   {
     "id": 7,
@@ -298,9 +298,105 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 119,
+    "tempo_ms": 131,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T01:14:45"
+    "ts": "2026-10-31T01:47:32"
+  },
+  {
+    "id": 1,
+    "aluno": "visitante",
+    "atividade": "pizza",
+    "habilidade": "representar frações",
+    "item": "montar-1/4",
+    "resposta": "0/4",
+    "correta": false,
+    "tipo_erro": "contou_fatias_errado",
+    "pistas": 1,
+    "precisou_modelo": false,
+    "tempo_ms": 0,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T01:47:33"
+  },
+  {
+    "id": 2,
+    "aluno": "visitante",
+    "atividade": "pizza",
+    "habilidade": "representar frações",
+    "item": "montar-1/4",
+    "resposta": "1/4",
+    "correta": true,
+    "tipo_erro": null,
+    "pistas": 1,
+    "precisou_modelo": false,
+    "tempo_ms": 47,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T01:47:33"
+  },
+  {
+    "id": 3,
+    "aluno": "visitante",
+    "atividade": "pizza",
+    "habilidade": "somar frações de mesmo denominador",
+    "item": "soma-2/6+2/6",
+    "resposta": "4/12",
+    "correta": false,
+    "tipo_erro": "somou_denominadores",
+    "pistas": 1,
+    "precisou_modelo": false,
+    "tempo_ms": 0,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T01:47:33"
+  },
+  {
+    "id": 4,
+    "aluno": "visitante",
+    "atividade": "pizza",
+    "habilidade": "somar frações de mesmo denominador",
+    "item": "soma-2/6+2/6",
+    "resposta": "6/4",
+    "correta": false,
+    "tipo_erro": "confundiu_numerador_denominador",
+    "pistas": 2,
+    "precisou_modelo": false,
+    "tempo_ms": 58,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T01:47:33"
+  },
+  {
+    "id": 5,
+    "aluno": "visitante",
+    "atividade": "pizza",
+    "habilidade": "somar frações de mesmo denominador",
+    "item": "soma-2/6+2/6",
+    "resposta": "4/6",
+    "correta": true,
+    "tipo_erro": null,
+    "pistas": 2,
+    "precisou_modelo": false,
+    "tempo_ms": 122,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T01:47:33"
+  },
+  {
+    "id": 6,
+    "aluno": "visitante",
+    "atividade": "pizza",
+    "habilidade": "somar frações de mesmo denominador",
+    "item": "soma-3/6+5/6",
+    "resposta": "8/6",
+    "correta": true,
+    "tipo_erro": null,
+    "pistas": 0,
+    "precisou_modelo": false,
+    "tempo_ms": 0,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T01:47:33"
   }
 ]

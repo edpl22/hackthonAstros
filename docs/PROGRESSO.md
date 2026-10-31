@@ -66,10 +66,14 @@
 - [ ] Modo Par/ímpar (cortado pela ordem de corte da especificação)
 - [x] **Aceite:** testes da lógica e da tela; demo por mouse, teclado e mão simulada; agente monta e conclui
 ## Etapa 6 — Pizza de Frações
-- [ ] Corte, pegar/devolver, soma de mesmo denominador, desafio, barra de chocolate e erros
-- [ ] **Aceite:** testes da lógica e capturas
-- [ ] Tag `v0.2.0`
-
+- [x] Lógica pura com testes: Montar (n fatias de d), Somar (mesmo denominador) e Desafio (fração imprópria e número misto)
+- [x] Cartões: sempre um de somar os denominadores; o outro troca numerador e denominador ou conta uma fatia a mais
+- [x] Fatias escolhidas com hachura diagonal e contorno grosso; alternativa em barra de chocolate (`forma_pizza` ou `forma="barra"`)
+- [x] Erros `somou_denominadores`, `contou_fatias_errado`, `confundiu_numerador_denominador`; pista 2 sobrepõe as pizzas com "As fatias continuam do mesmo tamanho."
+- [x] `atlas demo pizza` e `atlas agente pizza`
+- [ ] A criança escolher o corte (2, 3, 4, 6 ou 8): o corte vem sorteado na rodada
+- [x] **Aceite:** testes da lógica e da tela; demo por mouse, teclado e mão simulada; agente monta a fração
+- [x] Tag `v0.2.0`
 ## Etapa 7 — Painel do professor
 - [ ] `seed_demo.py`, painel e recomendações
 - [ ] **Aceite:** captura do painel com a turma de demonstração

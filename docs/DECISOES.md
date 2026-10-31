@@ -58,4 +58,8 @@
 | 2026-10-31 | No Montar, a resposta errada esvazia a bandeja | Recomeçar a contagem é mais claro do que tirar objetos um a um |
 | 2026-10-31 | Bandeja (`Caixa`) com capacidade e vagas em grade; `ocupada_por` virou propriedade | A Mesa precisa de vários objetos por bandeja sem mudar o treino e o Ímã |
 | 2026-10-31 | O contador de rodadas recomeça a cada abertura da atividade | A mesma semente precisa dar as mesmas rodadas (demo, agente e testes reproduzíveis) |
+| 2026-10-31 | Pizza em 3 níveis: Montar a fração, Somar e Desafio (impróprias, com número misto) | Cobre o que a especificação pede com uma resposta registrável por rodada |
+| 2026-10-31 | Tocar numa fatia escolhe ou devolve (não se arrasta a fatia); nas somas a criança escolhe o cartão | Uma ação só, igual para mão, mouse, teclado e agente; juntar fatias numa terceira pizza ficou de fora pelo prazo |
+| 2026-10-31 | O corte (2, 3, 4, 6 ou 8) é sorteado na rodada, não escolhido pela criança | Prazo; o corte varia a cada rodada e o perfil TEA fica com cortes até 4 |
+| 2026-10-31 | Pista 2 da Pizza usa transparência para sobrepor as pizzas | É transparência que ensina (a fatia de B cobre a de A), não decorativa |
 | 2026-10-30 | Toda captura de `docs/saida-exemplo/` sai do `atlas demo` rodando o app real | Regra de jogo limpo: demo de fachada desclassifica |

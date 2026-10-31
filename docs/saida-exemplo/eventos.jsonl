@@ -55,3 +55,11 @@
 {"n": 55, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "4 não é a resposta. Vamos tentar de novo. Olhe o que está marcado."}
 {"n": 56, "roteiro": "quantidades", "entrada": "mouse", "anuncio": "Isso. A resposta é 3."}
 {"n": 57, "roteiro": "quantidades", "evento": "estado_final", "concluida": true}
+{"n": 58, "roteiro": "pizza", "entrada": "mouse", "anuncio": "0/4 não é a resposta. Vamos tentar de novo. Pegue 1 fatia da pizza de 4 fatias. Depois toque em Pronto."}
+{"n": 59, "roteiro": "pizza", "entrada": "mouse", "anuncio": "Você pegou 1/4 da pizza."}
+{"n": 60, "roteiro": "pizza", "entrada": "mouse", "anuncio": "Isso. A resposta é 1/4."}
+{"n": 61, "roteiro": "pizza", "entrada": "mouse", "anuncio": "4/12 não é a resposta. Vamos tentar de novo. Quanto é 2/6 + 2/6? Escolha o cartão."}
+{"n": 62, "roteiro": "pizza", "entrada": "mouse", "anuncio": "6/4 não é a resposta. Vamos tentar de novo. Olhe o que está marcado."}
+{"n": 63, "roteiro": "pizza", "entrada": "mouse", "anuncio": "Isso. A resposta é 4/6."}
+{"n": 64, "roteiro": "pizza", "entrada": "mouse", "anuncio": "Isso. A resposta é 8/6 = 1 e 2/6."}
+{"n": 65, "roteiro": "pizza", "evento": "estado_final", "concluida": true}

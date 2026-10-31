@@ -33,3 +33,9 @@
 | 29 mesa-conta-pista1 | cartao 11 | 11 não é a resposta. Vamos tentar de novo. Quanto é 7 − 4? Escolha o cartão. | [captura-29-mesa-conta-pista1.png](captura-29-mesa-conta-pista1.png) | operacao_trocada | 1 - repetir a instrucao |
 | 30 mesa-conta-pista2 | cartao 4 | 4 não é a resposta. Vamos tentar de novo. Olhe o que está marcado. | [captura-30-mesa-conta-pista2.png](captura-30-mesa-conta-pista2.png) | um_a_mais_ou_menos | 2 - realcar a peca e a caixa |
 | 31 mesa-conta-fim | cartao certo | Isso. A resposta é 3. | [captura-31-mesa-conta-fim.png](captura-31-mesa-conta-fim.png) | — | — |
+| 32 pizza-apresentacao | momento 1: o que vamos fazer | Vamos repartir a pizza em fatias do mesmo tamanho. | [captura-32-pizza-apresentacao.png](captura-32-pizza-apresentacao.png) | — | — |
+| 33 pizza-montar-erro | mouse: 0 fatias e Pronto | 0/4 não é a resposta. Vamos tentar de novo. Pegue 1 fatia da pizza de 4 fatias. Depois toque em Pronto. | [captura-33-pizza-montar-erro.png](captura-33-pizza-montar-erro.png) | contou_fatias_errado | 1 - repetir a instrucao |
+| 34 pizza-montar-fim | 1 fatias e Pronto | Isso. A resposta é 1/4. | [captura-34-pizza-montar-fim.png](captura-34-pizza-montar-fim.png) | — | — |
+| 35 pizza-somar-pista1 | cartao 4/12 | 4/12 não é a resposta. Vamos tentar de novo. Quanto é 2/6 + 2/6? Escolha o cartão. | [captura-35-pizza-somar-pista1.png](captura-35-pizza-somar-pista1.png) | somou_denominadores | 1 - repetir a instrucao |
+| 36 pizza-somar-pista2 | cartao 6/4 | 6/4 não é a resposta. Vamos tentar de novo. Olhe o que está marcado. | [captura-36-pizza-somar-pista2.png](captura-36-pizza-somar-pista2.png) | confundiu_numerador_denominador | 2 - realcar a peca e a caixa |
+| 37 pizza-desafio-barra | desafio: fracao impropria | Isso. A resposta é 8/6 = 1 e 2/6. | [captura-37-pizza-desafio-barra.png](captura-37-pizza-desafio-barra.png) | — | — |

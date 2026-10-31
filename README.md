@@ -31,7 +31,7 @@ echo '{"acao":"estado"}' | docker compose run --rm -T agente
 | --- | --- | --- |
 | `docker compose build` | Monta a imagem (Python 3.11, Qt, OpenCV, MediaPipe) | `Image atlas:local Built` |
 | `docker compose run --rm verificar` | Confere o ambiente, uma linha por item | Última linha: `RESULTADO: pronto` |
-| `docker compose run --rm demo` | Joga as atividades por roteiro e salva evidências em `./saida/` | `demo todas: 31 capturas; ...` e `relatorio: /saida/relatorio.md` |
+| `docker compose run --rm demo` | Joga as atividades por roteiro e salva evidências em `./saida/` | `demo todas: 37 capturas; ...` e `relatorio: /saida/relatorio.md` |
 | `docker compose run --rm teste` | Roda a suíte de testes (pytest) | Última linha com `passed` e sem `failed` |
 | `echo ... \| docker compose run --rm -T agente` | Abre o Ímã das Sílabas em BOLA e responde em JSON | 1ª linha `{"pronto": true, ...}`; 2ª linha com o `estado` |
 
@@ -61,7 +61,7 @@ No Windows: `py -3.11 -m venv .venv` e `.venv\Scripts\activate`. No Linux sem in
 | `eventos.jsonl` | Um evento por linha, com a frase narrada e a entrada usada |
 | `audio.log` | Cada áudio que tocaria (no Docker não há som; frases sem WAV ficam só na legenda) |
 
-Os roteiros têm **erros propositais**. Eles mostram a resposta neutra ("Vamos tentar de novo"), as pistas graduais (1ª repete a instrução, 2ª realça, 3ª mostra o modelo) e a classificação do erro: `ordem_trocada`, `silaba_de_outra_palavra`, `par_surdo_sonoro`, `tonica_errada`, `letra_trocada`, `um_a_mais_ou_menos`, `operacao_trocada`, `digitos_invertidos`, `comparacao_errada`.
+Os roteiros têm **erros propositais**. Eles mostram a resposta neutra ("Vamos tentar de novo"), as pistas graduais (1ª repete a instrução, 2ª realça, 3ª mostra o modelo) e a classificação do erro: `ordem_trocada`, `silaba_de_outra_palavra`, `par_surdo_sonoro`, `tonica_errada`, `letra_trocada`, `um_a_mais_ou_menos`, `operacao_trocada`, `digitos_invertidos`, `comparacao_errada`, `somou_denominadores`, `contou_fatias_errado`, `confundiu_numerador_denominador`.
 
 ### Variações
 
@@ -70,7 +70,7 @@ atlas demo silabas --perfil tea,dislexia --entrada teclado --saida ./saida-tea
 atlas perfis --combinar tea,dislexia
 ```
 
-- `demo`: roteiros `navegacao`, `treino`, `silabas`, `quantidades` ou `todas`.
+- `demo`: roteiros `navegacao`, `treino`, `silabas`, `quantidades`, `pizza` ou `todas`.
 - `--perfil`: `padrao`, `tea`, `tdah`, `dislexia`, `baixa_visao`, `daltonismo`, `motor`, `cegueira` (combináveis com vírgula; vence a opção mais acessível).
 - `--entrada`: `mouse`, `teclado`, `varredura` ou `mao-simulada`. A mão simulada gera os 21 pontos de uma mão que aponta, faz pinça e solta, e eles passam pelo mesmo código da câmera (`app/entrada/mao.py`).
 - No Docker, os mesmos argumentos vão depois do serviço: `docker compose run --rm demo demo silabas --perfil tea --saida /saida`.
@@ -79,7 +79,7 @@ A câmera real não é testável sem webcam; o caminho dela é coberto por `--en
 
 ### Protocolo do agente (`atlas agente <atividade>`)
 
-JSON Lines: um pedido JSON por linha no stdin, uma resposta JSON por linha no stdout. Atividades: `silabas` (começa em BOLA; `--palavra janela` troca), `quantidades` (Mesa: `{"acao":"escolher","id":"cartao-7"}`) e `treino`.
+JSON Lines: um pedido JSON por linha no stdin, uma resposta JSON por linha no stdout. Atividades: `silabas` (começa em BOLA; `--palavra janela` troca), `quantidades` (Mesa: `{"acao":"escolher","id":"cartao-7"}`), `pizza` (`fatia-a-0` escolhe uma fatia; `cartao-3-4` escolhe 3/4) e `treino`.
 
 | Ação | Exemplo |
 | --- | --- |
@@ -109,7 +109,7 @@ Resposta (resumida):
 {"ok": true, "anuncio": "Bolha LA colocada na segunda caixa.", "estado": {"concluida": true, "momento": "fim", "...": "..."}}
 ```
 
-Ids estáveis: `bolha-<sílaba>-<n>`, `caixa-<n>`, `peca-<letra>-<n>`, `objeto-<conjunto>-<n>`, `bandeja-a`, `bandeja-b`, `cartao-<valor>`. O `estado` traz a tela, o momento, o nível, a instrução, os itens e alvos com posição, a pista atual e se concluiu. Erros vêm como `{"ok": false, "erro": "item inexistente: bolha-xx", "dica": "ids disponiveis: ..."}`. A sessão completa está em [`docs/saida-exemplo/agente-respostas.jsonl`](docs/saida-exemplo/agente-respostas.jsonl).
+Ids estáveis: `bolha-<sílaba>-<n>`, `caixa-<n>`, `peca-<letra>-<n>`, `objeto-<conjunto>-<n>`, `bandeja-a`, `bandeja-b`, `cartao-<valor>`, `fatia-<pizza>-<n>`, `cartao-<num>-<den>`. O `estado` traz a tela, o momento, o nível, a instrução, os itens e alvos com posição, a pista atual e se concluiu. Erros vêm como `{"ok": false, "erro": "item inexistente: bolha-xx", "dica": "ids disponiveis: ..."}`. A sessão completa está em [`docs/saida-exemplo/agente-respostas.jsonl`](docs/saida-exemplo/agente-respostas.jsonl).
 
 ### Problemas comuns
 
@@ -134,7 +134,7 @@ Ids estáveis: `bolha-<sílaba>-<n>`, `caixa-<n>`, `peca-<letra>-<n>`, `objeto-<
 | Treino de arrastar (letras A–D, maiúsculas e minúsculas) | Pronto |
 | Teste da mão (câmera) | Pronto |
 | Mesa de Quantidades (matemática): montar, comparar, somar e subtrair até 20 | Pronta (sem o modo Par/ímpar) |
-| Pizza de Frações (matemática) | Em construção |
+| Pizza de Frações (matemática): montar, somar, frações impróprias, barra de chocolate | Pronta |
 | Painel do professor | Em construção (os dados já são registrados) |
 
 ## Capturas

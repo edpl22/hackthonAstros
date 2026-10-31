@@ -33,8 +33,17 @@ toca terminou_3afe66.wav
 toca vamos_tentar_de_novo_0cfb0e.wav + compare_as_bandejas_a_da_esquerda_e_maio_d275fb.wav | so legenda: Menor não é a resposta.
 toca isso_a_resposta_e_maior_924b00.wav
 toca terminou_3afe66.wav
-toca vamos_tentar_de_novo_0cfb0e.wav | so legenda: 11 não é a resposta. Quanto é 7 − 4? Escolha o cartão.
+toca vamos_tentar_de_novo_0cfb0e.wav + escolha_o_cartao_82f18e.wav | so legenda: 11 não é a resposta. Quanto é 7 − 4?
 toca vamos_tentar_de_novo_0cfb0e.wav + olhe_o_que_esta_marcado_76e20c.wav | so legenda: 4 não é a resposta.
 toca vamos_contar_juntos_a9d971.wav
 toca isso_a_resposta_e_3_8c250c.wav
+toca terminou_3afe66.wav
+toca vamos_tentar_de_novo_0cfb0e.wav + depois_toque_em_pronto_8ef885.wav | so legenda: 0/4 não é a resposta. Pegue 1 fatia da pizza de 4 fatias.
+legenda (sem wav): Isso. A resposta é 1/4.
+toca terminou_3afe66.wav
+toca vamos_tentar_de_novo_0cfb0e.wav + escolha_o_cartao_82f18e.wav | so legenda: 4/12 não é a resposta. Quanto é 2/6 + 2/6?
+toca vamos_tentar_de_novo_0cfb0e.wav + olhe_o_que_esta_marcado_76e20c.wav | so legenda: 6/4 não é a resposta.
+legenda (sem wav): Isso. A resposta é 4/6.
+toca terminou_3afe66.wav
+legenda (sem wav): Isso. A resposta é 8/6 = 1 e 2/6.
 toca terminou_3afe66.wav

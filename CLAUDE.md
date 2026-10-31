@@ -78,6 +78,6 @@ docs/         DECISOES.md, PROGRESSO.md (depois: ARQUITETURA.md, AVALIACAO.md, s
 | 3. Núcleo das atividades, demo e agente completos | concluída |
 | 4. Ímã das Sílabas | concluída (tag v0.1.0) |
 | 5. Mesa de Quantidades | concluída (sem Par/ímpar) |
-| 6. Pizza de Frações | pendente |
+| 6. Pizza de Frações | concluída (tag v0.2.0) |
 | 7. Painel do professor e interface remota (noVNC) | pendente |
 | 8. Entrega | README, AVALIACAO, saída de exemplo e verificar_readme prontos; falta tag, Release e repositório público |
