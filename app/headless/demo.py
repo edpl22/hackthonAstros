@@ -406,12 +406,24 @@ def roteiro_pizza(ex: Execucao) -> None:
     ex.fechar(janela)
 
 
+def roteiro_painel(ex: Execucao) -> None:
+    """Painel do professor com a Turma de demonstração (dados fictícios, rotulados assim)."""
+    from app.nucleo import turma_demo
+
+    janela = ex.nova_janela()
+    turma_demo.criar(janela.registro)
+    janela.abrir_painel()
+    ex.capturar(janela, "painel", "painel do professor", texto("demo.painel"))
+    janela.close()  # sem fechar(): as tentativas fictícias não entram no tentativas.json
+
+
 ROTEIROS = {
     "navegacao": roteiro_navegacao,
     "treino": roteiro_treino,
     "silabas": roteiro_silabas,
     "quantidades": roteiro_quantidades,
     "pizza": roteiro_pizza,
+    "painel": roteiro_painel,
 }
 
 

@@ -58,7 +58,7 @@ def test_demo_gera_evidencias(tmp_path):
 
     capturas = sorted(p.name for p in saida.glob("captura-*.png"))
     assert capturas[0] == "captura-01-inicio.png"
-    assert len(capturas) == 37  # navegação 6 + treino 7 + sílabas 9 + mesa 9 + pizza 6
+    assert len(capturas) == 38  # navegação 6 + treino 7 + sílabas 9 + mesa 9 + pizza 6 + painel
     relatorio = (saida / "relatorio.md").read_text(encoding="utf-8")
     for captura in capturas:
         assert captura in relatorio
