@@ -48,9 +48,14 @@
 - [x] **Aceite:** 211 testes verdes, incluindo `progresso.py`, `erros.py` e o protocolo do agente; capturas revisadas nos perfis padrão e baixa visão
 
 ## Etapa 4 — Ímã das Sílabas
-- [ ] Lógica pura, cena, níveis 1–4, 15 SVGs, áudios e erros classificados
-- [ ] **Aceite:** BOLA completada por mouse, teclado e varredura nos testes + capturas (padrão, TEA, dislexia)
-- [ ] Tag `v0.1.0`
+- [x] `palavras.json` (15 palavras, pronúncia de cada sílaba) e lógica pura com testes (distratoras, par surdo/sonoro, tônica)
+- [x] 15 figuras SVG desenhadas para o projeto (`assets/figuras/palavras/`)
+- [x] Cena: figura, caixas, bolhas que flutuam (velocidade x 40 px/s), sílabas alternadas na dislexia, figura no momento 1
+- [x] Níveis 1 a 4 (4 = "Qual bolha é a mais forte?"), minúsculas no nível 3, erros classificados e pistas
+- [x] Áudio: pegar toca a sílaba, palavra pronta toca a palavra; 168 frases geradas com espeak-ng
+- [x] `atlas demo silabas` e `atlas agente silabas` (começa em BOLA; `--palavra` troca)
+- [x] **Aceite:** BOLA completada por arrastar, clique-clique, teclado, varredura e mão simulada; agente completa BOLA via JSON; capturas nos perfis padrão, TEA, dislexia e baixa visão revisadas; 266 testes
+- [x] Tag `v0.1.0`
 
 ## Etapa 5 — Mesa de Quantidades
 - [ ] Modos Montar, Resolver, Comparar e Par/ímpar; 3 conjuntos de objetos; erros

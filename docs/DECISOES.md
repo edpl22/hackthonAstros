@@ -39,4 +39,15 @@
 | 2026-10-30 | Nos botões, só a letra cresce com a escala; altura mínima fica em 64 px | Em baixa visão (1,75) a moldura tomava o espaço da cena e as peças ficavam pequenas (visto nas capturas) |
 | 2026-10-30 | Travar nível e volume são ajustes gerais (tabela `config`), não por aluno | Mais simples para o prazo; o professor ajusta na área do adulto |
 | 2026-10-30 | `docker compose run agente` usa o treino até o Ímã das Sílabas existir | O serviço já funciona hoje; troca para `silabas` na Etapa 4 |
+| 2026-10-30 | Sílabas finais átonas em O são lidas como "o" (to, po, co), não "u" | Mantém a correspondência letra-som da alfabetização e evita que a voz leia "cu" sozinho em MACACO; a vogal tônica aberta segue a regra (BO = "bó") |
+| 2026-10-30 | Nível 3 (encontros consonantais) em letra minúscula; níveis 1, 2 e 4 em letra bastão | Regra "bastão nas trilhas iniciais, minúscula a partir do 1º ano"; o nível 4 usa as mesmas palavras e foca no som |
+| 2026-10-30 | Distratoras: nível 3 usa o par surdo/sonoro (PRA x BRA, VRO x FRO); níveis 1 e 2, sílaba de outra palavra | Especificação: par surdo/sonoro "nos níveis altos" |
+| 2026-10-30 | Novo tipo de erro `tonica_errada` (com recomendação) | O nível 4 precisava de um erro classificado próprio |
+| 2026-10-30 | No nível 4, pegar uma bolha já é escolher (mão, mouse e teclado); o agente pode usar `escolher` | Uma ação só, igual em todas as entradas |
+| 2026-10-30 | Áudio em fila (uma fala não corta a outra) e fala parcial: trecho sem WAV fica só na legenda | A sílaba ao pegar e a palavra antes do "Terminou!" precisavam tocar em sequência; anúncios com sílaba variável não têm WAV próprio |
+| 2026-10-30 | Instruções iguais na tela para palavras diferentes ("Pegue a bolha CA" em VACA e MACACO) compartilham um WAV | O manifesto é indexado pelo texto da tela; a diferença de tonicidade é pequena |
+| 2026-10-30 | Cena lógica passou para 1280 x 560 | A área livre abaixo da faixa e da instrução é mais larga que 16:9; com 720 de altura tudo ficava 30% menor |
+| 2026-10-30 | Limitação: baixa visão numa janela de 1280 x 720 deixa a cena pequena (instrução e legenda em duas linhas) | Em tela cheia (1366 x 768 ou maior) a cena cresce; reduzir a letra contrariaria o perfil |
+| 2026-10-30 | `atlas agente silabas` começa sempre em BOLA (`--palavra` troca) | README e avaliadora têm um começo previsível; o sorteio continua nas rodadas seguintes |
+| 2026-10-30 | As 15 figuras foram desenhadas por um subagente de IA com as regras do design system; revisadas por imagem | Tarefa independente, como a especificação sugere; nenhuma figura de terceiros |
 | 2026-10-30 | Toda captura de `docs/saida-exemplo/` sai do `atlas demo` rodando o app real | Regra de jogo limpo: demo de fachada desclassifica |

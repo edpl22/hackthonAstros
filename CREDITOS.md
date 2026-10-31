@@ -8,4 +8,4 @@
 | Qt for Python (PySide6) | The Qt Company | LGPL v3 | Interface |
 | Voz dos áudios | eSpeak NG (síntese offline, voz pt-br), gerada por `scripts/gerar_audio.py` | GPL v3 (o programa; os WAV gerados não são cobertos) | Instruções, anúncios, sílabas e palavras |
 
-O código do Atlas usa a licença MIT (ver `LICENSE`). As figuras SVG foram desenhadas para este projeto e seguem a mesma licença.
+O código do Atlas usa a licença MIT (ver `LICENSE`). As figuras SVG (avatares e as 15 palavras) foram desenhadas para este projeto, com ajuda de IA, e seguem a mesma licença.

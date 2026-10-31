@@ -74,7 +74,7 @@ docs/         DECISOES.md, PROGRESSO.md (depois: ARQUITETURA.md, AVALIACAO.md, s
 | 1b. Empacotamento, Release e imagem no GHCR | pendente |
 | 2. Perfis e entrada | concluída |
 | 3. Núcleo das atividades, demo e agente completos | concluída |
-| 4. Ímã das Sílabas | pendente |
+| 4. Ímã das Sílabas | concluída (tag v0.1.0) |
 | 5. Mesa de Quantidades | pendente |
 | 6. Pizza de Frações | pendente |
 | 7. Painel do professor e interface remota (noVNC) | pendente |
