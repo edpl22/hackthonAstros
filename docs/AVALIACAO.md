@@ -11,6 +11,7 @@ Cada resposta vira um registro com o tipo de erro (por exemplo, `par_surdo_sonor
 
 | Afirmação | Onde está | Como verificar |
 | --- | --- | --- |
+| Os instaladores funcionam e incluem o detector da mão | `empacotamento/atlas.spec`, `.github/workflows/release.yml` | Release: `Atlas.exe verificar --completo` termina com `OK  detector da mao` e `RESULTADO: pronto` |
 | O app roda sem tela, sem webcam e sem áudio | `app/headless/`, `Dockerfile` | `docker compose run --rm verificar` termina com `RESULTADO: pronto` |
 | Perfis combinam pela opção mais acessível | `app/nucleo/perfis.py` | `atlas perfis --combinar tea,dislexia`; `pytest tests/test_perfis.py` |
 | A mesma atividade muda com o perfil (itens, escala, contraste, espaçamento, sílabas alternadas) | `app/nucleo/tema.py`, `app/atividades/silabas/tela.py` | `atlas demo silabas --perfil baixa_visao` e `--perfil dislexia`; `pytest tests/test_silabas_tela.py` |
@@ -41,5 +42,5 @@ Todas as capturas e saídas de `docs/saida-exemplo/` foram geradas pelo app real
 - **Voz:** sintética (eSpeak NG), compreensível mas robótica. Com credencial do Google Cloud, `scripts/gerar_audio.py --provedor google --refazer` troca todos os WAV.
 - **Áudio no Docker:** não há som; o `audio.log` registra o que tocaria.
 - **Baixa visão em janela pequena:** em 1280 x 720 a área da atividade fica pequena, porque a instrução e a legenda grandes ocupam duas linhas. Em tela cheia (1366 x 768 ou maior) isso não acontece.
-- **Instaladores (Windows e macOS) e imagem pronta no GHCR:** ainda não publicados; por enquanto, Docker com `build` ou Python.
+- **Instaladores:** não são assinados (o Windows e o macOS pedem confirmação na primeira abertura) e o de macOS é só para Apple Silicon. A Release testa cada executável com `verificar --completo` e `demo silabas` antes de publicar.
 - **Cegueira (parcial):** áudio automático e uso por teclado; ainda não há descrição em áudio de cada item focado.

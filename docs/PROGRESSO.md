@@ -17,11 +17,10 @@
 - [x] **Aceite:** o usuário testou a câmera com `python -m app.main`: o cursor segue a mão e a pinça muda de estado
 
 ## Etapa 1b — Empacotamento, Release e GHCR
-- [ ] `empacotamento/atlas.spec` (onedir, dados do mediapipe, assets, conteúdo, Info.plist com uso de câmera)
-- [ ] `release.yml` (tag `v*`: Windows + macOS em zip; imagem `ghcr.io/edpl22/atlas`)
-- [ ] Tag `v0.0.1` com os dois zips e a imagem
-- [ ] **Aceite:** o usuário baixa o zip da Release, abre e vê o cursor seguindo a mão
-
+- [x] `empacotamento/atlas.spec` (onedir, `collect_all("mediapipe")`, assets e conteúdo, Info.plist com uso de câmera) e `atlas_launcher.py` (sem console)
+- [x] `release.yml` (tag `v*`): Windows e macOS com teste de fumaça (`verificar --completo` e `demo silabas`), zips na Release, imagem `ghcr.io/edpl22/atlas`
+- [x] Release `v0.2.2` com `Atlas-windows.zip` e `Atlas-macos.zip`; imagem `:v0.2.2` e `:latest` no GHCR
+- [ ] Usuário: tornar públicos o repositório e o pacote do GHCR antes do envio
 ## Etapa 2 — Perfis e camada de entrada
 - [x] `perfis.py`: 8 perfis, combinação "a opção mais acessível vence" + testes; `atlas perfis [--combinar]`
 - [x] `tema.py` aplica o perfil (escala, alto contraste, contornos, espaçamento de letras) + teste WCAG

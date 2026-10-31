@@ -41,7 +41,7 @@ docker compose build
 docker compose run --rm verificar | demo | teste
 bash scripts/gerar_saida_exemplo.sh      # regenera docs/saida-exemplo (Docker)
 bash scripts/verificar_readme.sh         # roda o README num clone limpo; rodar antes de cada tag
-# empacotar: Etapa 1b (PyInstaller onedir, empacotamento/atlas.spec)
+pyinstaller empacotamento/atlas.spec --noconfirm   # dist/Atlas (onedir); a Release faz isso a cada tag v*
 ```
 
 ## Estrutura
@@ -73,7 +73,7 @@ docs/         DECISOES.md, PROGRESSO.md (depois: ARQUITETURA.md, AVALIACAO.md, s
 | --- | --- |
 | 0. Repositório | concluída |
 | 1a. Esqueleto, câmera, `atlas verificar`/`demo` mínimos, Docker | concluída |
-| 1b. Empacotamento, Release e imagem no GHCR | pendente |
+| 1b. Empacotamento, Release e imagem no GHCR | concluída (Release v0.2.2) |
 | 2. Perfis e entrada | concluída |
 | 3. Núcleo das atividades, demo e agente completos | concluída |
 | 4. Ímã das Sílabas | concluída (tag v0.1.0) |

@@ -27,6 +27,8 @@ docker compose run --rm teste
 echo '{"acao":"estado"}' | docker compose run --rm -T agente
 ```
 
+Sem build, com a imagem pronta: `docker run --rm ghcr.io/edpl22/atlas:latest verificar` (os outros comandos também funcionam assim, por exemplo `docker run --rm -v "$PWD/saida:/saida" ghcr.io/edpl22/atlas:latest demo todas --saida /saida`).
+
 | Comando | O que faz | Saída esperada |
 | --- | --- | --- |
 | `docker compose build` | Monta a imagem (Python 3.11, Qt, OpenCV, MediaPipe) | `Image atlas:local Built` |
@@ -120,7 +122,10 @@ Ids estáveis: `bolha-<sílaba>-<n>`, `caixa-<n>`, `peca-<letra>-<n>`, `objeto-<
 
 ## Para uma pessoa
 
-- **Instalador (Windows e macOS):** ainda não publicado. Por enquanto, use o Caminho B sem `QT_QPA_PLATFORM=offscreen` e rode `atlas`, que abre a janela.
+- **Instalador:** baixe `Atlas-windows.zip` ou `Atlas-macos.zip` na [última Release](https://github.com/edpl22/hackthonAstros/releases/latest), descompacte e abra.
+  - **Windows:** abra `Atlas\Atlas.exe`. Como o app não é assinado, o SmartScreen pode avisar: clique em "Mais informações" e depois em "Executar assim mesmo".
+  - **macOS (Apple Silicon):** clique com o botão direito em `Atlas.app` e escolha "Abrir", ou rode `xattr -dr com.apple.quarantine Atlas.app` no Terminal. Em Macs Intel, use o Docker ou o Caminho B.
+  - O executável também aceita os comandos sem tela: `Atlas.exe verificar --completo` confere até o detector da mão.
 - **Sem webcam:** o Atlas usa mouse, toque e teclado sem nenhuma mensagem de erro; só aparece "Câmera desligada".
 - **Com webcam:** `pip install -r requirements-camera.txt`. A câmera liga só dentro de uma atividade. Junte o polegar e o indicador (pinça) para pegar e abra para soltar.
 - **Teclado:** Tab ou setas movem o foco; Enter ou Espaço pega e solta; Esc pausa.
@@ -135,6 +140,7 @@ Ids estáveis: `bolha-<sílaba>-<n>`, `caixa-<n>`, `peca-<letra>-<n>`, `objeto-<
 | Teste da mão (câmera) | Pronto |
 | Mesa de Quantidades (matemática): montar, comparar, somar e subtrair até 20 | Pronta (sem o modo Par/ímpar) |
 | Pizza de Frações (matemática): montar, somar, frações impróprias, barra de chocolate | Pronta |
+| Instaladores Windows e macOS e imagem Docker pronta (GHCR) | Publicados a cada versão (Releases) |
 | Painel do professor | Em construção (os dados já são registrados) |
 
 ## Capturas
