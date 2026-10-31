@@ -93,3 +93,5 @@
 - [x] Pausa de 150 ms antes de cada fala (Bluetooth/HDMI); Piper avaliado e não adotado por licença; tag `v1.0.2` conferida sem login
 - [x] Voz só no português (letra, sílaba, palavra), sem o botão Ouvir; treino só em Português; Teste da mão na tela inicial; áudio de 52 MB para 3 MB; capturas regeneradas
 - [x] Tag `v1.0.3` (zips de 155 e 142 MB, imagem de 1,66 GB) conferida sem login
+- [x] Botão de câmera abaixo do Voltar em toda atividade (começa ligada)
+- [x] Tabuada Protetora (matemática): 1 minuto, monstrinhos, +1/-1, arminha com coice; demo, agente, painel e testes

@@ -1,4 +1,5 @@
-"""Lógica pura da mão: filtro One Euro, área ativa, pinça com histerese e permanência.
+"""Lógica pura da mão: filtro One Euro, área ativa, pinça com histerese, permanência e o
+gesto de arminha com disparo (Tabuada Protetora).
 
 Não importa Qt nem OpenCV, para ser testada por completo.
 Os pontos seguem a numeração do MediaPipe: 0 = punho, 4 = ponta do polegar,
@@ -9,6 +10,13 @@ import math
 from dataclasses import dataclass
 
 PUNHO, POLEGAR, INDICADOR, BASE_MEDIO = 0, 4, 8, 9
+JUNTA_INDICADOR = 6
+# (junta do meio, ponta) do médio, anelar e mínimo
+DEDOS_DOBRADOS = ((10, 12), (14, 16), (18, 20))
+
+DISPARO_SUBIDA = 0.12  # a ponta do indicador sobe 12% da altura da área ativa...
+DISPARO_JANELA_S = 0.2  # ...em até 200 ms
+DISPARO_INTERVALO_S = 0.6  # depois de um disparo, espera antes do próximo
 
 PINCA_FECHA = 0.25
 PINCA_ABRE = 0.40
@@ -113,6 +121,59 @@ class DetectorPinca:
         self.fechada = False
 
 
+def eh_arminha(pontos, proporcao: float = PROPORCAO_QUADRO) -> bool:
+    """Indicador esticado e médio, anelar e mínimo dobrados (o polegar pode estar como for).
+
+    Esticado: a ponta fica bem mais longe do punho que a junta do meio; dobrado: a ponta
+    fica mais perto do punho que a junta do meio.
+    """
+    punho = pontos[PUNHO]
+
+    def ate_punho(i):
+        return _distancia(pontos[i], punho, proporcao)
+
+    esticado = ate_punho(INDICADOR) > 1.1 * ate_punho(JUNTA_INDICADOR)
+    dobrados = all(ate_punho(ponta) < ate_punho(junta) for junta, ponta in DEDOS_DOBRADOS)
+    return esticado and dobrados
+
+
+class DetectorDisparo:
+    """Dispara quando, em arminha, a ponta do indicador sobe rápido (o "coice" do tiro).
+
+    A mira é o ponto onde a mão estava antes do coice, para o tiro sair onde a criança mirou.
+    """
+
+    def __init__(
+        self, subida: float = DISPARO_SUBIDA, janela_s: float = DISPARO_JANELA_S,
+        intervalo_s: float = DISPARO_INTERVALO_S,
+    ):
+        self.subida, self.janela_s, self.intervalo_s = subida, janela_s, intervalo_s
+        self._historico: list[tuple[float, float, float, float]] = []  # (t, y bruto, x, y)
+        self._ultimo = -math.inf
+
+    def reiniciar(self) -> None:
+        self._historico = []
+
+    def atualizar(
+        self, t: float, y_bruto: float, mira: tuple[float, float], arminha: bool
+    ) -> tuple[float, float] | None:
+        """`y_bruto`: altura da ponta do indicador (0 = topo do quadro), sem filtro.
+        Devolve a mira (x, y) quando dispara; senão None."""
+        if not arminha:
+            self.reiniciar()
+            return None
+        self._historico = [h for h in self._historico if t - h[0] <= self.janela_s]
+        self._historico.append((t, y_bruto, *mira))
+        if t - self._ultimo < self.intervalo_s:
+            return None
+        mais_baixo = max(self._historico, key=lambda h: h[1])
+        if mais_baixo[1] - y_bruto >= self.subida and mais_baixo[0] < t:
+            self._ultimo = t
+            self.reiniciar()
+            return mais_baixo[2], mais_baixo[3]
+        return None
+
+
 class DetectorPermanencia:
     """Dispara quando o cursor fica parado sobre um alvo (dentro da tolerância) pelo tempo dado.
 
@@ -158,6 +219,8 @@ class EstadoMao:
     y: float = 0.0
     razao: float = math.inf
     pinca_fechada: bool = False
+    arminha: bool = False
+    y_bruto: float = 0.0  # ponta do indicador sem filtro (para o disparo)
 
 
 class RastreadorMao:
@@ -176,4 +239,7 @@ class RastreadorMao:
         x, y = mapear_area_ativa(ponta[0], ponta[1])
         x, y = self.filtro.filtrar(x, y, t)
         razao = razao_pinca(pontos)
-        return EstadoMao(True, x, y, razao, self.pinca.atualizar(razao))
+        _, y_bruto = mapear_area_ativa(ponta[0], ponta[1])
+        return EstadoMao(
+            True, x, y, razao, self.pinca.atualizar(razao), eh_arminha(pontos), y_bruto
+        )

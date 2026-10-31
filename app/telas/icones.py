@@ -44,6 +44,15 @@ def desenhar(pintor: QPainter, tipo: str, lado: float) -> None:
         pintor.drawArc(r, 60 * 16, 300 * 16)
         topo = QPointF(r.center().x() + r.width() * 0.25, r.top() + r.height() * 0.07)
         pintor.drawPolyline(QPolygonF([topo + QPointF(-9, -6), topo, topo + QPointF(-3, 10)]))
+    elif tipo in ("camera", "camera_desligada"):  # corpo, lente e visor; desligada: risco
+        corpo = QRectF(r.left(), r.top() + r.height() * 0.25, r.width(), r.height() * 0.65)
+        pintor.drawRoundedRect(corpo, 4, 4)
+        pintor.drawRect(QRectF(r.left() + r.width() * 0.3, r.top() + r.height() * 0.1,
+                               r.width() * 0.3, r.height() * 0.15))
+        raio = r.width() * 0.2
+        pintor.drawEllipse(corpo.center(), raio, raio)
+        if tipo == "camera_desligada":
+            pintor.drawLine(QPointF(r.left(), r.bottom()), QPointF(r.right(), r.top()))
     elif tipo == "pausa":  # duas barras
         pintor.setBrush(QColor(p.texto))
         largura = r.width() * 0.28

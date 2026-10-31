@@ -79,6 +79,8 @@
     "momento_nova_rodada": "Nova rodada",
     "comecar": "Começar",
     "pausa": "Pausa",
+    "camera_ligar": "Câmera desligada. Toque para ligar.",
+    "camera_desligar": "Câmera ligada. Toque para desligar.",
     "pausado": "Pausa. A atividade está parada.",
     "continuar": "Continuar",
     "terminou": "Terminou!",
@@ -117,6 +119,16 @@
     "instrucao": "Pegue a letra {letra}. Coloque na caixa da letra {letra}.",
     "terminou": "Todas as letras estão nas caixas.",
     "nomes_letras": "á,bê,cê,dê,é,éfe,gê,agá,i,jota,cá,éle,eme,ene,ó,pê,quê,érre,ésse,tê,u,vê,dáblio,xis,ípsilon,zê"
+  },
+  "tabuada": {
+    "habilidade": "tabuada",
+    "apresentacao": "Proteja a cidade! Acerte o monstrinho que tem o resultado da conta. Você tem 1 minuto.",
+    "instrucao": "Acerte o monstrinho com o resultado de {conta}.",
+    "certo": "Isso! {conta} = {resultado}. Mais um ponto.",
+    "errado": "{valor} não é o resultado de {conta}. Menos um ponto.",
+    "pontos": "Pontos: {pontos}",
+    "pontos_final": "Você fez {pontos} pontos.",
+    "terminou": "O tempo acabou!"
   },
   "quantidades": {
     "habilidade_montar": "contar e montar quantidades",
@@ -186,6 +198,7 @@
       "teste_mao": "Teste da mão aberto pela tela inicial. Sem webcam, a câmera aparece como desligada."
     },
     "treino_inicio": "Treino de arrastar aberto.",
+    "trilhas_mat": "Matemática escolhida: Contar e comparar, Frações com pizza e Tabuada Protetora.",
     "painel": "Painel do professor com a Turma de demonstração (6 alunos fictícios)."
   }
 }

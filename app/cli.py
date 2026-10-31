@@ -5,7 +5,9 @@ import json
 import os
 import sys
 
-ROTEIROS = ("navegacao", "treino", "silabas", "quantidades", "pizza", "painel", "todas")
+ROTEIROS = (
+    "navegacao", "treino", "silabas", "quantidades", "pizza", "tabuada", "painel", "todas",
+)
 ENTRADAS = ("mouse", "teclado", "varredura", "mao-simulada")
 
 

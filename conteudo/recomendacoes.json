@@ -54,5 +54,13 @@
   "comparacao_errada": {
     "descricao": "errou qual bandeja tem mais",
     "sugestao": "ligar os objetos das duas bandejas um a um com o dedo e olhar de que lado sobra."
+  },
+  "somou_em_vez_de_multiplicar": {
+    "descricao": "somou os dois números em vez de multiplicar",
+    "sugestao": "montar a conta como grupos iguais: 3 x 4 são 3 grupos de 4 objetos, contados juntos."
+  },
+  "vizinho_na_tabuada": {
+    "descricao": "escolheu o resultado vizinho na tabuada (uma vez a mais ou a menos)",
+    "sugestao": "recitar a tabuada contando nos dedos quantas vezes já somou, parando no número certo."
   }
 }

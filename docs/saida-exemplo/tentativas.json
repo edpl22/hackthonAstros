@@ -13,7 +13,7 @@
     "tempo_ms": 45,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:35"
+    "ts": "2026-10-31T06:34:07"
   },
   {
     "id": 2,
@@ -26,10 +26,10 @@
     "tipo_erro": "letra_trocada",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 86,
+    "tempo_ms": 87,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:35"
+    "ts": "2026-10-31T06:34:07"
   },
   {
     "id": 3,
@@ -42,10 +42,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 179,
+    "tempo_ms": 174,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:35"
+    "ts": "2026-10-31T06:34:07"
   },
   {
     "id": 4,
@@ -58,10 +58,10 @@
     "tipo_erro": null,
     "pistas": 0,
     "precisou_modelo": false,
-    "tempo_ms": 44,
+    "tempo_ms": 40,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:35"
+    "ts": "2026-10-31T06:34:07"
   },
   {
     "id": 5,
@@ -77,7 +77,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:35"
+    "ts": "2026-10-31T06:34:07"
   },
   {
     "id": 6,
@@ -93,7 +93,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:35"
+    "ts": "2026-10-31T06:34:07"
   },
   {
     "id": 1,
@@ -106,10 +106,10 @@
     "tipo_erro": "ordem_trocada",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 48,
+    "tempo_ms": 61,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:35"
+    "ts": "2026-10-31T06:34:07"
   },
   {
     "id": 2,
@@ -122,10 +122,10 @@
     "tipo_erro": "silaba_de_outra_palavra",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 95,
+    "tempo_ms": 111,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:35"
+    "ts": "2026-10-31T06:34:07"
   },
   {
     "id": 3,
@@ -138,10 +138,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 138,
+    "tempo_ms": 153,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:35"
+    "ts": "2026-10-31T06:34:07"
   },
   {
     "id": 4,
@@ -157,7 +157,7 @@
     "tempo_ms": 40,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:35"
+    "ts": "2026-10-31T06:34:07"
   },
   {
     "id": 5,
@@ -173,7 +173,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:35"
+    "ts": "2026-10-31T06:34:08"
   },
   {
     "id": 6,
@@ -189,7 +189,7 @@
     "tempo_ms": 44,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:35"
+    "ts": "2026-10-31T06:34:08"
   },
   {
     "id": 1,
@@ -202,10 +202,10 @@
     "tipo_erro": "um_a_mais_ou_menos",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 47,
+    "tempo_ms": 44,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:36"
+    "ts": "2026-10-31T06:34:08"
   },
   {
     "id": 2,
@@ -218,10 +218,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 101,
+    "tempo_ms": 88,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:36"
+    "ts": "2026-10-31T06:34:08"
   },
   {
     "id": 3,
@@ -237,7 +237,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:36"
+    "ts": "2026-10-31T06:34:08"
   },
   {
     "id": 4,
@@ -250,10 +250,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 56,
+    "tempo_ms": 46,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:36"
+    "ts": "2026-10-31T06:34:08"
   },
   {
     "id": 5,
@@ -266,10 +266,10 @@
     "tipo_erro": "operacao_trocada",
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 47,
+    "tempo_ms": 42,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:36"
+    "ts": "2026-10-31T06:34:08"
   },
   {
     "id": 6,
@@ -282,10 +282,10 @@
     "tipo_erro": "um_a_mais_ou_menos",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 90,
+    "tempo_ms": 80,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:36"
+    "ts": "2026-10-31T06:34:08"
   },
   {
     "id": 7,
@@ -298,10 +298,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 139,
+    "tempo_ms": 125,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:36"
+    "ts": "2026-10-31T06:34:08"
   },
   {
     "id": 1,
@@ -317,7 +317,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:37"
+    "ts": "2026-10-31T06:34:09"
   },
   {
     "id": 2,
@@ -330,10 +330,10 @@
     "tipo_erro": null,
     "pistas": 1,
     "precisou_modelo": false,
-    "tempo_ms": 47,
+    "tempo_ms": 48,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:37"
+    "ts": "2026-10-31T06:34:09"
   },
   {
     "id": 3,
@@ -349,7 +349,7 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:37"
+    "ts": "2026-10-31T06:34:09"
   },
   {
     "id": 4,
@@ -362,10 +362,10 @@
     "tipo_erro": "confundiu_numerador_denominador",
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 57,
+    "tempo_ms": 64,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:37"
+    "ts": "2026-10-31T06:34:09"
   },
   {
     "id": 5,
@@ -378,10 +378,10 @@
     "tipo_erro": null,
     "pistas": 2,
     "precisou_modelo": false,
-    "tempo_ms": 125,
+    "tempo_ms": 134,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:37"
+    "ts": "2026-10-31T06:34:09"
   },
   {
     "id": 6,
@@ -397,6 +397,70 @@
     "tempo_ms": 0,
     "modo_entrada": "mouse",
     "perfis": [],
-    "ts": "2026-10-31T06:02:37"
+    "ts": "2026-10-31T06:34:09"
+  },
+  {
+    "id": 1,
+    "aluno": "visitante",
+    "atividade": "tabuada",
+    "habilidade": "tabuada",
+    "item": "3x1",
+    "resposta": "2",
+    "correta": false,
+    "tipo_erro": "vizinho_na_tabuada",
+    "pistas": 1,
+    "precisou_modelo": false,
+    "tempo_ms": 41,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T06:34:10"
+  },
+  {
+    "id": 2,
+    "aluno": "visitante",
+    "atividade": "tabuada",
+    "habilidade": "tabuada",
+    "item": "3x1",
+    "resposta": "3",
+    "correta": true,
+    "tipo_erro": null,
+    "pistas": 1,
+    "precisou_modelo": false,
+    "tempo_ms": 83,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T06:34:10"
+  },
+  {
+    "id": 3,
+    "aluno": "visitante",
+    "atividade": "tabuada",
+    "habilidade": "tabuada",
+    "item": "3x9",
+    "resposta": "27",
+    "correta": true,
+    "tipo_erro": null,
+    "pistas": 0,
+    "precisou_modelo": false,
+    "tempo_ms": 0,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T06:34:10"
+  },
+  {
+    "id": 4,
+    "aluno": "visitante",
+    "atividade": "tabuada",
+    "habilidade": "tabuada",
+    "item": "4x9",
+    "resposta": "36",
+    "correta": true,
+    "tipo_erro": null,
+    "pistas": 0,
+    "precisou_modelo": false,
+    "tempo_ms": 0,
+    "modo_entrada": "mouse",
+    "perfis": [],
+    "ts": "2026-10-31T06:34:10"
   }
 ]

@@ -234,3 +234,27 @@ def test_estado_completo(tela):
         assert chave in estado
     assert estado["tela"] == "treino" and estado["momento"] == ATIVIDADE
     assert len(estado["itens"]) == combinar(["motor"]).max_itens
+
+
+# --- botão de câmera -------------------------------------------------------------------
+
+
+def test_atividade_comeca_com_a_camera_ligada_e_o_botao_desliga(tela, qtbot):
+    _abrir(tela)
+    assert tela.camera_ligada and tela.botao_camera.isChecked()
+    assert tela.botao_camera.accessibleName() == texto("base.camera_desligar")
+    qtbot.mouseClick(tela.botao_camera, Qt.LeftButton)
+    assert not tela.camera_ligada
+    assert tela.botao_camera.accessibleName() == texto("base.camera_ligar")
+    assert tela.indicador.accessibleName() == "Câmera desligada"
+    _acertar_todas(tela)  # mouse e teclado continuam funcionando
+    assert tela.momento == FIM
+    qtbot.mouseClick(tela.botao_camera, Qt.LeftButton)
+    assert tela.camera_ligada
+
+
+def test_reabrir_a_atividade_religa_a_camera(tela):
+    _abrir(tela)
+    tela.botao_camera.setChecked(False)
+    _abrir(tela)
+    assert tela.camera_ligada and tela.botao_camera.isChecked()

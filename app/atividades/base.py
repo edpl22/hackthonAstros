@@ -2,7 +2,9 @@
 
 - Roteiro fixo em 3 momentos: "O que vamos fazer" -> atividade -> "Terminou!" + Próximo,
   com a faixa Agora / Depois sempre no topo.
-- Uma instrução por vez, com botão "Ouvir"; som só depois de uma ação da criança.
+- Uma instrução por vez, escrita; voz só no português (letra, sílaba, palavra).
+- Botão de câmera abaixo do Voltar: começa ligada e pode ser desligada para a mão não agir
+  sem querer (mouse, toque e teclado continuam).
 - Erro neutro com pistas graduais (repetir, realçar, mostrar o modelo).
 - Ajuste de nível ("Quer um desafio?" / voltar um nível), que o professor pode travar.
 - Pausa sempre visível (e Esc): congela, cobre a tela e silencia.
@@ -128,6 +130,7 @@ class AtividadeBase(QWidget):
 
     id_atividade = "base"
     nivel_maximo = 1
+    gesto_mao = "pinca"  # a Tabuada Protetora usa "arminha"
 
     def __init__(self, contexto: Contexto, parent=None):
         super().__init__(parent)
@@ -167,7 +170,14 @@ class AtividadeBase(QWidget):
         topo.addWidget(self.botao_pausa)
 
         self.instrucao = rotulo("", "instrucao")
+        self.botao_camera = botao("")
+        self.botao_camera.setCheckable(True)
+        self.botao_camera.setIconSize(QSize(36, 36))
+        self.botao_camera.setFixedWidth(self.botao_voltar.sizeHint().width())
+        self.botao_camera.toggled.connect(self._alternar_camera)
+        self._mostrar_botao_camera(False)
         linha_instrucao = QHBoxLayout()
+        linha_instrucao.addWidget(self.botao_camera)  # logo abaixo do Voltar
         linha_instrucao.addWidget(self.instrucao, 1)
         linha_instrucao.addStretch()  # segura o lugar quando a instrução some
         linha_instrucao.addWidget(self.indicador)
@@ -304,16 +314,49 @@ class AtividadeBase(QWidget):
         # 4. legenda limpa a cada atividade aberta
         self.legenda.clear()
         self.ultimo_anuncio = ""
+        if self.botao_camera.isChecked():
+            self._ligar_camera()
+        else:
+            self.botao_camera.setChecked(True)  # toda atividade começa com a câmera ligada
+
+    # --- câmera ----------------------------------------------------------------------
+
+    @property
+    def camera_ligada(self) -> bool:
+        return self.camera is not None
+
+    def _mostrar_botao_camera(self, ligada: bool) -> None:
+        self.botao_camera.setIcon(icones.icone("camera" if ligada else "camera_desligada"))
+        nome = texto("base.camera_desligar" if ligada else "base.camera_ligar")
+        self.botao_camera.setAccessibleName(nome)
+        self.botao_camera.setToolTip(nome)
+
+    def _alternar_camera(self, ligar: bool) -> None:
+        if ligar:
+            self._ligar_camera()
+        else:
+            self._desligar_camera()
+        self._mostrar_botao_camera(ligar)
+
+    def _ligar_camera(self) -> None:
+        if self.camera is not None:
+            return
         self.camera = self.ctx.fabrica_camera(mostrar_miniatura=False)
         self.camera.pontos.connect(self._receber_pontos)
         self.camera.estado.connect(self.indicador.mostrar)
         self.camera.start()
 
-    def parar(self) -> None:
+    def _desligar_camera(self) -> None:
         if self.camera is not None:
             camera, self.camera = self.camera, None
             camera.parar()
             camera.deleteLater()
+        if self.entrada_mao is not None:
+            self.entrada_mao.receber([], False)  # some o cursor da mão
+        self.indicador.mostrar("desligada")
+
+    def parar(self) -> None:
+        self._desligar_camera()
         if isinstance(self.entrada_teclado, EntradaVarredura):
             self.entrada_teclado.desligar()
         if self.pausada:
@@ -346,7 +389,7 @@ class AtividadeBase(QWidget):
             self.entrada_teclado = EntradaVarredura(self.area, self.barramento)
         else:
             self.entrada_teclado = EntradaTeclado(self.area, self.barramento)
-        self.entrada_mao = EntradaMao(self.area, self.barramento, self.perfil)
+        self.entrada_mao = EntradaMao(self.area, self.barramento, self.perfil, self.gesto_mao)
         self._inicio_item = self.relogio()
 
     def _ir_para(self, momento: str) -> None:

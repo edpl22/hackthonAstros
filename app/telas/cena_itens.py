@@ -23,6 +23,7 @@ LARGURA, ALTURA = 1280, 560
 DURACAO_MS = 250  # animações sempre até 300 ms
 PX_POR_S_NA_VELOCIDADE_1 = 40  # bolhas flutuam a velocidade x 40 px/s
 QUADRO_MS = 33
+LARANJA_MONSTRO = "#E8833A"  # placeholder dos monstrinhos da Tabuada Protetora
 
 
 def _sem_animacao() -> bool:
@@ -93,6 +94,9 @@ class Peca(_Figura):
         if self.figura:
             self._pintar_figura(pintor, p)
             return
+        if self.tipo == "monstro":
+            self._pintar_monstro(pintor, p)
+            return
         espessura = self.contorno + (3 if self.segurada else 0)
         pintor.setPen(QPen(QColor(p.texto), espessura))
         if self.segurada:
@@ -107,6 +111,27 @@ class Peca(_Figura):
         letras = len(self.rotulo)
         tamanho = self.lado * (0.42 if letras <= 2 else 0.36 if letras == 3 else 0.22)
         self._desenhar_rotulo(pintor, tamanho, sublinhado=self.alternada)
+        self._desenhar_foco(pintor)
+
+    def _pintar_monstro(self, pintor, p) -> None:
+        """Número em cima e um retângulo laranja com dois olhos (placeholder do monstrinho)."""
+        q = self._quadro()
+        numero = QRectF(q.left(), q.top(), q.width(), q.height() * 0.35)
+        corpo = QRectF(q.left() + q.width() * 0.1, q.top() + q.height() * 0.38,
+                       q.width() * 0.8, q.height() * 0.62)
+        pintor.setPen(QPen(QColor(p.texto), self.contorno))
+        pintor.setBrush(QBrush(QColor(LARANJA_MONSTRO)))
+        pintor.drawRoundedRect(corpo, 8, 8)
+        pintor.setBrush(QBrush(QColor(p.texto)))
+        raio = q.width() * 0.06
+        y_olho = corpo.top() + corpo.height() * 0.35
+        for fx in (0.35, 0.65):
+            pintor.drawEllipse(QPointF(q.left() + q.width() * fx, y_olho), raio, raio)
+        fonte = QFont(pintor.font())
+        fonte.setPixelSize(round(q.height() * 0.3))
+        fonte.setBold(True)
+        pintor.setFont(fonte)
+        pintor.drawText(numero, Qt.AlignCenter, self.rotulo)
         self._desenhar_foco(pintor)
 
     def _pintar_figura(self, pintor, p) -> None:
@@ -372,6 +397,13 @@ class CenaItens(QGraphicsView):
             self._mover(self.pecas[peca_id], self.pecas[peca_id].origem)
         caixa.ocupantes = []
         caixa.update()
+
+    def remover_peca(self, peca_id: str) -> None:
+        peca = self.pecas.pop(peca_id)
+        if self.segurada == peca_id:
+            self.segurada = None
+            self.barramento.segurando = False
+        self.scene().removeItem(peca)
 
     def devolver(self, peca_id: str) -> None:
         peca = self.pecas[peca_id]

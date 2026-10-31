@@ -66,6 +66,20 @@ def classificar_quantidade(
     return "outro"
 
 
+# --- Tabuada Protetora ---------------------------------------------------------------
+
+
+def classificar_tabuada(resposta: int, a: int, b: int) -> str | None:
+    """Monstrinho acertado (`resposta`) para a conta a x b."""
+    if resposta == a * b:
+        return None
+    if resposta == a + b:
+        return "somou_em_vez_de_multiplicar"
+    if resposta in (a * (b + 1), a * (b - 1), (a + 1) * b, (a - 1) * b):
+        return "vizinho_na_tabuada"
+    return "outro"
+
+
 # --- Pizza de Frações -----------------------------------------------------------------
 
 

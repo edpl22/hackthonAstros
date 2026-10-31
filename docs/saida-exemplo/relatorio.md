@@ -39,4 +39,11 @@
 | 35 pizza-somar-pista1 | cartao 4/12 | 4/12 não é a resposta. Vamos tentar de novo. Quanto é 2/6 + 2/6? Escolha o cartão. | [captura-35-pizza-somar-pista1.png](captura-35-pizza-somar-pista1.png) | somou_denominadores | 1 - repetir a instrucao |
 | 36 pizza-somar-pista2 | cartao 6/4 | 6/4 não é a resposta. Vamos tentar de novo. Olhe o que está marcado. | [captura-36-pizza-somar-pista2.png](captura-36-pizza-somar-pista2.png) | confundiu_numerador_denominador | 2 - realcar a peca e a caixa |
 | 37 pizza-desafio-barra | desafio: fracao impropria | Isso. A resposta é 8/6 = 1 e 2/6. | [captura-37-pizza-desafio-barra.png](captura-37-pizza-desafio-barra.png) | — | — |
-| 38 painel | painel do professor | Painel do professor com a Turma de demonstração (6 alunos fictícios). | [captura-38-painel.png](captura-38-painel.png) | — | — |
+| 38 trilhas-matematica | escolher Matematica | Matemática escolhida: Contar e comparar, Frações com pizza e Tabuada Protetora. | [captura-38-trilhas-matematica.png](captura-38-trilhas-matematica.png) | — | — |
+| 39 tabuada-apresentacao | momento 1: o que vamos fazer | Proteja a cidade! Acerte o monstrinho que tem o resultado da conta. Você tem 1 minuto. | [captura-39-tabuada-apresentacao.png](captura-39-tabuada-apresentacao.png) | — | — |
+| 40 tabuada-atividade | conta, relogio de 1 minuto e monstrinhos | Acerte o monstrinho com o resultado de 3 × 1. | [captura-40-tabuada-atividade.png](captura-40-tabuada-atividade.png) | — | — |
+| 41 tabuada-erro | mouse: monstrinho errado (-1) | 2 não é o resultado de 3 × 1. Menos um ponto. Acerte o monstrinho com o resultado de 3 × 1. | [captura-41-tabuada-erro.png](captura-41-tabuada-erro.png) | vizinho_na_tabuada | 1 - repetir a instrucao |
+| 42 tabuada-acertos | mouse: tres acertos (+3) | Isso! 4 × 9 = 36. Mais um ponto. | [captura-42-tabuada-acertos.png](captura-42-tabuada-acertos.png) | — | — |
+| 43 tabuada-camera-desligada | botao da camera: desligar | Câmera desligada. Toque para ligar. | [captura-43-tabuada-camera-desligada.png](captura-43-tabuada-camera-desligada.png) | — | — |
+| 44 tabuada-fim | o tempo acabou | O tempo acabou! Você fez 2 pontos. | [captura-44-tabuada-fim.png](captura-44-tabuada-fim.png) | — | — |
+| 45 painel | painel do professor | Painel do professor com a Turma de demonstração (6 alunos fictícios). | [captura-45-painel.png](captura-45-painel.png) | — | — |

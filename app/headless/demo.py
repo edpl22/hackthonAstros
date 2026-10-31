@@ -274,8 +274,9 @@ def _escolher(tela, ex, peca_id) -> None:
     """Escolhe um cartão com a entrada da execução (pegar um cartão já é escolher)."""
     cena = tela.cena
     if ex.entrada == "mouse":
-        _mouse(cena, QEvent.MouseButtonPress, cena.centro(peca_id), Qt.LeftButton)
-        _mouse(cena, QEvent.MouseButtonRelease, cena.centro(peca_id), Qt.NoButton)
+        centro = cena.centro(peca_id)  # o item pode sumir ao ser escolhido (monstrinho)
+        _mouse(cena, QEvent.MouseButtonPress, centro, Qt.LeftButton)
+        _mouse(cena, QEvent.MouseButtonRelease, centro, Qt.NoButton)
     elif ex.entrada == "mao-simulada":
         mao_simulada.reproduzir(tela.entrada_mao, cena, passos=[
             {"ir_para": peca_id, "ms": 600}, {"esperar": 300},
@@ -407,6 +408,54 @@ def roteiro_pizza(ex: Execucao) -> None:
     ex.fechar(janela)
 
 
+def _acertar_monstro(tela, ex, id_monstro) -> None:
+    """Acerta um monstrinho: clique, tecla, varredura ou arminha com coice (mão simulada)."""
+    if ex.entrada == "mao-simulada":
+        mao_simulada.reproduzir(tela.entrada_mao, tela.cena, passos=[
+            {"arminha": True}, {"ir_para": id_monstro, "ms": 500}, {"esperar": 300},
+            {"disparar": True}, {"esperar": 300},
+        ])
+    else:
+        _escolher(tela, ex, id_monstro)
+
+
+def roteiro_tabuada(ex: Execucao) -> None:
+    janela = ex.nova_janela()
+    janela.escolher_aluno(None, ex.perfis)
+    janela.abrir_materia("matematica")
+    ex.capturar(janela, "trilhas-matematica", "escolher Matematica", texto("demo.trilhas_mat"))
+    tela = janela.atividades["tabuada"]
+    janela.abrir_atividade("tabuada", semente=SEMENTE, varredura=ex.entrada == "varredura")
+    tela.anunciou.connect(
+        lambda frase: ex.registrar("tabuada", entrada=tela.barramento.modo_entrada, anuncio=frase)
+    )
+    ex.capturar(janela, "tabuada-apresentacao", "momento 1: o que vamos fazer",
+                tela.instrucao.text())
+    tela.comecar()
+    ex.capturar(janela, "tabuada-atividade", "conta, relogio de 1 minuto e monstrinhos",
+                tela.instrucao.text())
+
+    def monstro(certo: bool) -> str:
+        conta = tela.partida.conta
+        return next(m.id for m in conta.monstros if (m.valor == conta.certo) == certo)
+
+    _acertar_monstro(tela, ex, monstro(certo=False))
+    tentativa = _ultima_tentativa(janela)
+    ex.capturar(janela, "tabuada-erro", f"{ex.entrada}: monstrinho errado (-1)",
+                tela.ultimo_anuncio, tipo_erro=tentativa["tipo_erro"], pista=PISTAS[1])
+    for _ in range(3):
+        _acertar_monstro(tela, ex, monstro(certo=True))
+    ex.capturar(janela, "tabuada-acertos", f"{ex.entrada}: tres acertos (+3)",
+                tela.ultimo_anuncio)
+    tela.botao_camera.click()
+    ex.capturar(janela, "tabuada-camera-desligada", "botao da camera: desligar",
+                tela.botao_camera.accessibleName())
+    tela.passar_tempo(60)
+    ex.capturar(janela, "tabuada-fim", "o tempo acabou", tela.texto_fim_detalhe.text())
+    ex.registrar("tabuada", evento="estado_final", pontos=tela.partida.pontos)
+    ex.fechar(janela)
+
+
 def roteiro_painel(ex: Execucao) -> None:
     """Painel do professor com a Turma de demonstração (dados fictícios, rotulados assim)."""
     from app.nucleo import turma_demo
@@ -424,6 +473,7 @@ ROTEIROS = {
     "silabas": roteiro_silabas,
     "quantidades": roteiro_quantidades,
     "pizza": roteiro_pizza,
+    "tabuada": roteiro_tabuada,
     "painel": roteiro_painel,
 }
 

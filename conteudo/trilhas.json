@@ -5,6 +5,7 @@
   ],
   "matematica": [
     {"id": "quantidades", "nome": "Contar e comparar", "atividade": "quantidades"},
-    {"id": "fracoes", "nome": "Frações com pizza", "atividade": "pizza"}
+    {"id": "fracoes", "nome": "Frações com pizza", "atividade": "pizza"},
+    {"id": "tabuada", "nome": "Tabuada Protetora", "atividade": "tabuada"}
   ]
 }
