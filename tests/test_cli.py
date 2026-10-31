@@ -58,21 +58,26 @@ def test_demo_gera_evidencias(tmp_path):
 
     capturas = sorted(p.name for p in saida.glob("captura-*.png"))
     assert capturas[0] == "captura-01-inicio.png"
-    assert len(capturas) == 13
+    assert len(capturas) == 22  # navegação 6 + treino 7 + sílabas 9
     relatorio = (saida / "relatorio.md").read_text(encoding="utf-8")
     for captura in capturas:
         assert captura in relatorio
-    # O erro proposital aparece no relatório com o tipo de erro e as duas pistas.
-    assert "letra_trocada" in relatorio
+    # Os erros propositais aparecem no relatório com o tipo de erro e as pistas.
+    for tipo in ("letra_trocada", "ordem_trocada", "tonica_errada"):
+        assert tipo in relatorio
     assert "1 - repetir a instrucao" in relatorio and "2 - realcar" in relatorio
     eventos = _ler_eventos(saida)
-    assert eventos[-1] == {"n": len(eventos), "roteiro": "treino", "evento": "estado_final",
+    assert eventos[-1] == {"n": len(eventos), "roteiro": "silabas", "evento": "estado_final",
                            "concluida": True}
     tentativas = json.loads((saida / "tentativas.json").read_text("utf-8"))
-    assert [t["correta"] for t in tentativas] == [False, False, True, True, True, True]
-    assert tentativas[0]["tipo_erro"] == "letra_trocada" and tentativas[1]["pistas"] == 2
+    treino = [t for t in tentativas if t["atividade"] == "treino"]
+    assert [t["correta"] for t in treino] == [False, False, True, True, True, True]
+    assert treino[0]["tipo_erro"] == "letra_trocada" and treino[1]["pistas"] == 2
+    silabas = [t for t in tentativas if t["atividade"] == "silabas"]
+    assert [t["item"] for t in silabas][:2] == ["bola-1", "bola-1"]
     audio = (saida / "audio.log").read_text("utf-8").splitlines()
-    assert audio and all(linha.startswith("toca ") for linha in audio)
+    assert sum(linha.startswith("toca ") for linha in audio) > 10
+    assert all(linha.startswith(("toca ", "legenda (sem wav): ")) for linha in audio)
 
 
 @pytest.mark.parametrize("entrada", ["teclado", "varredura", "mao-simulada"])

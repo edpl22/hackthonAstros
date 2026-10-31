@@ -218,7 +218,58 @@ def roteiro_treino(ex: Execucao) -> None:
     ex.fechar(janela)
 
 
-ROTEIROS = {"navegacao": roteiro_navegacao, "treino": roteiro_treino}
+def roteiro_silabas(ex: Execucao) -> None:
+    janela = ex.nova_janela()
+    janela.escolher_aluno(None, ex.perfis)
+    janela.abrir_materia("portugues")
+    varredura = ex.entrada == "varredura"
+    janela.abrir_atividade("silabas", semente=SEMENTE, varredura=varredura, palavra="bola")
+    tela = janela.atividades["silabas"]
+    tela.anunciou.connect(
+        lambda frase: ex.registrar("silabas", entrada=tela.barramento.modo_entrada, anuncio=frase)
+    )
+
+    def bolha(silaba):
+        return next(b.id for b in tela.rodada.bolhas if b.silaba == silaba)
+
+    ex.capturar(janela, "silabas-apresentacao", "momento 1: o que vamos fazer",
+                tela.instrucao.text())
+    tela.comecar()
+    ex.capturar(janela, "silabas-bola", "nivel 1: BOLA", tela.instrucao.text())
+    jogar = JOGADAS[ex.entrada]
+    # Erros propositais: LA na primeira caixa (ordem trocada) e uma distratora.
+    distratora = next(b.id for b in tela.rodada.bolhas if b.posicao is None)
+    for n_pista, peca, nome in ((1, bolha("LA"), "ordem"), (2, distratora, "distratora")):
+        jogar(tela, peca, "caixa-1", 0)
+        tentativa = _ultima_tentativa(janela)
+        ex.capturar(
+            janela, f"silabas-erro-{nome}", f"{ex.entrada}: {tentativa['resposta']} na 1a caixa",
+            tela.ultimo_anuncio, tipo_erro=tentativa["tipo_erro"], pista=PISTAS[n_pista],
+        )
+    jogar(tela, bolha("BO"), "caixa-1", 1)
+    ex.capturar(janela, "silabas-acerto", f"{ex.entrada}: BO na 1a caixa", tela.ultimo_anuncio)
+    jogar(tela, bolha("LA"), "caixa-2", 2)
+    ex.capturar(janela, "silabas-fim", "palavra pronta: toca BOLA", tela.texto_fim_detalhe.text())
+
+    # Nível 3: letra minúscula e distratora do par surdo/sonoro (PRA x BRA).
+    janela.abrir_atividade("silabas", semente=SEMENTE, nivel=3, palavra="prato")
+    tela.comecar()
+    ex.capturar(janela, "silabas-nivel3", "nivel 3: PRATO em minusculas", tela.instrucao.text())
+
+    # Nível 4: qual bolha é a mais forte? Primeiro erra (LA), depois acerta (BO).
+    janela.abrir_atividade("silabas", semente=SEMENTE, nivel=4, palavra="bola")
+    tela.comecar()
+    tela.barramento.usar(ex.entrada).escolher.emit(bolha("LA"))
+    tentativa = _ultima_tentativa(janela)
+    ex.capturar(janela, "silabas-tonica-erro", "nivel 4: escolhe LA", tela.ultimo_anuncio,
+                tipo_erro=tentativa["tipo_erro"], pista=PISTAS[1])
+    tela.barramento.escolher.emit(bolha("BO"))
+    ex.capturar(janela, "silabas-tonica-certa", "nivel 4: escolhe BO", tela.ultimo_anuncio)
+    ex.registrar("silabas", evento="estado_final", concluida=tela.estado()["concluida"])
+    ex.fechar(janela)
+
+
+ROTEIROS = {"navegacao": roteiro_navegacao, "treino": roteiro_treino, "silabas": roteiro_silabas}
 
 
 def _ler_tamanho(tamanho: str) -> tuple[int, int]:

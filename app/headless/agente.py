@@ -41,7 +41,9 @@ class Erro(Exception):
 
 
 class Agente:
-    def __init__(self, atividade: str, perfis: list[str], semente: int | None = 7):
+    def __init__(
+        self, atividade: str, perfis: list[str], semente: int | None = 7, palavra: str | None = None
+    ):
         self.app = QApplication.instance() or QApplication([])
         tema.aplicar(self.app)
         self.janela = JanelaPrincipal(
@@ -56,7 +58,10 @@ class Agente:
             jogaveis = [a for a in disponiveis if a != "teste_camera"]
             raise Erro(f"atividade inexistente: {atividade}", f"disponiveis: {', '.join(jogaveis)}")
         self.janela.escolher_aluno(None, perfis)
-        self.janela.abrir_atividade(atividade, semente=semente)
+        opcoes = {}
+        if atividade == "silabas":
+            opcoes["palavra"] = palavra or "bola"  # começo previsível para o README
+        self.janela.abrir_atividade(atividade, semente=semente, **opcoes)
         self.atividade = self.janela.atividades[atividade]
         self.nome = atividade
         self._processar()
@@ -138,14 +143,19 @@ def _escrever(dados: dict) -> None:
     sys.stdout.flush()
 
 
-def executar(atividade: str, perfis: list[str], entrada=None) -> int:
+def executar(atividade: str, perfis: list[str], entrada=None, palavra: str | None = None) -> int:
     os.environ["ATLAS_SEM_ANIMACAO"] = "1"
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")  # acentos iguais no Windows e no Linux
     try:
-        agente = Agente(atividade, perfis)
+        agente = Agente(atividade, perfis, palavra=palavra)
     except Erro as erro:
         _escrever({"ok": False, "erro": erro.erro, "dica": erro.dica})
+        return 1
+    except StopIteration:
+        _escrever({"ok": False, "erro": f"palavra inexistente: {palavra}",
+                   "dica": "palavras: bola, casa, pato, gato, sapo, vaca, macaco, sapato, "
+                           "boneca, janela, tomate, braco, prato, passaro, livro"})
         return 1
     _escrever({"pronto": True, "atividade": agente.nome, "acoes": ACOES})
     for linha in entrada or sys.stdin:
