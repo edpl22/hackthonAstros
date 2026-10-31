@@ -353,11 +353,65 @@ def roteiro_quantidades(ex: Execucao) -> None:
     ex.fechar(janela)
 
 
+def roteiro_pizza(ex: Execucao) -> None:
+    from app.atividades.pizza import logica as pizza
+
+    janela = ex.nova_janela()
+    janela.escolher_aluno(None, ex.perfis)
+    janela.abrir_materia("matematica")
+    tela = janela.atividades["pizza"]
+    varredura = ex.entrada == "varredura"
+
+    def cartao(valor) -> str:
+        return f"cartao-{valor[0]}-{valor[1]}"
+
+    # Montar: "Pronto" com uma fatia a menos (erro proposital), depois a fração certa.
+    janela.abrir_atividade("pizza", semente=SEMENTE, varredura=varredura, nivel=pizza.MONTAR)
+    tela.anunciou.connect(
+        lambda frase: ex.registrar("pizza", entrada=tela.barramento.modo_entrada, anuncio=frase)
+    )
+    ex.capturar(janela, "pizza-apresentacao", "momento 1: o que vamos fazer", tela.instrucao.text())
+    tela.comecar()
+    n = tela.rodada.certo[0]
+    for i in range(n - 1):
+        _escolher(tela, ex, f"fatia-a-{i}")
+    _escolher(tela, ex, "cartao-pronto")
+    tentativa = _ultima_tentativa(janela)
+    ex.capturar(janela, "pizza-montar-erro", f"{ex.entrada}: {n - 1} fatias e Pronto",
+                tela.ultimo_anuncio, tipo_erro=tentativa["tipo_erro"], pista=PISTAS[1])
+    _escolher(tela, ex, f"fatia-a-{n - 1}")
+    _escolher(tela, ex, "cartao-pronto")
+    ex.capturar(janela, "pizza-montar-fim", f"{n} fatias e Pronto", tela.ultimo_anuncio)
+
+    # Somar: soma os denominadores (pista 1), depois troca em cima e embaixo (pista 2).
+    janela.abrir_atividade("pizza", semente=SEMENTE, varredura=varredura, nivel=pizza.SOMAR)
+    tela.comecar()
+    errados = [c.id for c in tela.rodada.cartoes if c.valor != tela.rodada.certo]
+    errados.sort(key=lambda c: c != cartao((sum(p[0] for p in tela.rodada.parcelas),
+                                            2 * tela.rodada.corte)))
+    for n_pista, errado in enumerate(errados, start=1):
+        _escolher(tela, ex, errado)
+        tentativa = _ultima_tentativa(janela)
+        ex.capturar(janela, f"pizza-somar-pista{n_pista}", f"cartao {tentativa['resposta']}",
+                    tela.ultimo_anuncio, tipo_erro=tentativa["tipo_erro"], pista=PISTAS[n_pista])
+    _escolher(tela, ex, cartao(tela.rodada.certo))
+
+    # Desafio na barra de chocolate: a soma passa de uma barra inteira.
+    janela.abrir_atividade("pizza", semente=SEMENTE, varredura=varredura, nivel=pizza.DESAFIO,
+                           forma="barra")
+    tela.comecar()
+    _escolher(tela, ex, cartao(tela.rodada.certo))
+    ex.capturar(janela, "pizza-desafio-barra", "desafio: fracao impropria", tela.ultimo_anuncio)
+    ex.registrar("pizza", evento="estado_final", concluida=tela.estado()["concluida"])
+    ex.fechar(janela)
+
+
 ROTEIROS = {
     "navegacao": roteiro_navegacao,
     "treino": roteiro_treino,
     "silabas": roteiro_silabas,
     "quantidades": roteiro_quantidades,
+    "pizza": roteiro_pizza,
 }
 
 
