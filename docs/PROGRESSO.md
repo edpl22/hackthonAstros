@@ -71,6 +71,10 @@
 - [ ] **Aceite:** captura do painel com a turma de demonstração
 
 ## Etapa 8 — Entrega
-- [ ] README final e capturas
-- [ ] Tag `v1.0.0` e Release conferida
-- [ ] Usuário muda o repositório para público e testamos o link numa aba anônima
+- [x] README de entrega: resumo, "Como executar e avaliar sem tela" (caminhos A, B e C), protocolo do agente, problemas comuns, privacidade, créditos
+- [x] `docs/AVALIACAO.md` (afirmação → onde está → como verificar, limitações) e `docs/ARQUITETURA.md`
+- [x] `scripts/gerar_saida_exemplo.sh` e `docs/saida-exemplo/` (saídas reais do Docker, sessão do agente)
+- [x] `scripts/verificar_readme.sh` passou num clone limpo (Docker e Python)
+- [ ] Atualizar README e AVALIACAO quando Mesa, Pizza e painel ficarem prontos; gerar de novo a saída de exemplo
+- [ ] Tag `v1.0.0`, Release e imagem no GHCR (depende da Etapa 1b)
+- [ ] Usuário muda o repositório (e o pacote do GHCR) para público; testar clone e pull sem login

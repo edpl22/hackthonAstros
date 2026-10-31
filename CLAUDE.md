@@ -39,6 +39,8 @@ docker run --rm -v "$PWD:/w" -w /w python:3.11-slim-bookworm sh -c "apt-get upda
 .venv/Scripts/python -m pytest   # roda em offscreen (tests/conftest.py)
 docker compose build
 docker compose run --rm verificar | demo | teste
+bash scripts/gerar_saida_exemplo.sh      # regenera docs/saida-exemplo (Docker)
+bash scripts/verificar_readme.sh         # roda o README num clone limpo; rodar antes de cada tag
 # empacotar: Etapa 1b (PyInstaller onedir, empacotamento/atlas.spec)
 ```
 
@@ -78,4 +80,4 @@ docs/         DECISOES.md, PROGRESSO.md (depois: ARQUITETURA.md, AVALIACAO.md, s
 | 5. Mesa de Quantidades | pendente |
 | 6. Pizza de Frações | pendente |
 | 7. Painel do professor e interface remota (noVNC) | pendente |
-| 8. Entrega | pendente |
+| 8. Entrega | README, AVALIACAO, saída de exemplo e verificar_readme prontos; falta tag, Release e repositório público |
