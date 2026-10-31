@@ -84,6 +84,6 @@
 - [x] `docs/AVALIACAO.md` (afirmação → onde está → como verificar, limitações) e `docs/ARQUITETURA.md`
 - [x] `scripts/gerar_saida_exemplo.sh` e `docs/saida-exemplo/` (saídas reais do Docker, sessão do agente)
 - [x] `scripts/verificar_readme.sh` passou num clone limpo (Docker e Python)
-- [ ] Atualizar README e AVALIACAO quando Mesa, Pizza e painel ficarem prontos; gerar de novo a saída de exemplo
-- [ ] Tag `v1.0.0`, Release e imagem no GHCR (depende da Etapa 1b)
+- [x] README, AVALIACAO e saída de exemplo atualizados com Mesa, Pizza e painel (38 capturas)
+- [x] `verificar_readme.sh` passou num clone limpo; tag `v1.0.0` com `Atlas-windows.zip`, `Atlas-macos.zip` e `ghcr.io/edpl22/atlas:v1.0.0`
 - [ ] Usuário muda o repositório (e o pacote do GHCR) para público; testar clone e pull sem login
