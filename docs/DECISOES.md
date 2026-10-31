@@ -70,3 +70,4 @@
 | 2026-10-31 | Interface remota (`docker compose up gui`, noVNC) não implementada; o serviço `gui` saiu do compose | Primeiro item da ordem de corte; os modos sem tela e os instaladores cobrem a avaliação |
 | 2026-10-31 | Imagem Docker ganhou `libgles2` | O `verificar --completo` mostrou que o MediaPipe não carregava no Linux sem `libGLESv2.so.2`; o `verificar` comum só confere se os pacotes existem |
 | 2026-10-30 | Toda captura de `docs/saida-exemplo/` sai do `atlas demo` rodando o app real | Regra de jogo limpo: demo de fachada desclassifica |
+| 2026-10-31 | Treino de arrastar percorre o alfabeto inteiro: cada rodada é um bloco de até 4 letras (ABCD, EFGH, ..., WXYZ) e depois volta ao A; abrir a atividade recomeça no A | Pedido do time: só A–D era pouco. Blocos em ordem mantêm até 4 alvos de 64 px na tela, são simples de explicar e deixam a primeira rodada igual (capturas e agente não mudam). A voz lê o nome da letra ("bê"), guardado em `frases.json` |

@@ -136,7 +136,7 @@ Ids estáveis: `bolha-<sílaba>-<n>`, `caixa-<n>`, `peca-<letra>-<n>`, `objeto-<
 | Atividade | Estado |
 | --- | --- |
 | Ímã das Sílabas (português): 15 palavras, 4 níveis, sílaba tônica | Pronta |
-| Treino de arrastar (letras A–D, maiúsculas e minúsculas) | Pronto |
+| Treino de arrastar (alfabeto inteiro em blocos de 4 letras, maiúsculas e minúsculas) | Pronto |
 | Teste da mão (câmera) | Pronto |
 | Mesa de Quantidades (matemática): montar, comparar, somar e subtrair até 20 | Pronta (sem o modo Par/ímpar) |
 | Pizza de Frações (matemática): montar, somar, frações impróprias, barra de chocolate | Pronta |

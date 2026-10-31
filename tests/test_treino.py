@@ -25,6 +25,21 @@ def test_rodada_respeita_max_itens():
     assert len(logica.nova_rodada(1, 1).letras) == 2
 
 
+def test_rodadas_percorrem_o_alfabeto_inteiro():
+    vistas = [logica.nova_rodada(4, 1, bloco).letras for bloco in range(8)]
+    assert vistas[:2] == [["A", "B", "C", "D"], ["E", "F", "G", "H"]]
+    assert vistas[6] == ["W", "X", "Y", "Z"]  # o último bloco sempre tem as n letras
+    assert vistas[7] == ["A", "B", "C", "D"]  # depois do Z volta ao começo
+    assert set().union(*vistas[:7]) == set(logica.ALFABETO)
+
+
+@pytest.mark.parametrize("n", [2, 3, 4])
+def test_todo_bloco_tem_n_letras_e_todas_aparecem(n):
+    blocos = [logica.letras_do_bloco(b, n) for b in range(-(-26 // n))]
+    assert all(len(b) == n for b in blocos)
+    assert set().union(*blocos) == set(logica.ALFABETO)
+
+
 @pytest.mark.parametrize("semente", range(20))
 def test_pecas_nunca_ficam_todas_em_cima_das_caixas(semente):
     rodada = logica.nova_rodada(3, semente)
@@ -188,6 +203,16 @@ def test_estado_tem_ids_estaveis(tela):
     assert [i["id"] for i in estado["itens"]] == ["peca-a-0", "peca-b-1", "peca-c-2", "peca-d-3"]
     assert [a["id"] for a in estado["alvos"]] == ["caixa-1", "caixa-2", "caixa-3", "caixa-4"]
     assert estado["instrucao"] == "Pegue a letra A. Coloque na caixa da letra A."
+
+
+def test_proxima_rodada_avanca_no_alfabeto(tela):
+    _iniciar(tela, PERFIS["padrao"], semente=1)
+    _completar(tela, _arrastar)
+    tela.proximo()
+    assert tela.rodada.letras == ["E", "F", "G", "H"]
+    assert tela.estado()["instrucao"] == "Pegue a letra E. Coloque na caixa da letra E."
+    _iniciar(tela, PERFIS["padrao"], semente=1)  # abrir de novo recomeça no A
+    assert tela.rodada.letras == ["A", "B", "C", "D"]
 
 
 def test_soltar_fora_devolve_a_peca(tela):

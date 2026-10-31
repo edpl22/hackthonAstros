@@ -30,14 +30,13 @@ from app.nucleo.conteudo import carregar  # noqa: E402
 PASTA_AUDIO = RAIZ / "assets" / "audio"
 MANIFESTO = RAIZ / "conteudo" / "manifesto_audio.json"
 TAXA = 22050
-LETRAS = "ABCD"
 
 # Seções de frases.json lidas em voz alta (as demais são da área do adulto ou técnicas).
 SECOES_FALADAS = ("base", "treino", "silabas", "quantidades", "pizza")
 CHAVES_SEM_VOZ = {
     "habilidade", "habilidade_tonica", "instrucao", "nivel_subiu", "agora", "depois",
     "ouvir_curto", "ordinais", "habilidade_montar", "habilidade_comparar", "habilidade_contas",
-    "sobrou", "tirar", "bandeja-a", "bandeja-b", "habilidade_somar",
+    "sobrou", "tirar", "bandeja-a", "bandeja-b", "habilidade_somar", "nomes_letras",
 }
 
 
@@ -59,12 +58,24 @@ def coletar_textos() -> list[tuple[str, str]]:
         for chave, valor in frases[secao].items():
             if chave not in CHAVES_SEM_VOZ and "{" not in valor:
                 mesmo(valor)
-    # Treino: frases com letra, uma por letra.
-    for letra in LETRAS:
-        mesmo(frases["treino"]["instrucao"].format(letra=letra))
-        for chave in ("pegou", "voltou", "soltou_fora"):
-            mesmo(frases["anuncio"][chave].format(item=letra))
-        mesmo(frases["anuncio"]["encaixou"].format(item=letra, alvo=letra))
+    # Treino: frases com letra, uma por letra do alfabeto. A voz lê o nome ("bê"), não "B";
+    # no nível 2 a peça é minúscula, então pegou/voltou também saem com a letra minúscula.
+    from app.atividades.treino import logica as treino
+
+    a = frases["anuncio"]
+    nomes = dict(zip(treino.ALFABETO, frases["treino"]["nomes_letras"].split(","), strict=True))
+    for letra, nome in nomes.items():
+        pares.append((
+            frases["treino"]["instrucao"].format(letra=letra),
+            frases["treino"]["instrucao"].format(letra=nome),
+        ))
+        for item in (letra, letra.lower()):
+            for chave in ("pegou", "voltou", "soltou_fora"):
+                pares.append((a[chave].format(item=item), a[chave].format(item=nome)))
+            pares.append((
+                a["encaixou"].format(item=item, alvo=letra),
+                a["encaixou"].format(item=nome, alvo=nome),
+            ))
     for n in (1, 2, 3, 4):
         mesmo(frases["base"]["nivel_subiu"].format(nivel=n))
     for chave in ("nada_para_pegar", "pausou", "continuou"):

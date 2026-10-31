@@ -131,7 +131,8 @@ def test_quatro_acertos_oferecem_desafio_e_nivel_2_usa_minusculas(tela):
 
     tela.responder_desafio(True)
     assert tela.nivel.nivel == 2 and tela.momento == ATIVIDADE
-    assert [p.rotulo for p in tela.cena.pecas.values()] == ["a", "b", "c", "d"]
+    minusculas = [letra.lower() for letra in tela.rodada.letras]  # o desafio já é o bloco seguinte
+    assert [p.rotulo for p in tela.cena.pecas.values()] == minusculas
     _acertar_todas(tela)  # minúscula na caixa da maiúscula
     assert tela.momento == FIM
 

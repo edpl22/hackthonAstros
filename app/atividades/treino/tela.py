@@ -18,8 +18,14 @@ class TelaTreino(AtividadeBase):
     id_atividade = "treino"
     nivel_maximo = 2
 
+    def iniciar(self, *args, **kwargs) -> None:
+        self._rodadas = 0  # cada abertura começa no A; cada nova rodada avança no alfabeto
+        super().iniciar(*args, **kwargs)
+
     def preparar_rodada(self, semente: int | None) -> None:
-        self.rodada = logica.nova_rodada(self.perfil.max_itens, semente)
+        semente_rodada = None if semente is None else semente + self._rodadas
+        self.rodada = logica.nova_rodada(self.perfil.max_itens, semente_rodada, self._rodadas)
+        self._rodadas += 1
 
     def criar_area(self) -> CenaItens:
         cena = CenaItens(self.barramento, self.perfil)
