@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from app.entrada.camera import CameraNula
+from app.entrada.camera import CameraNula, encerrar
 from app.entrada.mao import EstadoMao, RastreadorMao
 from app.nucleo.conteudo import texto
 from app.nucleo.tema import paleta_atual
@@ -132,8 +132,7 @@ class TelaTesteCamera(QWidget):
         if self.camera is None:
             return
         camera, self.camera = self.camera, None
-        camera.parar()
-        camera.deleteLater()
+        encerrar(camera)
         self.miniatura.clear()
         self.indicador.mostrar("desligada")
         self.ao_receber_pontos([], False)

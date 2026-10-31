@@ -14,6 +14,7 @@ from app.nucleo.perfis import ler_lista
 
 AVATARES = ("gato", "cachorro", "peixe", "passaro", "sapo", "tartaruga")
 TAMANHO_MAX_APELIDO = 20
+VISITANTE = "visitante"  # nome gravado nas tentativas de quem joga sem cadastro
 
 
 @dataclass(frozen=True)
@@ -160,6 +161,8 @@ class Registro:
             raise ValueError("apelido vazio")
         if len(apelido) > TAMANHO_MAX_APELIDO:
             raise ValueError(f"apelido com mais de {TAMANHO_MAX_APELIDO} letras")
+        if apelido.casefold() == VISITANTE:  # misturaria o histórico com o do visitante
+            raise ValueError(f"o apelido {apelido} é reservado")
         if avatar not in AVATARES:
             raise ValueError(f"avatar desconhecido: {avatar}")
         perfis = ler_lista(",".join(perfis))
@@ -172,15 +175,31 @@ class Registro:
                 )
                 id = cursor.lastrowid
             else:
+                antigo = self._apelido_de(id)
                 self.conexao.execute(
                     "UPDATE alunos SET apelido = ?, avatar = ?, perfis = ? WHERE id = ?",
                     (apelido, avatar, texto_perfis, id),
                 )
+                # As tentativas guardam o apelido: trocar o apelido leva o histórico junto.
+                if antigo is not None and antigo != apelido:
+                    self.conexao.execute(
+                        "UPDATE tentativas SET aluno = ? WHERE aluno = ?", (apelido, antigo)
+                    )
         except sqlite3.IntegrityError as erro:
+            self.conexao.rollback()
             raise ValueError(f"já existe um aluno com o apelido {apelido}") from erro
         self.conexao.commit()
         return Aluno(id, apelido, avatar, perfis)
 
+    def _apelido_de(self, id: int) -> str | None:
+        linha = self.conexao.execute("SELECT apelido FROM alunos WHERE id = ?", (id,)).fetchone()
+        return linha[0] if linha else None
+
     def apagar_aluno(self, id: int) -> None:
+        """Apaga o aluno e as tentativas dele: senão o painel seguiria mostrando quem foi
+        apagado, e um aluno novo com o mesmo apelido herdaria esse histórico."""
+        apelido = self._apelido_de(id)
+        if apelido is not None:
+            self.conexao.execute("DELETE FROM tentativas WHERE aluno = ?", (apelido,))
         self.conexao.execute("DELETE FROM alunos WHERE id = ?", (id,))
         self.conexao.commit()

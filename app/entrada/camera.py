@@ -7,6 +7,7 @@ Nenhum quadro é salvo: cada imagem vive só dentro do laço.
 import importlib.util
 import sys
 import time
+import warnings
 
 from PySide6.QtCore import QObject, QThread, Signal
 from PySide6.QtGui import QImage
@@ -76,17 +77,25 @@ class Camera(QThread):
             self.estado.emit("indisponivel")
             return
 
-        captura = self._abrir_captura(cv2)
+        captura = None
+        final = "desligada"
         try:
-            self._laco(cv2, mp, detector, captura)
+            captura = self._abrir_captura(cv2)
+            if not self._laco(cv2, mp, detector, captura):
+                final = "indisponivel"
+        except Exception:  # webcam arrancada ou erro do MediaPipe: o app segue sem câmera
+            final = "indisponivel"
         finally:
-            captura.release()
+            if captura is not None:
+                captura.release()
             detector.close()
-            self.estado.emit("desligada")
+            self.estado.emit(final)
 
-    def _laco(self, cv2, mp, detector, captura) -> None:
+    def _laco(self, cv2, mp, detector, captura) -> bool:
+        """Lê quadros até pedirem para parar (devolve True) ou a câmera sumir (False)."""
         inicio = time.monotonic()
         ligada = False
+        ultimo_quadro = inicio
         ultimo_ts_ms = -1
         quadros, marca_fps = 0, time.monotonic()
         medias: list[float] = []
@@ -96,11 +105,12 @@ class Camera(QThread):
             ok, quadro = captura.read() if captura.isOpened() else (False, None)
             agora = time.monotonic()
             if not ok:
-                if not ligada and agora - inicio > TEMPO_MAX_ABRIR_S:
-                    self.estado.emit("indisponivel")
-                    return
+                # Sem quadro por 3 s, ao abrir ou no meio do uso (webcam desconectada).
+                if agora - ultimo_quadro > TEMPO_MAX_ABRIR_S:
+                    return False
                 self.msleep(30)
                 continue
+            ultimo_quadro = agora
             if not ligada:
                 ligada = True
                 self.estado.emit("ligada")
@@ -137,6 +147,7 @@ class Camera(QThread):
                     captura.set(cv2.CAP_PROP_FRAME_WIDTH, LARGURA_REDUZIDA)
                     captura.set(cv2.CAP_PROP_FRAME_HEIGHT, ALTURA_REDUZIDA)
                     reduzida = True
+        return True
 
 
 class CameraNula(QObject):
@@ -156,6 +167,36 @@ class CameraNula(QObject):
 
     def parar(self) -> None:
         self.estado.emit("desligada")
+
+
+# Câmeras que ainda estão terminando. Guardar a referência evita destruir a QThread rodando,
+# o que derruba o app (ex.: desligar enquanto o MediaPipe ainda carrega).
+_encerrando: set = set()
+
+
+def encerrar(camera) -> None:
+    """Para a câmera sem travar a tela nem derrubar o app. Os sinais são desligados antes,
+    para que um estado ou ponto atrasado não chegue a uma tela que já ligou outra câmera."""
+    with warnings.catch_warnings():  # o PySide avisa quando o sinal não tinha conexão
+        warnings.simplefilter("ignore", RuntimeWarning)
+        for sinal in (camera.pontos, camera.fps, camera.estado, camera.miniatura):
+            try:
+                sinal.disconnect()
+            except (RuntimeError, TypeError):
+                pass
+    camera.parar()
+    if isinstance(camera, QThread) and camera.isRunning():
+        _encerrando.add(camera)
+        camera.finished.connect(lambda: _encerrando.discard(camera))
+        camera.finished.connect(camera.deleteLater)
+    else:
+        camera.deleteLater()
+
+
+def esperar_encerramento(ms: int = 5000) -> None:
+    """Ao fechar o app: dá tempo para as câmeras que ainda estão terminando."""
+    for camera in list(_encerrando):
+        camera.wait(ms)
 
 
 def pacotes_disponiveis() -> bool:

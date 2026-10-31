@@ -252,3 +252,14 @@ def test_agente_joga_a_tabuada(capsys, monkeypatch):
     agente.executar("tabuada", [], entrada=[json.dumps(p) for p in pedidos])
     resposta = json.loads(capsys.readouterr().out.splitlines()[-1])
     assert resposta["ok"] and resposta["estado"]["pontos"] == 1
+
+
+def test_tiro_com_o_modelo_na_tela_nao_conta(tela, monkeypatch):
+    _abrir(tela, perfis=["padrao"])
+    monkeypatch.delenv("ATLAS_SEM_ANIMACAO")  # o modelo fica 1,5 s na tela
+    for _ in range(3):
+        _clicar(tela, _id(tela, certo=False))
+    pontos, tentativas = tela.partida.pontos, len(tela.ctx.registro.listar_tentativas())
+    _clicar(tela, _id(tela, certo=True))
+    assert tela.partida.pontos == pontos
+    assert len(tela.ctx.registro.listar_tentativas()) == tentativas

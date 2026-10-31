@@ -67,7 +67,10 @@ class _TocadorSistema:
     def tocar(self, caminhos_wav: list[Path], volume: float) -> None:
         chave = (tuple(str(c) for c in caminhos_wav), round(volume, 2))
         if chave not in self._cache:
-            self._cache[chave] = _wav_com_volume(caminhos_wav, volume)
+            try:
+                self._cache[chave] = _wav_com_volume(caminhos_wav, volume)
+            except (OSError, EOFError, wave.Error):  # WAV faltando ou estragado: fica a legenda
+                return
         while self._fila.qsize() >= self.MAX_ESPERANDO:
             try:
                 self._fila.get_nowait()

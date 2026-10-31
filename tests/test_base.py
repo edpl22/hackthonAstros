@@ -9,7 +9,8 @@ from PySide6.QtCore import Qt
 from app.atividades.base import APRESENTACAO, ATIVIDADE, FIM, Contexto
 from app.atividades.treino import logica
 from app.atividades.treino.tela import TelaTreino
-from app.entrada.camera import CameraNula
+from app.entrada import camera as camera_mod
+from app.entrada.camera import Camera, CameraNula
 from app.nucleo.audio import ServicoAudio
 from app.nucleo.conteudo import texto
 from app.nucleo.perfis import PERFIS, combinar
@@ -258,3 +259,35 @@ def test_reabrir_a_atividade_religa_a_camera(tela):
     tela.botao_camera.setChecked(False)
     _abrir(tela)
     assert tela.camera_ligada and tela.botao_camera.isChecked()
+
+
+class _CameraLenta(Camera):
+    """Thread que demora a terminar, como a câmera real enquanto o MediaPipe carrega."""
+
+    def run(self):
+        self.msleep(300)
+        self.estado.emit("desligada")
+
+    def parar(self):
+        self.requestInterruption()  # não espera: a thread segue rodando
+
+
+def test_desligar_camera_que_ainda_carrega_nao_derruba_nem_mexe_no_indicador(qtbot, monkeypatch):
+    monkeypatch.setenv("ATLAS_SEM_ANIMACAO", "1")
+    contexto = Contexto(
+        Registro(":memory:"), ServicoAudio(backend="nulo"), Sessao(), _CameraLenta
+    )
+    tela = TelaTreino(contexto)
+    qtbot.addWidget(tela)
+    _abrir(tela)
+    camera = tela.camera
+    tela.botao_camera.setChecked(False)  # desliga com a thread rodando
+    assert camera in camera_mod._encerrando
+    tela.indicador.mostrar("ligada")  # se o sinal antigo chegasse, voltaria para "desligada"
+    qtbot.waitUntil(lambda: camera not in camera_mod._encerrando, timeout=3000)
+    assert tela.indicador.rotulo.text() == texto("teste_camera.camera_ligada")
+
+
+def test_indicador_avisa_quando_nao_ha_camera(tela):
+    _abrir(tela)  # CameraNula: sem opencv/mediapipe ou sem webcam
+    assert tela.indicador.rotulo.text() == texto("teste_camera.camera_indisponivel")

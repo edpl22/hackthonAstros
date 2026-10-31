@@ -41,6 +41,7 @@ class TelaTabuada(AtividadeBase):
     def __init__(self, contexto, parent=None):
         self.partida: logica.Partida | None = None
         self._rodadas = 0
+        self._modelo_na_tela = False  # a conta pronta aparece por 1,5 s antes da próxima
         super().__init__(contexto, parent)
         self.relogio_partida = QTimer(self)
         self.relogio_partida.setInterval(1000)
@@ -55,6 +56,7 @@ class TelaTabuada(AtividadeBase):
     def preparar_rodada(self, semente: int | None) -> None:
         semente_rodada = None if semente is None else semente + self._rodadas
         self._rodadas += 1
+        self._modelo_na_tela = False
         self.partida = logica.nova_partida(self.nivel.nivel, self.perfil.max_itens, semente_rodada)
 
     @property
@@ -143,6 +145,7 @@ class TelaTabuada(AtividadeBase):
     def _proxima_conta(self) -> None:
         if self.partida.acabou or self.momento != ATIVIDADE:
             return
+        self._modelo_na_tela = False
         logica.nova_conta(self.partida)
         self._mostrar_monstros()
         self.atualizar_instrucao()
@@ -163,7 +166,8 @@ class TelaTabuada(AtividadeBase):
     def _acertar(self, id_monstro: str) -> None:
         conta = self.conta
         monstro = next((m for m in conta.monstros if m.id == id_monstro), None)
-        if monstro is None or self.momento != ATIVIDADE or self.partida.acabou:
+        if (monstro is None or self.momento != ATIVIDADE or self.partida.acabou
+                or self._modelo_na_tela):  # não conta tiro enquanto o modelo está na tela
             return
         tipo_erro = erros.classificar_tabuada(monstro.valor, conta.a, conta.b)
         pontos = logica.acertar(self.partida, monstro.valor)
@@ -191,6 +195,7 @@ class TelaTabuada(AtividadeBase):
         """Realça o certo, mostra a conta pronta na legenda e passa para a próxima conta."""
         self.cena.realcar([self._id_certo()])
         modelo = f"{self.conta.texto} = {self.conta.certo}."
+        self._modelo_na_tela = True
         self._anunciar(f"{self.ultimo_anuncio} {modelo}")
         if _sem_animacao():
             self._proxima_conta()

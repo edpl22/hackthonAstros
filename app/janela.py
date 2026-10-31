@@ -10,7 +10,7 @@ from app.atividades.silabas.tela import TelaSilabas
 from app.atividades.tabuada.tela import TelaTabuada
 from app.atividades.teste_camera import TelaTesteCamera
 from app.atividades.treino.tela import TelaTreino
-from app.entrada.camera import fabrica_padrao
+from app.entrada.camera import esperar_encerramento, fabrica_padrao
 from app.nucleo import tema
 from app.nucleo.audio import ServicoAudio
 from app.nucleo.conteudo import texto
@@ -125,4 +125,5 @@ class JanelaPrincipal(QMainWindow):
     def closeEvent(self, evento):
         for atividade in self.atividades.values():
             atividade.parar()
+        esperar_encerramento()
         super().closeEvent(evento)

@@ -121,3 +121,35 @@ def test_config(registro):
     registro.salvar_config("volume", "0.3")
     registro.salvar_config("volume", "0.4")
     assert registro.ler_config("volume", "0.8") == "0.4"
+
+
+def test_trocar_apelido_leva_o_historico_junto(registro):
+    ana = registro.salvar_aluno("Ana", "gato", [])
+    registro.salvar_tentativa(_tentativa(aluno="Ana"))
+    registro.salvar_aluno("Aninha", "gato", [], id=ana.id)
+    assert [t["aluno"] for t in registro.listar_tentativas()] == ["Aninha"]
+
+
+def test_apelido_repetido_na_edicao_nao_mexe_no_historico(registro):
+    ana = registro.salvar_aluno("Ana", "gato", [])
+    registro.salvar_aluno("Beto", "sapo", [])
+    registro.salvar_tentativa(_tentativa(aluno="Ana"))
+    with pytest.raises(ValueError, match="já existe"):
+        registro.salvar_aluno("Beto", "gato", [], id=ana.id)
+    assert [t["aluno"] for t in registro.listar_tentativas()] == ["Ana"]
+    assert [a.apelido for a in registro.listar_alunos()] == ["Ana", "Beto"]
+
+
+def test_apagar_aluno_apaga_so_as_tentativas_dele(registro):
+    ana = registro.salvar_aluno("Ana", "gato", [])
+    registro.salvar_tentativa(_tentativa(aluno="Ana"))
+    registro.salvar_tentativa(_tentativa(aluno="Beto"))
+    registro.apagar_aluno(ana.id)
+    assert [t["aluno"] for t in registro.listar_tentativas()] == ["Beto"]
+    registro.salvar_aluno("Ana", "sapo", [])  # um aluno novo não herda o histórico
+    assert registro.listar_tentativas("Ana") == []
+
+
+def test_visitante_e_apelido_reservado(registro):
+    with pytest.raises(ValueError, match="reservado"):
+        registro.salvar_aluno("Visitante", "gato", [])

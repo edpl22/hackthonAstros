@@ -26,7 +26,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from app.entrada.camera import CameraNula
+from app.entrada.camera import CameraNula, encerrar
 from app.entrada.mao_entrada import EntradaMao
 from app.entrada.ponteiro import EntradaPonteiro
 from app.entrada.teclado import EntradaTeclado
@@ -238,7 +238,9 @@ class AtividadeBase(QWidget):
             self.paginas.addWidget(pagina)
 
         self.legenda = rotulo("")
-        self.legenda.setAccessibleName("Legenda")
+        # O nome acessível fica sendo o próprio texto (o leitor de tela lê o retorno a cada
+        # troca); "Legenda" vai na descrição para não esconder o conteúdo.
+        self.legenda.setAccessibleDescription("Legenda")
 
         layout = QVBoxLayout(self)
         layout.addLayout(topo)
@@ -349,8 +351,7 @@ class AtividadeBase(QWidget):
     def _desligar_camera(self) -> None:
         if self.camera is not None:
             camera, self.camera = self.camera, None
-            camera.parar()
-            camera.deleteLater()
+            encerrar(camera)
         if self.entrada_mao is not None:
             self.entrada_mao.receber([], False)  # some o cursor da mão
         self.indicador.mostrar("desligada")

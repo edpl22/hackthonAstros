@@ -14,6 +14,7 @@ from app.nucleo.tema import paleta_atual
 FRASES = {
     "ligada": "teste_camera.camera_ligada",
     "ligando": "teste_camera.camera_ligando",
+    "indisponivel": "teste_camera.camera_indisponivel",
 }
 FRASE_DESLIGADA = "teste_camera.camera_desligada"
 DIAMETRO = 18
