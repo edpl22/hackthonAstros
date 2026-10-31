@@ -60,6 +60,18 @@ def test_volume_multiplica_as_amostras():
     assert abs(pico(metade) - pico(original) // 2) <= 1
 
 
+def test_fala_comeca_com_pausa_curta():
+    arquivo = next(caminhos.asset("audio").glob("*.wav"))
+    import io
+
+    with wave.open(str(arquivo), "rb") as w:
+        n_original, taxa = w.getnframes(), w.getframerate()
+    with wave.open(io.BytesIO(audio._wav_com_volume(arquivo, 1.0)), "rb") as w:
+        pausa = taxa * audio.PAUSA_INICIAL_MS // 1000
+        assert w.getnframes() == n_original + pausa
+        assert set(w.readframes(pausa)) == {0}  # só silêncio antes da voz
+
+
 def test_volume_limitado():
     servico = ServicoAudio(backend="nulo")
     servico.definir_volume(3)
@@ -94,4 +106,5 @@ def test_juntar_wavs_soma_as_duracoes():
         with wave.open(alvo, "rb") as w:
             return w.getnframes()
 
-    assert quadros(juntos) == quadros(arquivos[0]) + quadros(arquivos[1])
+    pausa = 22050 * audio.PAUSA_INICIAL_MS // 1000  # uma pausa só, no início
+    assert quadros(juntos) == pausa + quadros(arquivos[0]) + quadros(arquivos[1])

@@ -29,8 +29,12 @@ def dividir_em_frases(texto: str) -> list[str]:
     return [f for f in re.split(r"(?<=[.!?])\s+", texto.strip()) if f]
 
 
+PAUSA_INICIAL_MS = 150  # fone Bluetooth e HDMI "acordam" no começo do som e engolem a 1ª sílaba
+
+
 def _wav_com_volume(caminhos_wav, volume: float) -> bytes:
-    """Junta os WAV (PCM 16 bits, mesmo formato) e multiplica as amostras pelo volume."""
+    """Junta os WAV (PCM 16 bits, mesmo formato), põe uma pausa curta no início e multiplica as
+    amostras pelo volume."""
     if isinstance(caminhos_wav, Path):
         caminhos_wav = [caminhos_wav]
     quadros = b""
@@ -39,6 +43,8 @@ def _wav_com_volume(caminhos_wav, volume: float) -> bytes:
         with wave.open(str(caminho), "rb") as entrada:
             parametros = parametros or entrada.getparams()
             quadros += entrada.readframes(entrada.getnframes())
+    n_silencio = parametros.framerate * PAUSA_INICIAL_MS // 1000
+    quadros = b"\x00" * (n_silencio * parametros.sampwidth * parametros.nchannels) + quadros
     amostras = array.array("h", quadros)
     if sys.byteorder == "big":
         amostras.byteswap()
