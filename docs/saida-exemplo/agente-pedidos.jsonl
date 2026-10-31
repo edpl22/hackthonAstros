@@ -1,0 +1,9 @@
+{"acao":"estado"}
+{"acao":"proximo"}
+{"acao":"pegar","id":"bolha-la-1"}
+{"acao":"soltar","alvo":"caixa-1"}
+{"acao":"pegar","id":"bolha-bo-3"}
+{"acao":"soltar","alvo":"caixa-1"}
+{"acao":"pegar","id":"bolha-la-1"}
+{"acao":"soltar","alvo":"caixa-2"}
+{"acao":"sair"}

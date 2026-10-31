@@ -1,0 +1,31 @@
+{"n": 1, "roteiro": "navegacao", "evento": "inicio"}
+{"n": 2, "roteiro": "navegacao", "evento": "adulto"}
+{"n": 3, "roteiro": "navegacao", "evento": "materias"}
+{"n": 4, "roteiro": "navegacao", "evento": "trilhas"}
+{"n": 5, "roteiro": "navegacao", "evento": "teste_mao"}
+{"n": 6, "roteiro": "treino", "entrada": "mouse", "anuncio": "Você pegou a letra B."}
+{"n": 7, "roteiro": "treino", "entrada": "mouse", "anuncio": "A letra B voltou para o lugar. Vamos tentar de novo. Pegue a letra A. Coloque na caixa da letra A."}
+{"n": 8, "roteiro": "treino", "entrada": "mouse", "anuncio": "Você pegou a letra B."}
+{"n": 9, "roteiro": "treino", "entrada": "mouse", "anuncio": "A letra B voltou para o lugar. Vamos tentar de novo. Olhe o que está marcado."}
+{"n": 10, "roteiro": "treino", "entrada": "mouse", "anuncio": "Atividade pausada."}
+{"n": 11, "roteiro": "treino", "entrada": "mouse", "anuncio": "Atividade continuando."}
+{"n": 12, "roteiro": "treino", "entrada": "mouse", "anuncio": "Você pegou a letra A."}
+{"n": 13, "roteiro": "treino", "entrada": "mouse", "anuncio": "Letra A colocada na caixa da letra A."}
+{"n": 14, "roteiro": "treino", "entrada": "mouse", "anuncio": "Você pegou a letra B."}
+{"n": 15, "roteiro": "treino", "entrada": "mouse", "anuncio": "Letra B colocada na caixa da letra B."}
+{"n": 16, "roteiro": "treino", "entrada": "mouse", "anuncio": "Você pegou a letra C."}
+{"n": 17, "roteiro": "treino", "entrada": "mouse", "anuncio": "Letra C colocada na caixa da letra C."}
+{"n": 18, "roteiro": "treino", "entrada": "mouse", "anuncio": "Você pegou a letra D."}
+{"n": 19, "roteiro": "treino", "entrada": "mouse", "anuncio": "Letra D colocada na caixa da letra D."}
+{"n": 20, "roteiro": "treino", "evento": "estado_final", "concluida": true}
+{"n": 21, "roteiro": "silabas", "entrada": "mouse", "anuncio": "Você pegou a bolha LA."}
+{"n": 22, "roteiro": "silabas", "entrada": "mouse", "anuncio": "A bolha LA voltou para o lugar. Vamos tentar de novo. Pegue a bolha BO. Coloque na primeira caixa."}
+{"n": 23, "roteiro": "silabas", "entrada": "mouse", "anuncio": "Você pegou a bolha CO."}
+{"n": 24, "roteiro": "silabas", "entrada": "mouse", "anuncio": "A bolha CO voltou para o lugar. Vamos tentar de novo. Olhe o que está marcado."}
+{"n": 25, "roteiro": "silabas", "entrada": "mouse", "anuncio": "Você pegou a bolha BO."}
+{"n": 26, "roteiro": "silabas", "entrada": "mouse", "anuncio": "Bolha BO colocada na primeira caixa."}
+{"n": 27, "roteiro": "silabas", "entrada": "mouse", "anuncio": "Você pegou a bolha LA."}
+{"n": 28, "roteiro": "silabas", "entrada": "mouse", "anuncio": "Bolha LA colocada na segunda caixa."}
+{"n": 29, "roteiro": "silabas", "entrada": "mouse", "anuncio": "LA não é a mais forte. Vamos tentar de novo. Ouça a palavra BOLA. Qual bolha é a mais forte?"}
+{"n": 30, "roteiro": "silabas", "entrada": "mouse", "anuncio": "Isso. BO é a sílaba mais forte de BOLA."}
+{"n": 31, "roteiro": "silabas", "evento": "estado_final", "concluida": true}

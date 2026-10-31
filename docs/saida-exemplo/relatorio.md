@@ -1,0 +1,26 @@
+# Relatório da demonstração do Atlas (perfil: padrao; entrada: mouse)
+
+| Passo | Evento | Frase narrada | Captura | Tipo de erro | Pista |
+| --- | --- | --- | --- | --- | --- |
+| 01 inicio | abrir | Tela Quem vai jogar aberta. | [captura-01-inicio.png](captura-01-inicio.png) | — | — |
+| 02 adulto | preencher cadastro | Área do adulto: cadastro de um aluno de exemplo com os perfis TEA e dislexia. | [captura-02-adulto.png](captura-02-adulto.png) | — | — |
+| 03 inicio-com-aluno | salvar aluno | Aluno salvo. Ele aparece na tela Quem vai jogar. | [captura-03-inicio-com-aluno.png](captura-03-inicio-com-aluno.png) | — | — |
+| 04 materias | escolher visitante | Visitante escolhido. Tela de matérias aberta. | [captura-04-materias.png](captura-04-materias.png) | — | — |
+| 05 trilhas-portugues | escolher Portugues | Português escolhido. Tela de trilhas aberta. | [captura-05-trilhas-portugues.png](captura-05-trilhas-portugues.png) | — | — |
+| 06 teste-mao | abrir Teste da mao | Teste da mão aberto. Sem webcam, a câmera aparece como desligada. | [captura-06-teste-mao.png](captura-06-teste-mao.png) | — | — |
+| 07 treino-apresentacao | momento 1: o que vamos fazer | Vamos levar cada letra para a caixa da mesma letra. | [captura-07-treino-apresentacao.png](captura-07-treino-apresentacao.png) | — | — |
+| 08 treino-atividade | momento 2: comecar | Pegue a letra A. Coloque na caixa da letra A. | [captura-08-treino-atividade.png](captura-08-treino-atividade.png) | — | — |
+| 09 treino-erro-pista1 | mouse: peca B na caixa A | A letra B voltou para o lugar. Vamos tentar de novo. Pegue a letra A. Coloque na caixa da letra A. | [captura-09-treino-erro-pista1.png](captura-09-treino-erro-pista1.png) | letra_trocada | 1 - repetir a instrucao |
+| 10 treino-erro-pista2 | mouse: peca B na caixa A | A letra B voltou para o lugar. Vamos tentar de novo. Olhe o que está marcado. | [captura-10-treino-erro-pista2.png](captura-10-treino-erro-pista2.png) | letra_trocada | 2 - realcar a peca e a caixa |
+| 11 treino-pausa | Pausa (Esc) | Pausa. A atividade está parada. | [captura-11-treino-pausa.png](captura-11-treino-pausa.png) | — | — |
+| 12 treino-acerto | mouse: peca A na caixa A | Letra A colocada na caixa da letra A. | [captura-12-treino-acerto.png](captura-12-treino-acerto.png) | — | — |
+| 13 treino-fim | momento 3: terminou | Todas as letras estão nas caixas. | [captura-13-treino-fim.png](captura-13-treino-fim.png) | — | — |
+| 14 silabas-apresentacao | momento 1: o que vamos fazer | Vamos montar a palavra da figura com as bolhas de sílabas. | [captura-14-silabas-apresentacao.png](captura-14-silabas-apresentacao.png) | — | — |
+| 15 silabas-bola | nivel 1: BOLA | Pegue a bolha BO. Coloque na primeira caixa. | [captura-15-silabas-bola.png](captura-15-silabas-bola.png) | — | — |
+| 16 silabas-erro-ordem | mouse: LA na 1a caixa | A bolha LA voltou para o lugar. Vamos tentar de novo. Pegue a bolha BO. Coloque na primeira caixa. | [captura-16-silabas-erro-ordem.png](captura-16-silabas-erro-ordem.png) | ordem_trocada | 1 - repetir a instrucao |
+| 17 silabas-erro-distratora | mouse: CO na 1a caixa | A bolha CO voltou para o lugar. Vamos tentar de novo. Olhe o que está marcado. | [captura-17-silabas-erro-distratora.png](captura-17-silabas-erro-distratora.png) | silaba_de_outra_palavra | 2 - realcar a peca e a caixa |
+| 18 silabas-acerto | mouse: BO na 1a caixa | Bolha BO colocada na primeira caixa. | [captura-18-silabas-acerto.png](captura-18-silabas-acerto.png) | — | — |
+| 19 silabas-fim | palavra pronta: toca BOLA | A palavra está pronta. | [captura-19-silabas-fim.png](captura-19-silabas-fim.png) | — | — |
+| 20 silabas-nivel3 | nivel 3: PRATO em minusculas | Pegue a bolha pra. Coloque na primeira caixa. | [captura-20-silabas-nivel3.png](captura-20-silabas-nivel3.png) | — | — |
+| 21 silabas-tonica-erro | nivel 4: escolhe LA | LA não é a mais forte. Vamos tentar de novo. Ouça a palavra BOLA. Qual bolha é a mais forte? | [captura-21-silabas-tonica-erro.png](captura-21-silabas-tonica-erro.png) | tonica_errada | 1 - repetir a instrucao |
+| 22 silabas-tonica-certa | nivel 4: escolhe BO | Isso. BO é a sílaba mais forte de BOLA. | [captura-22-silabas-tonica-certa.png](captura-22-silabas-tonica-certa.png) | — | — |
