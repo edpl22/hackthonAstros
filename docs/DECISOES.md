@@ -62,4 +62,7 @@
 | 2026-10-31 | Tocar numa fatia escolhe ou devolve (não se arrasta a fatia); nas somas a criança escolhe o cartão | Uma ação só, igual para mão, mouse, teclado e agente; juntar fatias numa terceira pizza ficou de fora pelo prazo |
 | 2026-10-31 | O corte (2, 3, 4, 6 ou 8) é sorteado na rodada, não escolhido pela criança | Prazo; o corte varia a cada rodada e o perfil TEA fica com cortes até 4 |
 | 2026-10-31 | Pista 2 da Pizza usa transparência para sobrepor as pizzas | É transparência que ensina (a fatia de B cobre a de A), não decorativa |
+| 2026-10-31 | Instaladores: PyInstaller onedir, executável sem console; sem console a saída da CLI vai para `atlas-saida.txt` | A criança não vê janela preta; a Release testa o executável com `verificar --completo` e `demo` antes de publicar |
+| 2026-10-31 | `atlas verificar --completo` carrega o detector da mão de verdade | Prova que OpenCV, MediaPipe e o modelo foram empacotados; o `verificar` normal continua rápido (menos de 5 s) |
+| 2026-10-31 | Instalador macOS gerado no runner `macos-latest` (Apple Silicon) | É o runner disponível; Macs Intel usam o Docker ou o Python |
 | 2026-10-30 | Toda captura de `docs/saida-exemplo/` sai do `atlas demo` rodando o app real | Regra de jogo limpo: demo de fachada desclassifica |
