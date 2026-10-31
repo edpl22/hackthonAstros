@@ -15,7 +15,7 @@ from PySide6.QtWidgets import QFrame, QGraphicsObject, QGraphicsScene, QGraphics
 
 from app.entrada.alvos import Area, mais_proximo
 from app.entrada.cursor import CursorMao
-from app.nucleo import caminhos
+from app.nucleo import caminhos, figuras
 from app.nucleo.tema import paleta_atual
 
 # Mais larga que 16:9: é o formato da área que sobra abaixo da faixa e da instrução.
@@ -84,10 +84,15 @@ class Peca(_Figura):
         self.forma = "quadrado"  # ou "redondo" (bolha)
         self.alternada = False  # dislexia: sílabas alternam cor e sublinhado
         self.direcao = QPointF(0, 0)  # para flutuar
+        self.figura: str | None = None  # SVG no lugar do rótulo (objetos da Mesa)
+        self.hachura = False  # destaque da sobra: hachura + contorno grosso (não só cor)
         self.setZValue(5)
 
     def paint(self, pintor, _opcao, _widget=None) -> None:
         p = paleta_atual()
+        if self.figura:
+            self._pintar_figura(pintor, p)
+            return
         espessura = self.contorno + (3 if self.segurada else 0)
         pintor.setPen(QPen(QColor(p.texto), espessura))
         if self.segurada:
@@ -99,17 +104,45 @@ class Peca(_Figura):
             pintor.drawEllipse(self._quadro())
         else:
             pintor.drawRoundedRect(self._quadro(), 12, 12)
-        tamanho = self.lado * (0.36 if len(self.rotulo) > 2 else 0.42)
+        letras = len(self.rotulo)
+        tamanho = self.lado * (0.42 if letras <= 2 else 0.36 if letras == 3 else 0.22)
         self._desenhar_rotulo(pintor, tamanho, sublinhado=self.alternada)
+        self._desenhar_foco(pintor)
+
+    def _pintar_figura(self, pintor, p) -> None:
+        quadro = self._quadro()
+        if self.segurada or self.hachura:
+            pintor.setPen(QPen(QColor(p.texto), self.contorno + 2))
+            pincel = QBrush(QColor(p.destaque), Qt.BDiagPattern) if self.hachura else QBrush(
+                QColor(p.destaque)
+            )
+            pintor.setBrush(pincel)
+            pintor.drawEllipse(quadro.adjusted(-6, -6, 6, 6))
+        lado = max(8, round(self.lado))
+        pintor.drawPixmap(quadro.toRect(), figuras.pixmap(self.figura, lado))
         self._desenhar_foco(pintor)
 
 
 class Caixa(_Figura):
+    @property
+    def ocupada_por(self) -> str | None:
+        return self.ocupantes[0] if self.ocupantes else None
+
+    def posicao_vaga(self, indice: int) -> QPointF:
+        """Centro da vaga `indice`: uma só no meio, ou uma grade de 4 colunas na bandeja."""
+        if self.capacidade == 1:
+            return self.pos()
+        celula = self.lado / 4
+        linha, coluna = divmod(indice, 4)
+        canto = self.pos() - QPointF(self.lado / 2, self.lado / 2)
+        return canto + QPointF(celula * (coluna + 0.5), celula * (linha + 0.5))
+
     """Destino. Vazia: borda tracejada; ocupada: borda contínua (forma, não só cor)."""
 
     def __init__(self, *args):
         super().__init__(*args)
-        self.ocupada_por: str | None = None
+        self.ocupantes: list[str] = []
+        self.capacidade = 1  # bandejas da Mesa recebem vários objetos
         self.mostrar_rotulo = True
         self.setZValue(1)
 
@@ -245,7 +278,7 @@ class CenaItens(QGraphicsView):
         return [p for p in self.pecas.values() if not p.encaixada and p.id != self.segurada]
 
     def caixas_livres(self) -> list[Caixa]:
-        return [c for c in self.caixas.values() if c.ocupada_por is None]
+        return [c for c in self.caixas.values() if len(c.ocupantes) < c.capacidade]
 
     def ids_foco(self) -> list[str]:
         figuras = self.caixas_livres() if self.segurada else self.pecas_livres()
@@ -327,9 +360,18 @@ class CenaItens(QGraphicsView):
     def encaixar(self, peca_id: str, caixa_id: str) -> None:
         peca, caixa = self.pecas[peca_id], self.caixas[caixa_id]
         peca.encaixada = True
-        caixa.ocupada_por = peca_id
+        caixa.ocupantes.append(peca_id)
         caixa.update()
-        self._mover(peca, caixa.pos())
+        self._mover(peca, caixa.posicao_vaga(len(caixa.ocupantes) - 1))
+
+    def esvaziar(self, caixa_id: str) -> None:
+        """Devolve todas as peças da caixa ao lugar de origem."""
+        caixa = self.caixas[caixa_id]
+        for peca_id in caixa.ocupantes:
+            self.pecas[peca_id].encaixada = False
+            self._mover(self.pecas[peca_id], self.pecas[peca_id].origem)
+        caixa.ocupantes = []
+        caixa.update()
 
     def devolver(self, peca_id: str) -> None:
         peca = self.pecas[peca_id]
@@ -358,6 +400,7 @@ class CenaItens(QGraphicsView):
                     "tipo": c.tipo,
                     "posicao": posicao(c),
                     "ocupado_por": c.ocupada_por,
+                    "quantidade": len(c.ocupantes),
                 }
                 for c in self.caixas.values()
             ],
