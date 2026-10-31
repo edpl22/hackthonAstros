@@ -13,7 +13,7 @@ from app.atividades.tabuada import logica
 from app.atividades.tabuada.tela import TelaTabuada
 from app.entrada import mao_simulada
 from app.entrada.camera import CameraNula
-from app.entrada.mao import DetectorDisparo, eh_arminha
+from app.entrada.mao import DetectorGatilho, eh_arminha, razao_gatilho
 from app.headless import agente
 from app.nucleo import erros
 from app.nucleo.audio import ServicoAudio
@@ -75,21 +75,48 @@ def test_arminha_reconhecida_e_mao_apontando_nao():
     assert not eh_arminha(mao_simulada.pontos_sinteticos(0.5, 0.5, False))
 
 
-def test_disparo_so_com_coice_rapido_para_cima():
-    d = DetectorDisparo()
-    assert d.atualizar(0.0, 0.60, (100, 300), True) is None
-    assert d.atualizar(0.1, 0.55, (100, 280), True) is None  # subiu pouco
-    assert d.atualizar(0.2, 0.45, (100, 240), True) == (100, 300)  # coice: mira de antes
-    assert d.atualizar(0.3, 0.30, (100, 200), True) is None  # espera o intervalo
+def test_dedao_levantado_e_abaixado():
+    def razao(abaixado):
+        pontos = mao_simulada.pontos_sinteticos(0.5, 0.5, False, True, abaixado)
+        return razao_gatilho(pontos)
+
+    assert razao(False) > 0.5 > 0.3 > razao(True)
 
 
-def test_subida_lenta_ou_sem_arminha_nao_dispara():
-    d = DetectorDisparo()
-    for i in range(20):  # sobe 0,3 em 2 s: devagar demais
-        assert d.atualizar(i * 0.1, 0.6 - i * 0.015, (0, 0), True) is None
-    d = DetectorDisparo()
-    assert d.atualizar(0.0, 0.6, (0, 0), False) is None
-    assert d.atualizar(0.1, 0.3, (0, 0), False) is None
+def test_arminha_com_o_indicador_apontado_para_a_tela():
+    """Na imagem o indicador aparece curto; a profundidade mostra que ele está esticado."""
+    pontos = list(mao_simulada.pontos_sinteticos(0.5, 0.5, False, arminha=True))
+    x, y, _ = pontos[6]
+    pontos[8] = (x, y, 0.0)  # na imagem, a ponta cai em cima da junta...
+    assert not eh_arminha(pontos)
+    pontos[8] = (x, y, -0.15)  # ...mas está mais perto da câmera: o dedo está esticado
+    assert eh_arminha(pontos)
+
+
+def test_tiro_sai_quando_o_dedao_desce():
+    g = DetectorGatilho()
+    assert g.atualizar(0.0, 0.9, (100, 300), True) is None and g.engatilhado
+    assert g.atualizar(0.1, 0.8, (100, 300), True) is None  # oscilou pouco
+    assert g.atualizar(0.2, 0.3, (102, 305), True) == (100, 300)  # desceu: mira de antes
+    assert not g.engatilhado
+    assert g.atualizar(0.3, 0.2, (100, 300), True) is None  # abaixado de novo: nada
+
+
+def test_precisa_levantar_o_dedao_para_atirar_de_novo():
+    g = DetectorGatilho()
+    g.atualizar(0.0, 0.9, (0, 0), True)
+    assert g.atualizar(0.1, 0.3, (0, 0), True) is not None
+    assert g.atualizar(0.7, 0.3, (0, 0), True) is None  # continua abaixado
+    g.atualizar(0.8, 0.9, (0, 0), True)  # levantou
+    assert g.atualizar(0.9, 0.3, (0, 0), True) is not None
+
+
+def test_so_engatilha_em_arminha_mas_pose_oscilando_nao_perde_o_tiro():
+    g = DetectorGatilho()
+    g.atualizar(0.0, 0.9, (0, 0), False)  # mão fechada com o dedão para cima: não engatilha
+    assert g.atualizar(0.1, 0.2, (0, 0), False) is None
+    g.atualizar(0.2, 0.9, (0, 0), True)
+    assert g.atualizar(0.3, 0.3, (0, 0), False) is not None  # a pose falhou só neste quadro
 
 
 # --- tela -------------------------------------------------------------------------------

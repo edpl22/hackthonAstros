@@ -471,7 +471,7 @@ def roteiro_dourado(ex: Execucao) -> None:
 
 
 def _acertar_monstro(tela, ex, id_monstro) -> None:
-    """Acerta um monstrinho: clique, tecla, varredura ou arminha com coice (mão simulada)."""
+    """Acerta um monstrinho: clique, tecla, varredura ou arminha com o dedão (mão simulada)."""
     if ex.entrada == "mao-simulada":
         mao_simulada.reproduzir(tela.entrada_mao, tela.cena, passos=[
             {"arminha": True}, {"ir_para": id_monstro, "ms": 500}, {"esperar": 300},

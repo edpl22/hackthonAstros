@@ -1,5 +1,5 @@
 """Lógica pura da mão: filtro One Euro, área ativa, pinça com histerese, permanência e o
-gesto de arminha com disparo (Tabuada Protetora).
+gesto de arminha com gatilho no dedão (Tabuada Protetora).
 
 Não importa Qt nem OpenCV, para ser testada por completo.
 Os pontos seguem a numeração do MediaPipe: 0 = punho, 4 = ponta do polegar,
@@ -10,13 +10,15 @@ import math
 from dataclasses import dataclass
 
 PUNHO, POLEGAR, INDICADOR, BASE_MEDIO = 0, 4, 8, 9
-JUNTA_INDICADOR = 6
+BASE_INDICADOR, JUNTA_INDICADOR, JUNTA_MEDIO = 5, 6, 10
 # (junta do meio, ponta) do médio, anelar e mínimo
 DEDOS_DOBRADOS = ((10, 12), (14, 16), (18, 20))
 
-DISPARO_SUBIDA = 0.12  # a ponta do indicador sobe 12% da altura da área ativa...
-DISPARO_JANELA_S = 0.2  # ...em até 200 ms
-DISPARO_INTERVALO_S = 0.6  # depois de um disparo, espera antes do próximo
+# Gatilho: distância da ponta do dedão até a lateral do indicador, em palmas.
+GATILHO_ARMA = 0.5  # dedão levantado (arma engatilhada)
+GATILHO_QUEDA = 0.55  # dispara quando cai para 55% do ponto mais alto desde que engatilhou
+GATILHO_INTERVALO_S = 0.4  # depois de um tiro, espera antes do próximo
+GATILHO_MIRA_S = 0.15  # a mira é onde o indicador estava um pouco antes do dedão descer
 
 PINCA_FECHA = 0.25
 PINCA_ABRE = 0.40
@@ -121,6 +123,17 @@ class DetectorPinca:
         self.fechada = False
 
 
+def _distancia_3d(a, b, proporcao: float) -> float:
+    """Como `_distancia`, mas com a profundidade (z do MediaPipe, na escala do x).
+
+    Com o indicador apontado para a tela, ele aparece curto na imagem; a profundidade
+    mostra que ele continua esticado.
+    """
+    za = a[2] if len(a) > 2 else 0.0
+    zb = b[2] if len(b) > 2 else 0.0
+    return math.hypot((a[0] - b[0]) * proporcao, a[1] - b[1], (za - zb) * proporcao)
+
+
 def eh_arminha(pontos, proporcao: float = PROPORCAO_QUADRO) -> bool:
     """Indicador esticado e médio, anelar e mínimo dobrados (o polegar pode estar como for).
 
@@ -130,47 +143,64 @@ def eh_arminha(pontos, proporcao: float = PROPORCAO_QUADRO) -> bool:
     punho = pontos[PUNHO]
 
     def ate_punho(i):
-        return _distancia(pontos[i], punho, proporcao)
+        return _distancia_3d(pontos[i], punho, proporcao)
 
     esticado = ate_punho(INDICADOR) > 1.1 * ate_punho(JUNTA_INDICADOR)
     dobrados = all(ate_punho(ponta) < ate_punho(junta) for junta, ponta in DEDOS_DOBRADOS)
     return esticado and dobrados
 
 
-class DetectorDisparo:
-    """Dispara quando, em arminha, a ponta do indicador sobe rápido (o "coice" do tiro).
+def razao_gatilho(pontos, proporcao: float = PROPORCAO_QUADRO) -> float:
+    """Distância da ponta do dedão até a lateral da mão (base e junta do indicador, base e
+    junta do médio), em palmas. Dedão levantado: grande; dedão abaixado: pequena."""
+    palma = _distancia_3d(pontos[PUNHO], pontos[BASE_MEDIO], proporcao)
+    if palma <= 1e-6:
+        return 0.0
+    lateral = (BASE_INDICADOR, JUNTA_INDICADOR, BASE_MEDIO, JUNTA_MEDIO)
+    dedao = pontos[POLEGAR]
+    return min(_distancia_3d(dedao, pontos[i], proporcao) for i in lateral) / palma
 
-    A mira é o ponto onde a mão estava antes do coice, para o tiro sair onde a criança mirou.
+
+class DetectorGatilho:
+    """Arminha com gatilho no dedão: engatilha com o dedão levantado e atira quando ele desce.
+
+    Só engatilha em arminha; depois de engatilhado, o tiro sai mesmo que a pose oscile num
+    quadro. A queda é medida em relação ao ponto mais alto do dedão, para servir a mãos e
+    ângulos de câmera diferentes. O indicador não precisa se mexer, então a mira fica firme.
     """
 
     def __init__(
-        self, subida: float = DISPARO_SUBIDA, janela_s: float = DISPARO_JANELA_S,
-        intervalo_s: float = DISPARO_INTERVALO_S,
+        self, arma: float = GATILHO_ARMA, queda: float = GATILHO_QUEDA,
+        intervalo_s: float = GATILHO_INTERVALO_S, mira_s: float = GATILHO_MIRA_S,
     ):
-        self.subida, self.janela_s, self.intervalo_s = subida, janela_s, intervalo_s
-        self._historico: list[tuple[float, float, float, float]] = []  # (t, y bruto, x, y)
+        self.arma, self.queda, self.intervalo_s, self.mira_s = arma, queda, intervalo_s, mira_s
+        self.pico: float | None = None  # None = desengatilhado
+        self._miras: list[tuple[float, float, float]] = []  # (t, x, y) recentes
         self._ultimo = -math.inf
 
+    @property
+    def engatilhado(self) -> bool:
+        return self.pico is not None
+
     def reiniciar(self) -> None:
-        self._historico = []
+        self.pico = None
+        self._miras = []
 
     def atualizar(
-        self, t: float, y_bruto: float, mira: tuple[float, float], arminha: bool
+        self, t: float, razao: float, mira: tuple[float, float], arminha: bool
     ) -> tuple[float, float] | None:
-        """`y_bruto`: altura da ponta do indicador (0 = topo do quadro), sem filtro.
-        Devolve a mira (x, y) quando dispara; senão None."""
-        if not arminha:
-            self.reiniciar()
+        """`razao`: `razao_gatilho` do quadro. Devolve a mira (x, y) quando atira; senão None."""
+        self._miras = [m for m in self._miras if t - m[0] <= self.mira_s]
+        self._miras.append((t, *mira))
+        if razao >= self.arma and (arminha or self.engatilhado):
+            self.pico = max(self.pico or 0.0, razao)
+        if not self.engatilhado or t - self._ultimo < self.intervalo_s:
             return None
-        self._historico = [h for h in self._historico if t - h[0] <= self.janela_s]
-        self._historico.append((t, y_bruto, *mira))
-        if t - self._ultimo < self.intervalo_s:
-            return None
-        mais_baixo = max(self._historico, key=lambda h: h[1])
-        if mais_baixo[1] - y_bruto >= self.subida and mais_baixo[0] < t:
+        if razao <= self.pico * self.queda:
             self._ultimo = t
-            self.reiniciar()
-            return mais_baixo[2], mais_baixo[3]
+            self.pico = None
+            _, x, y = self._miras[0]
+            return x, y
         return None
 
 
@@ -220,7 +250,7 @@ class EstadoMao:
     razao: float = math.inf
     pinca_fechada: bool = False
     arminha: bool = False
-    y_bruto: float = 0.0  # ponta do indicador sem filtro (para o disparo)
+    gatilho: float = 0.0  # `razao_gatilho`: dedão levantado (grande) ou abaixado (pequena)
 
 
 class RastreadorMao:
@@ -239,7 +269,7 @@ class RastreadorMao:
         x, y = mapear_area_ativa(ponta[0], ponta[1])
         x, y = self.filtro.filtrar(x, y, t)
         razao = razao_pinca(pontos)
-        _, y_bruto = mapear_area_ativa(ponta[0], ponta[1])
         return EstadoMao(
-            True, x, y, razao, self.pinca.atualizar(razao), eh_arminha(pontos), y_bruto
+            True, x, y, razao, self.pinca.atualizar(razao), eh_arminha(pontos),
+            razao_gatilho(pontos),
         )

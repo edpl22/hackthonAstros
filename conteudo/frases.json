@@ -146,7 +146,7 @@
   },
   "tabuada": {
     "habilidade": "tabuada",
-    "apresentacao": "Proteja a cidade! Acerte o monstrinho que tem o resultado da conta. Você tem 1 minuto.",
+    "apresentacao": "Proteja a cidade! Acerte o monstrinho que tem o resultado da conta. Você tem 1 minuto. Com a câmera, faça uma arminha com a mão e abaixe o dedão para atirar.",
     "instrucao": "Acerte o monstrinho com o resultado de {conta}.",
     "certo": "Isso! {conta} = {resultado}. Mais um ponto.",
     "errado": "{valor} não é o resultado de {conta}. Menos um ponto.",

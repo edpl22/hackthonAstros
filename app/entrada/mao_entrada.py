@@ -2,15 +2,15 @@
 
 Pinça fechando = pegar; pinça abrindo = soltar. No modo permanência, ficar parado sobre um
 alvo pelo tempo do perfil também pega e solta.
-Gesto "arminha" (Tabuada Protetora): a pinça fica desligada; o coice para cima dispara, ou
-seja, aponta para a mira e pega o alvo que estiver lá.
+Gesto "arminha" (Tabuada Protetora): a pinça fica desligada; abaixar o dedão atira, ou seja,
+aponta para a mira e pega o alvo que estiver lá.
 """
 
 import time
 
 from PySide6.QtCore import QObject
 
-from app.entrada.mao import DetectorDisparo, DetectorPermanencia, RastreadorMao
+from app.entrada.mao import DetectorGatilho, DetectorPermanencia, RastreadorMao
 
 
 class EntradaMao(QObject):
@@ -19,7 +19,7 @@ class EntradaMao(QObject):
         self.cena = cena
         self.barramento = barramento
         self.rastreador = RastreadorMao()
-        self.disparo = DetectorDisparo() if gesto == "arminha" else None
+        self.disparo = DetectorGatilho() if gesto == "arminha" else None
         self.permanencia = (
             DetectorPermanencia(perfil.tolerancia_alvo_px, perfil.tempo_permanencia_ms)
             if perfil.modo_entrada_preferido == "permanencia" and self.disparo is None
@@ -67,11 +67,12 @@ class EntradaMao(QObject):
         self.cena.cursor.atualizar(x, y, estado.pinca_fechada, progresso)
 
     def _arminha(self, estado, t: float, x: float, y: float) -> None:
-        mira = self.disparo.atualizar(t, estado.y_bruto, (x, y), estado.arminha)
+        mira = self.disparo.atualizar(t, estado.gatilho, (x, y), estado.arminha)
         if mira is not None:
             self.barramento.apontar.emit(*mira)
             self.barramento.pegar.emit()
             self.cena.cursor.atualizar(*mira, True, 0.0)
             return
         self.barramento.apontar.emit(x, y)
-        self.cena.cursor.atualizar(x, y, False, 0.0)
+        # O anel do cursor cheio mostra que a arminha está engatilhada (dedão levantado).
+        self.cena.cursor.atualizar(x, y, False, 1.0 if self.disparo.engatilhado else 0.0)

@@ -20,10 +20,11 @@ FPS = 30
 
 
 def pontos_sinteticos(
-    x_cena: float, y_cena: float, pinca: bool, arminha: bool = False
+    x_cena: float, y_cena: float, pinca: bool, arminha: bool = False, dedao_abaixado=False
 ) -> list[tuple]:
     """21 pontos de uma mão apontando, com a ponta do indicador sobre (x_cena, y_cena) 0..1.
-    Com `arminha`, médio, anelar e mínimo ficam dobrados (ponta perto da palma)."""
+    Com `arminha`, médio, anelar e mínimo ficam dobrados (ponta perto da palma) e o dedão fica
+    levantado, ou encostado na lateral do indicador com `dedao_abaixado` (o tiro)."""
     margem = (1 - AREA_ATIVA) / 2
     fx = margem + x_cena * AREA_ATIVA  # inverso da área ativa
     fy = margem + y_cena * AREA_ATIVA
@@ -37,6 +38,7 @@ def pontos_sinteticos(
         for junta, ponta in DEDOS_DOBRADOS:
             pontos[junta] = (fx + 0.02, fy + 0.12, 0.0)
             pontos[ponta] = (fx + 0.02, fy + 0.20, 0.0)
+        pontos[POLEGAR] = (fx - 0.01, fy + 0.09, 0.0) if dedao_abaixado else (fx - 0.10, fy, 0.0)
     return pontos
 
 
@@ -44,7 +46,8 @@ def quadros(passos, centro_normalizado, x0: float = 0.5, y0: float = 0.5):
     """Gera (t, pontos) a 30 quadros/s a partir dos passos do roteiro.
 
     Passos: {"ir_para": "<id>", "ms": 600}, {"pinca": true|false, "ms": 200}, {"esperar": 300},
-    {"arminha": true} (forma a arminha) e {"disparar": true} (coice rápido para cima e volta).
+    {"arminha": true} (forma a arminha, dedão levantado) e {"disparar": true} (abaixa o dedão
+    por 100 ms e levanta de novo).
     `centro_normalizado(id)` devolve o centro do item ou alvo em 0..1 da cena.
     """
     x, y, pinca, arminha, t = x0, y0, False, False, 0.0
@@ -53,10 +56,10 @@ def quadros(passos, centro_normalizado, x0: float = 0.5, y0: float = 0.5):
         if "arminha" in passo:
             arminha = bool(passo["arminha"])
             continue
-        if "disparar" in passo:  # sobe 20% da cena em 4 quadros (133 ms) e desce devagar
-            for dy in (0.05, 0.10, 0.15, 0.20, 0.15, 0.10, 0.05, 0.0):
+        if "disparar" in passo:  # o indicador fica parado; só o dedão desce e sobe
+            for abaixado in (True, True, True, False, False, False):
                 t += passo_t
-                yield t, pontos_sinteticos(x, y - dy, pinca, arminha)
+                yield t, pontos_sinteticos(x, y, pinca, arminha, abaixado)
             continue
         if "ir_para" in passo:
             destino = centro_normalizado(passo["ir_para"])

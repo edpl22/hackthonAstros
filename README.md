@@ -128,7 +128,7 @@ Ids estáveis: `bolha-<sílaba>-<n>`, `caixa-<n>`, `peca-<letra>-<n>`, `objeto-<
   - O executável também aceita os comandos sem tela: `Atlas.exe verificar --completo` confere até o detector da mão.
 - **Pelo código** (Windows, macOS inclusive Intel, Linux): veja [Abrir a interface pelo código](#abrir-a-interface-pelo-código).
 - **Sem webcam:** o Atlas usa mouse, toque e teclado sem nenhuma mensagem de erro; o indicador mostra "Sem câmera". Se a webcam for desconectada no meio da atividade, acontece o mesmo e o jogo continua.
-- **Com webcam:** o instalador já traz a câmera; pelo código, instale `requirements-camera.txt`. A câmera liga só dentro de uma atividade, e o botão com a câmera, abaixo do Voltar, desliga e religa. Junte o polegar e o indicador (pinça) para pegar e abra para soltar; na Tabuada Protetora, faça uma "arminha" e dê um coice para cima para disparar.
+- **Com webcam:** o instalador já traz a câmera; pelo código, instale `requirements-camera.txt`. A câmera liga só dentro de uma atividade, e o botão com a câmera, abaixo do Voltar, desliga e religa. Junte o polegar e o indicador (pinça) para pegar e abra para soltar; na Tabuada Protetora, faça uma "arminha" com o dedão levantado, mire com o indicador e abaixe o dedão para atirar (o anel em volta do cursor mostra que a arminha está engatilhada).
 - **Teclado:** Tab ou setas movem o foco; Enter ou Espaço pega e solta; Esc pausa.
 - **Leitor de tela:** a legenda embaixo da atividade traz cada instrução e retorno, e o leitor de tela lê o texto dela (a voz gravada é só do português).
 - **Área do adulto:** segure o botão "Área do adulto" por 2 segundos. Lá ficam o cadastro (só apelido e um bicho, nunca o nome completo), os perfis, o volume, a opção de travar o nível, exportar JSON e apagar todos os dados. Trocar o apelido de um aluno leva o histórico dele junto; apagar um aluno apaga também as tentativas dele.
@@ -160,7 +160,7 @@ python -m app.main
 | Mesa de Quantidades (matemática): montar, comparar, somar e subtrair até 20 | Pronta (sem o modo Par/ímpar) |
 | Pizza de Frações (matemática): montar, somar, operar com 2 ou 3 pratos (soma e subtração), frações impróprias, barra de chocolate | Pronta |
 | Jogo Dourado (matemática): montar o número com cubo, placas, barras e cubinhos no quadro valor de lugar, até 9.999 | Pronto |
-| Tabuada Protetora (matemática): 1 minuto, monstrinhos com resultados, +1 no certo e -1 no errado; pelo mouse ou pela "arminha" da mão (coice para cima dispara) | Pronta; os monstrinhos são retângulos (placeholder) |
+| Tabuada Protetora (matemática): 1 minuto, monstrinhos com resultados, +1 no certo e -1 no errado; pelo mouse ou pela "arminha" da mão (abaixar o dedão atira) | Pronta; os monstrinhos são retângulos (placeholder) |
 | Botão de câmera abaixo do Voltar em toda atividade: começa ligada e desliga a mão quando ela atrapalha | Pronto |
 | Instaladores Windows e macOS e imagem Docker pronta (GHCR) | Publicados a cada versão (Releases) |
 | Painel do professor: Domina, Em progresso, Precisa de apoio e recomendações (área do adulto) | Pronto; a turma de demonstração é fictícia e rotulada |
