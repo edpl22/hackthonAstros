@@ -152,6 +152,20 @@
     "escolha_cartao": "Escolha o cartão.",
     "toque_pronto": "Depois toque em Pronto."
   },
+  "painel": {
+    "titulo": "Painel do professor",
+    "sua_turma": "sua turma",
+    "domina": "Domina",
+    "em_progresso": "Em progresso",
+    "precisa_apoio": "Precisa de apoio",
+    "regra": "Últimos 10 itens; certos na 1ª tentativa",
+    "recomendacoes": "Recomendações",
+    "sem_dados": "Ainda não há tentativas registradas. Jogue uma atividade ou carregue a turma de demonstração na área do adulto.",
+    "sem_recomendacoes": "Nenhum aluno precisa de apoio agora.",
+    "abrir": "Painel do professor",
+    "turma_demo": "Carregar turma de demonstração",
+    "turma_demo_carregada": "Turma de demonstração carregada (6 alunos fictícios)."
+  },
   "anuncio": {
     "pegou": "Você pegou a letra {item}.",
     "encaixou": "Letra {item} colocada na caixa da letra {alvo}.",
@@ -172,6 +186,7 @@
       "trilhas": "Português escolhido. Tela de trilhas aberta.",
       "teste_mao": "Teste da mão aberto. Sem webcam, a câmera aparece como desligada."
     },
-    "treino_inicio": "Treino de arrastar aberto."
+    "treino_inicio": "Treino de arrastar aberto.",
+    "painel": "Painel do professor com a Turma de demonstração (6 alunos fictícios)."
   }
 }

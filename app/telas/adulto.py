@@ -32,6 +32,7 @@ TAMANHO_AVATAR = 56
 class TelaAdulto(QWidget):
     voltar = Signal()
     alunos_mudaram = Signal()
+    abrir_painel = Signal()
 
     def __init__(self, registro, audio=None, parent=None):
         super().__init__(parent)
@@ -131,9 +132,18 @@ class TelaAdulto(QWidget):
         direita.addWidget(self.travar_nivel)
         self.botao_exportar = botao(texto("adulto.exportar"))
         self.botao_exportar.clicked.connect(self.exportar)
+        self.botao_painel = botao(texto("painel.abrir"))
+        self.botao_painel.clicked.connect(self.abrir_painel)
+        self.botao_turma_demo = botao(texto("painel.turma_demo"))
+        self.botao_turma_demo.clicked.connect(self.carregar_turma_demo)
         self.botao_apagar_tudo = botao(texto("adulto.apagar_tudo"))
         self.botao_apagar_tudo.clicked.connect(self.apagar_tudo)
         linha_dados = QHBoxLayout()
+        linha_painel = QHBoxLayout()
+        linha_painel.addWidget(self.botao_painel)
+        linha_painel.addWidget(self.botao_turma_demo)
+        linha_painel.addStretch()
+        direita.addLayout(linha_painel)
         linha_dados.addWidget(self.botao_exportar)
         linha_dados.addWidget(self.botao_apagar_tudo)
         linha_dados.addStretch()
@@ -235,6 +245,18 @@ class TelaAdulto(QWidget):
                 return
         caminho = self.registro.exportar_json(destino)
         self.aviso.setText(texto("adulto.exportado").format(arquivo=caminho.name))
+
+    def carregar_turma_demo(self) -> None:
+        """Dados fictícios, rotulados como "Turma de demonstração", para ver o painel."""
+        from app.nucleo import turma_demo
+
+        if any(a.apelido == turma_demo.ALUNOS[0][0] for a in self.registro.listar_alunos()):
+            self.aviso.setText(texto("painel.turma_demo_carregada"))
+            return
+        turma_demo.criar(self.registro)
+        self.recarregar()
+        self.aviso.setText(texto("painel.turma_demo_carregada"))
+        self.alunos_mudaram.emit()
 
     def apagar_tudo(self) -> None:
         """Pede um segundo toque para confirmar: apagar não tem volta."""

@@ -17,6 +17,7 @@ from app.nucleo.sessao import Sessao
 from app.telas.adulto import TelaAdulto
 from app.telas.inicio import TelaInicio
 from app.telas.materias import TelaMaterias
+from app.telas.painel import TelaPainel
 from app.telas.trilhas import TelaTrilhas
 
 MARGEM = 24
@@ -37,6 +38,7 @@ class JanelaPrincipal(QMainWindow):
         self.inicio = TelaInicio()
         self.adulto = TelaAdulto(self.registro, self.audio)
         self.materias = TelaMaterias()
+        self.painel = TelaPainel(self.registro)
         self.atividades = {
             "treino": TelaTreino(self.contexto),
             "silabas": TelaSilabas(self.contexto),
@@ -47,7 +49,10 @@ class JanelaPrincipal(QMainWindow):
         self.trilhas = TelaTrilhas(self.atividades.keys())
 
         self.pilha = QStackedWidget()
-        telas = (self.inicio, self.adulto, self.materias, self.trilhas, *self.atividades.values())
+        telas = (
+            self.inicio, self.adulto, self.painel, self.materias, self.trilhas,
+            *self.atividades.values(),
+        )
         for tela in telas:
             tela.layout().setContentsMargins(MARGEM, MARGEM, MARGEM, MARGEM)
             self.pilha.addWidget(tela)
@@ -56,6 +61,8 @@ class JanelaPrincipal(QMainWindow):
         self.inicio.escolheu.connect(self.escolher_aluno)
         self.inicio.abrir_adulto.connect(lambda: self.ir_para(self.adulto))
         self.adulto.voltar.connect(self.abrir_inicio)
+        self.adulto.abrir_painel.connect(self.abrir_painel)
+        self.painel.voltar.connect(lambda: self.ir_para(self.adulto))
         self.materias.voltar.connect(self.abrir_inicio)
         self.materias.escolheu.connect(self.abrir_materia)
         self.trilhas.voltar.connect(lambda: self.ir_para(self.materias))
@@ -89,6 +96,10 @@ class JanelaPrincipal(QMainWindow):
         app = QApplication.instance()
         if app is not None:
             tema.aplicar(app, self.sessao.perfil)
+
+    def abrir_painel(self) -> None:
+        self.painel.mostrar()
+        self.ir_para(self.painel)
 
     def abrir_materia(self, materia: str) -> None:
         self.trilhas.mostrar(materia, self.sessao.perfil.escala)
