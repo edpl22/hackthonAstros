@@ -46,7 +46,7 @@ export QT_QPA_PLATFORM=offscreen ATLAS_AUDIO=nulo
 atlas verificar && atlas demo todas --saida ./saida
 ```
 
-No Windows: `py -3.11 -m venv .venv` e `.venv\Scripts\activate`. No Linux sem interface gráfica, o Qt precisa de `libegl1 libgl1 libxkbcommon0 libdbus-1-3 libfontconfig1`. A câmera é opcional (`pip install -r requirements-camera.txt`); sem ela, `atlas verificar` mostra `--  camera: ...` e o app usa mouse, toque e teclado.
+No Windows: `py -3.11 -m venv .venv` e `.venv\Scripts\activate`. No Linux sem interface gráfica, o Qt precisa de `libegl1 libgl1 libxkbcommon0 libdbus-1-3 libfontconfig1` (e a câmera, de `libgles2`). A câmera é opcional (`pip install -r requirements-camera.txt`); sem ela, `atlas verificar` mostra `--  camera: ...` e o app usa mouse, toque e teclado.
 
 ### Caminho C: só ler
 

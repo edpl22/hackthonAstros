@@ -68,4 +68,5 @@
 | 2026-10-31 | Painel: "item" = tentativas seguidas na mesma pergunta; o estado olha os últimos 10 itens | É como a especificação define "1ª tentativa"; um item repetido depois do acerto conta de novo |
 | 2026-10-31 | Turma de demonstração gerada com semente fixa e rotulada "Turma de demonstração" no título do painel | Dados fictícios declarados (regra de jogo limpo); o gerador fica em `app/nucleo/turma_demo.py` |
 | 2026-10-31 | Interface remota (`docker compose up gui`, noVNC) não implementada; o serviço `gui` saiu do compose | Primeiro item da ordem de corte; os modos sem tela e os instaladores cobrem a avaliação |
+| 2026-10-31 | Imagem Docker ganhou `libgles2` | O `verificar --completo` mostrou que o MediaPipe não carregava no Linux sem `libGLESv2.so.2`; o `verificar` comum só confere se os pacotes existem |
 | 2026-10-30 | Toda captura de `docs/saida-exemplo/` sai do `atlas demo` rodando o app real | Regra de jogo limpo: demo de fachada desclassifica |
