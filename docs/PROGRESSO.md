@@ -88,3 +88,5 @@
 - [x] `verificar_readme.sh` passou num clone limpo; tag `v1.0.0` com `Atlas-windows.zip`, `Atlas-macos.zip` e `ghcr.io/edpl22/atlas:v1.0.0`
 - [x] Repositório público: página, Release, zips e `git clone` conferidos sem login
 - [x] Pacote `atlas` do GHCR público: `docker pull` e `docker run ... verificar` sem login terminam com `RESULTADO: pronto`
+- [x] Treino de arrastar com o alfabeto inteiro (blocos de 4 letras, voz com o nome da letra)
+- [x] `verificar_readme.sh` passou num clone limpo; tag `v1.0.1` com os zips e `ghcr.io/edpl22/atlas:v1.0.1`/`latest`, conferidos sem login
