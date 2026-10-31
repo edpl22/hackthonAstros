@@ -99,3 +99,12 @@ def test_demo_com_perfil(tmp_path):
 def test_demo_roteiro_invalido():
     with pytest.raises(SystemExit):
         cli.main(["demo", "nao-existe"])
+
+
+def test_verificar_completo_carrega_o_detector_quando_ha_camera(capsys):
+    from app.entrada.camera import pacotes_disponiveis
+
+    assert cli.main(["verificar", "--completo"]) == 0
+    saida = capsys.readouterr().out
+    esperado = "OK  detector da mao" if pacotes_disponiveis() else "--  detector da mao"
+    assert esperado in saida and "RESULTADO: pronto" in saida

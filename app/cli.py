@@ -17,7 +17,10 @@ def _criar_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="comando", metavar="COMANDO")
 
     sub.add_parser("gui", help="abre a interface grafica (padrao)")
-    sub.add_parser("verificar", help="confere o ambiente e diz se o Atlas esta pronto")
+    verificar = sub.add_parser("verificar", help="confere o ambiente e diz se o Atlas esta pronto")
+    verificar.add_argument(
+        "--completo", action="store_true", help="tambem carrega o detector da mao (mais lento)"
+    )
 
     demo = sub.add_parser("demo", help="executa um roteiro sem tela e salva evidencias")
     demo.add_argument("roteiro", nargs="?", default="todas", choices=ROTEIROS)
@@ -71,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.comando == "verificar":
             from app.headless.verificar import executar
 
-            return executar()
+            return executar(args.completo)
         if args.comando == "agente":
             from app.headless.agente import executar
             from app.nucleo.perfis import ler_lista

@@ -100,6 +100,22 @@ def checar_camera() -> Checagem:
     )
 
 
+def checar_detector() -> Checagem:
+    """Carrega o detector de mão de verdade (OpenCV + MediaPipe + modelo), sem abrir a webcam."""
+    from app.entrada.camera import Camera, pacotes_disponiveis
+
+    if not pacotes_disponiveis():
+        return Checagem(AVISO, "detector da mao: pacotes ausentes")
+    try:
+        import cv2  # noqa: F401 - só confere que carrega
+
+        _mp, detector = Camera()._criar_detector()
+        detector.close()
+        return Checagem(OK, "detector da mao: OpenCV e MediaPipe carregados com o modelo")
+    except Exception as erro:  # noqa: BLE001
+        return Checagem(FALHA, f"detector da mao: {type(erro).__name__}: {erro}")
+
+
 def checar_banco() -> Checagem:
     pasta = caminhos.dados()
     try:
@@ -123,8 +139,9 @@ CHECAGENS = (
 )
 
 
-def executar() -> int:
-    resultados = [checagem() for checagem in CHECAGENS]
+def executar(completo: bool = False) -> int:
+    checagens = CHECAGENS + ((checar_detector,) if completo else ())
+    resultados = [checagem() for checagem in checagens]
     for resultado in resultados:
         print(resultado)
     falhou = any(r.situacao == FALHA for r in resultados)
