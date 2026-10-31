@@ -19,7 +19,8 @@ RUN pip install --no-cache-dir -r requirements.txt \
         || echo "AVISO: opencv/mediapipe sem wheel para esta arquitetura; camera desativada")
 
 COPY . .
-RUN pip install --no-cache-dir --no-deps .
+# Sem isolamento de build: usa o setuptools que já vem na imagem (nada é baixado aqui).
+RUN pip install --no-cache-dir --no-deps --no-build-isolation .
 
 ENV QT_QPA_PLATFORM=offscreen \
     ATLAS_AUDIO=nulo \
