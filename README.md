@@ -180,7 +180,6 @@ O professor marca um ou mais perfis no cadastro do aluno. Combinados, vale a op�
 | Dislexia | Letras 20% maiores e mais espaçadas, sílabas em cores alternadas |
 | Baixa visão | Tudo 75% maior, alto contraste, contornos mais grossos, no máximo 3 itens |
 | Dificuldade motora | Com a câmera, pegar e soltar parando a mão sobre o alvo (1,2 s), com tolerância maior |
-| Daltonismo e cegueira parcial | Ainda sem regra própria. Para cegueira, o app funciona inteiro pelo teclado e o leitor de tela lê a legenda |
 
 Também já estão declaradas, mas ainda não mudam a tela: um passo por vez e rodadas curtas (TDAH), resposta por escolha (dislexia), paleta segura (daltonismo), descrição do item em foco (cegueira) e varredura na janela (motor).
 
