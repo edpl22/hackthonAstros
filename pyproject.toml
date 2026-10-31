@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "atlas"
-version = "1.0.0"
+version = "1.0.1"
 description = "Português e matemática com o corpo, adaptado ao perfil de cada aluno."
 readme = "README.md"
 license = { text = "MIT" }
