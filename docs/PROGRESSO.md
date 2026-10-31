@@ -86,4 +86,5 @@
 - [x] `scripts/verificar_readme.sh` passou num clone limpo (Docker e Python)
 - [x] README, AVALIACAO e saída de exemplo atualizados com Mesa, Pizza e painel (38 capturas)
 - [x] `verificar_readme.sh` passou num clone limpo; tag `v1.0.0` com `Atlas-windows.zip`, `Atlas-macos.zip` e `ghcr.io/edpl22/atlas:v1.0.0`
-- [ ] Usuário muda o repositório (e o pacote do GHCR) para público; testar clone e pull sem login
+- [x] Repositório público: página, Release, zips e `git clone` conferidos sem login
+- [ ] Pacote `atlas` do GHCR público (o `docker pull` anônimo ainda responde "unauthorized")
