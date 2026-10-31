@@ -126,10 +126,28 @@ Ids estáveis: `bolha-<sílaba>-<n>`, `caixa-<n>`, `peca-<letra>-<n>`, `objeto-<
   - **Windows:** abra `Atlas\Atlas.exe`. Como o app não é assinado, o SmartScreen pode avisar: clique em "Mais informações" e depois em "Executar assim mesmo".
   - **macOS (Apple Silicon):** clique com o botão direito em `Atlas.app` e escolha "Abrir", ou rode `xattr -dr com.apple.quarantine Atlas.app` no Terminal. Em Macs Intel, use o Docker ou o Caminho B.
   - O executável também aceita os comandos sem tela: `Atlas.exe verificar --completo` confere até o detector da mão.
+- **Pelo código** (Windows, macOS inclusive Intel, Linux): veja [Abrir a interface pelo código](#abrir-a-interface-pelo-código).
 - **Sem webcam:** o Atlas usa mouse, toque e teclado sem nenhuma mensagem de erro; só aparece "Câmera desligada".
-- **Com webcam:** `pip install -r requirements-camera.txt`. A câmera liga só dentro de uma atividade. Junte o polegar e o indicador (pinça) para pegar e abra para soltar.
+- **Com webcam:** o instalador já traz a câmera; pelo código, instale `requirements-camera.txt`. A câmera liga só dentro de uma atividade. Junte o polegar e o indicador (pinça) para pegar e abra para soltar.
 - **Teclado:** Tab ou setas movem o foco; Enter ou Espaço pega e solta; Esc pausa.
 - **Área do adulto:** segure o botão "Área do adulto" por 2 segundos. Lá ficam o cadastro (só apelido e um bicho, nunca o nome completo), os perfis, o volume, a opção de travar o nível, exportar JSON e apagar todos os dados.
+
+### Abrir a interface pelo código
+
+Requisito: Python 3.11 ou 3.12 (o MediaPipe não roda no 3.13). O Docker não abre a janela; ele serve para os modos sem tela.
+
+```bash
+git clone https://github.com/edpl22/hackthonAstros && cd hackthonAstros
+python3.11 -m venv .venv && . .venv/bin/activate
+pip install -r requirements.txt -r requirements-camera.txt
+python -m app.main
+```
+
+- **Windows:** `py -3.11 -m venv .venv` e `.venv\Scripts\activate`; o resto é igual.
+- **Sem webcam:** pode deixar de fora `-r requirements-camera.txt`.
+- Rode de dentro da pasta clonada: o app procura `assets/` e `conteudo/` ali.
+- Não defina `QT_QPA_PLATFORM=offscreen` (é só para o Caminho B, sem tela); se ela estiver no terminal, a janela não aparece.
+- **Linux com área de trabalho:** se aparecer um erro do plugin "xcb", instale `libxcb-cursor0` (`sudo apt install libxcb-cursor0`).
 
 ## O que já existe
 
