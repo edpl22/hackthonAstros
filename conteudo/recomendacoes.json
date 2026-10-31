@@ -15,6 +15,10 @@
     "descricao": "usou uma sílaba que não está na palavra",
     "sugestao": "ouvir a palavra inteira de novo e procurar só as sílabas que aparecem nela."
   },
+  "tonica_errada": {
+    "descricao": "escolheu uma sílaba que não é a mais forte",
+    "sugestao": "falar a palavra esticando cada sílaba (BOOO-la, bo-LAAA) e perguntar qual jeito soa como a palavra de verdade."
+  },
   "um_a_mais_ou_menos": {
     "descricao": "errou a conta por um a mais ou um a menos",
     "sugestao": "contar tocando em cada objeto, um toque por número, e dizer o último número em voz alta."
