@@ -33,10 +33,11 @@ TAXA = 22050
 LETRAS = "ABCD"
 
 # Seções de frases.json lidas em voz alta (as demais são da área do adulto ou técnicas).
-SECOES_FALADAS = ("base", "treino", "silabas")
+SECOES_FALADAS = ("base", "treino", "silabas", "quantidades")
 CHAVES_SEM_VOZ = {
     "habilidade", "habilidade_tonica", "instrucao", "nivel_subiu", "agora", "depois",
-    "ouvir_curto", "ordinais",
+    "ouvir_curto", "ordinais", "habilidade_montar", "habilidade_comparar", "habilidade_contas",
+    "sobrou", "tirar", "bandeja-a", "bandeja-b",
 }
 
 
@@ -100,6 +101,27 @@ def coletar_textos() -> list[tuple[str, str]]:
             for candidata in (silaba, silabas.trocar_par(silaba)):
                 if candidata:
                     mesmo(silabas.fala_distratora(candidata))
+    # Mesa de Quantidades.
+    from app.atividades.quantidades import logica as mesa
+
+    q = frases["quantidades"]
+    for c in mesa.conjuntos():
+        for n in range(0, 13):
+            mesmo(mesa.quantidade(n, c))  # "três maçãs", falado a cada objeto
+        for n in range(2, 8):
+            nome = c.singular if n == 1 else c.plural
+            mesmo(q["instrucao_montar"].format(n=n, objetos=nome))
+            mesmo(q["certo_montar"].format(quantidade=mesa.quantidade(n, c)))
+    for a in range(1, 6):
+        for b in range(1, 6):
+            pares.append((
+                q["instrucao_conta"].format(a=a, sinal="+", b=b),
+                q["instrucao_conta"].format(
+                    a=mesa.numero_por_extenso(a), sinal="mais", b=mesa.numero_por_extenso(b)
+                ),
+            ))
+    for resposta in [str(n) for n in range(0, 21)] + list(mesa.COMPARACOES):
+        mesmo(q["certo"].format(resposta=resposta))
     return list(dict.fromkeys(pares))  # sem repetir, na ordem
 
 
