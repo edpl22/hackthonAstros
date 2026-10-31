@@ -82,4 +82,4 @@ docs/         DECISOES.md, PROGRESSO.md (depois: ARQUITETURA.md, AVALIACAO.md, s
 | 5. Mesa de Quantidades | concluída (sem Par/ímpar) |
 | 6. Pizza de Frações | concluída (tag v0.2.0) |
 | 7. Painel do professor e interface remota (noVNC) | painel concluído; noVNC cortado |
-| 8. Entrega | concluída: v1.0.3 (alfabeto inteiro, voz só no português, teste da mão no início), repositório e imagem públicos, conferidos sem login |
+| 8. Entrega | concluída: v1.0.4 (botão de câmera, Tabuada Protetora, pizza com operações, Jogo Dourado), repositório e imagem públicos, conferidos sem login |

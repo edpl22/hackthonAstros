@@ -97,3 +97,4 @@
 - [x] Tabuada Protetora (matemática): 1 minuto, monstrinhos, +1/-1, arminha com coice; demo, agente, painel e testes
 - [x] Pizza: nível Operar com 2 ou 3 pratos, soma e subtração
 - [x] Jogo Dourado (matemática): quadro valor de lugar até 9.999; demo, agente, painel e testes
+- [x] Tag `v1.0.4` (zips de 156 e 142 MB, imagem de 1,66 GB) conferida sem login: `verificar` dá `RESULTADO: pronto` e a imagem traz a versão 1.0.4
