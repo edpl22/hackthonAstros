@@ -1,0 +1,10 @@
+<!-- bola -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="128" cy="128" r="100" fill="#2F6F6A"/>
+    <path d="M128 28 Q236 128 128 228 Q20 128 128 28 Z" fill="#8FA9C7"/>
+    <path d="M128 28 Q196 128 128 228 Q60 128 128 28 Z" fill="#D9A441"/>
+    <path d="M128 28 Q160 128 128 228 Q96 128 128 28 Z" fill="#F6F3EC"/>
+    <ellipse cx="78" cy="88" rx="12" ry="18" fill="#FFFFFF" transform="rotate(30 78 88)"/>
+  </g>
+</svg>

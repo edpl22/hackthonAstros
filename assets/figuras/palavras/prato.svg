@@ -1,0 +1,12 @@
+<!-- prato -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="128" cy="128" r="80" fill="#8FA9C7"/>
+    <circle cx="128" cy="128" r="56" fill="#F6F3EC"/>
+    <rect x="26" y="112" width="12" height="100" rx="6" fill="#F6F3EC"/>
+    <path d="M22 44 L22 86 Q22 100 32 100 Q42 100 42 86 L42 44 M32 44 L32 86" fill="#F6F3EC"/>
+    <path d="M30 98 L30 114 L34 114 L34 98" fill="#F6F3EC"/>
+    <path d="M220 44 Q236 80 230 128 L218 128 Z" fill="#F6F3EC"/>
+    <rect x="218" y="126" width="12" height="86" rx="6" fill="#F6F3EC"/>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+<!-- braco -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M56 152 Q100 104 148 146 L154 102 L204 96 Q220 150 208 196 Q200 220 176 220 L56 220 Z" fill="#D9A441"/>
+    <path d="M90 152 Q112 140 130 156" fill="none"/>
+    <rect x="148" y="40" width="64" height="62" rx="20" fill="#D9A441"/>
+    <path d="M164 40 L164 62 M180 40 L180 62 M196 40 L196 62" fill="none"/>
+    <path d="M150 74 Q166 66 172 82" fill="none"/>
+    <path d="M28 140 L64 134 L64 224 L28 224 Z" fill="#2F6F6A"/>
+  </g>
+</svg>

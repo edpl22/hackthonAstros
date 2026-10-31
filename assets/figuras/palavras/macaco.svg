@@ -1,0 +1,17 @@
+<!-- macaco -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M110 60 Q118 30 128 52 Q138 30 146 60 Z" fill="#2F6F6A"/>
+    <circle cx="48" cy="128" r="26" fill="#2F6F6A"/>
+    <circle cx="208" cy="128" r="26" fill="#2F6F6A"/>
+    <circle cx="44" cy="128" r="13" fill="#D9A441"/>
+    <circle cx="212" cy="128" r="13" fill="#D9A441"/>
+    <circle cx="128" cy="132" r="74" fill="#2F6F6A"/>
+    <path d="M128 98 C114 70 66 74 70 118 C72 134 76 146 80 156 C84 206 172 206 176 156 C180 146 184 134 186 118 C190 74 142 70 128 98 Z" fill="#D9A441"/>
+    <circle cx="104" cy="118" r="9" fill="#2A2A2A"/>
+    <circle cx="152" cy="118" r="9" fill="#2A2A2A"/>
+    <circle cx="120" cy="150" r="3" fill="#2A2A2A"/>
+    <circle cx="136" cy="150" r="3" fill="#2A2A2A"/>
+    <path d="M102 168 Q128 188 154 168" fill="none"/>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+<!-- tomate -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M128 80 C180 56 228 90 224 146 C220 200 176 224 128 224 C80 224 36 200 32 146 C28 90 76 56 128 80 Z" fill="#D9A441"/>
+    <ellipse cx="80" cy="128" rx="10" ry="20" fill="#FFFFFF" transform="rotate(25 80 128)"/>
+    <path d="M128 76 Q104 48 90 64 Q106 68 110 78 Q82 86 94 98 Q112 88 128 88 Q144 88 162 98 Q174 86 146 78 Q150 68 166 64 Q152 48 128 76 Z" fill="#2F6F6A"/>
+    <path d="M124 76 Q122 50 132 32 L140 36 Q132 54 134 76 Z" fill="#2F6F6A"/>
+  </g>
+</svg>

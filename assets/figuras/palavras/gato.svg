@@ -1,0 +1,17 @@
+<!-- gato -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M182 210 Q234 204 226 148 Q224 136 212 140 Q212 186 178 192 Z" fill="#D9A441"/>
+    <ellipse cx="128" cy="178" rx="62" ry="50" fill="#D9A441"/>
+    <ellipse cx="128" cy="186" rx="30" ry="34" fill="#F6F3EC"/>
+    <ellipse cx="104" cy="222" rx="18" ry="9" fill="#D9A441"/>
+    <ellipse cx="152" cy="222" rx="18" ry="9" fill="#D9A441"/>
+    <path d="M84 74 L88 24 L122 50 Z M172 74 L168 24 L134 50 Z" fill="#D9A441"/>
+    <circle cx="128" cy="92" r="50" fill="#D9A441"/>
+    <circle cx="108" cy="86" r="8" fill="#2A2A2A"/>
+    <circle cx="148" cy="86" r="8" fill="#2A2A2A"/>
+    <path d="M120 104 L136 104 L128 113 Z" fill="#2A2A2A"/>
+    <path d="M128 113 Q122 124 112 121 M128 113 Q134 124 144 121" fill="none"/>
+    <path d="M98 106 L56 98 M98 114 L58 122 M158 106 L200 98 M158 114 L198 122" fill="none"/>
+  </g>
+</svg>

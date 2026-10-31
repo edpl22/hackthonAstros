@@ -1,0 +1,12 @@
+<!-- pato -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M100 210 L86 228 L118 228 Z M150 210 L136 228 L168 228 Z" fill="#D9A441"/>
+    <path d="M48 156 L28 112 L80 136 Z" fill="#F6F3EC"/>
+    <ellipse cx="122" cy="164" rx="88" ry="52" fill="#F6F3EC"/>
+    <circle cx="164" cy="88" r="40" fill="#F6F3EC"/>
+    <path d="M196 80 L230 94 L196 106 Q202 93 196 80 Z" fill="#D9A441"/>
+    <circle cx="174" cy="78" r="6" fill="#2A2A2A"/>
+    <path d="M78 160 Q120 128 162 154 Q124 194 78 160 Z" fill="#8FA9C7"/>
+  </g>
+</svg>

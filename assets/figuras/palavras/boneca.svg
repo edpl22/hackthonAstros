@@ -1,0 +1,21 @@
+<!-- boneca -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="76" cy="82" r="20" fill="#D9A441"/>
+    <circle cx="180" cy="82" r="20" fill="#D9A441"/>
+    <ellipse cx="88" cy="164" rx="10" ry="26" fill="#F6F3EC" transform="rotate(30 88 164)"/>
+    <ellipse cx="168" cy="164" rx="10" ry="26" fill="#F6F3EC" transform="rotate(-30 168 164)"/>
+    <rect x="108" y="196" width="14" height="26" fill="#F6F3EC"/>
+    <rect x="134" y="196" width="14" height="26" fill="#F6F3EC"/>
+    <ellipse cx="112" cy="226" rx="14" ry="6" fill="#2A2A2A"/>
+    <ellipse cx="144" cy="226" rx="14" ry="6" fill="#2A2A2A"/>
+    <path d="M90 204 L110 132 L146 132 L166 204 Z" fill="#2F6F6A"/>
+    <path d="M110 132 L128 146 L146 132 Z" fill="#FFFFFF"/>
+    <circle cx="128" cy="86" r="44" fill="#F6F3EC"/>
+    <path d="M84 88 Q82 38 128 38 Q174 38 172 88 Q160 62 128 64 Q96 62 84 88 Z" fill="#D9A441"/>
+    <circle cx="112" cy="90" r="6" fill="#2A2A2A"/>
+    <circle cx="144" cy="90" r="6" fill="#2A2A2A"/>
+    <path d="M114 108 Q128 120 142 108" fill="none"/>
+    <path d="M128 40 L114 26 L114 46 Z M128 40 L142 26 L142 46 Z" fill="#8FA9C7"/>
+  </g>
+</svg>

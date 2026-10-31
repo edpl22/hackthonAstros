@@ -1,0 +1,11 @@
+<!-- janela -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="40" y="32" width="176" height="176" rx="6" fill="#D9A441"/>
+    <rect x="56" y="48" width="144" height="144" fill="#8FA9C7"/>
+    <path d="M72 92 Q72 76 88 78 Q94 66 106 74 Q118 72 116 86 Q116 94 106 94 L80 94 Q72 94 72 92 Z" fill="#F6F3EC"/>
+    <rect x="122" y="48" width="12" height="144" fill="#D9A441"/>
+    <rect x="56" y="114" width="144" height="12" fill="#D9A441"/>
+    <rect x="28" y="204" width="200" height="20" rx="4" fill="#2F6F6A"/>
+  </g>
+</svg>

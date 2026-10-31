@@ -1,0 +1,10 @@
+<!-- livro -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M24 72 L128 88 L232 72 L232 208 L128 224 L24 208 Z" fill="#2F6F6A"/>
+    <path d="M36 60 Q86 48 128 76 L128 212 Q86 186 36 196 Z" fill="#F6F3EC"/>
+    <path d="M220 60 Q170 48 128 76 L128 212 Q170 186 220 196 Z" fill="#F6F3EC"/>
+    <path d="M52 92 Q84 84 112 100 M52 116 Q84 108 112 124 M52 140 Q84 132 112 148 M52 164 Q84 156 112 172" fill="none"/>
+    <path d="M204 92 Q172 84 144 100 M204 116 Q172 108 144 124 M204 140 Q172 132 144 148 M204 164 Q172 156 144 172" fill="none"/>
+  </g>
+</svg>

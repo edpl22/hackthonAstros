@@ -1,0 +1,10 @@
+<!-- sapato -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <g stroke="#2A2A2A" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M36 196 L36 92 Q36 80 48 80 L90 80 Q102 118 136 130 L194 146 Q226 154 226 184 L226 196 Z" fill="#2F6F6A"/>
+    <path d="M180 142 Q226 150 226 184 L226 196 L172 196 Q166 164 180 142 Z" fill="#D9A441"/>
+    <path d="M36 80 L64 80 L64 150 L36 150 Z" fill="#D9A441"/>
+    <path d="M28 192 L232 192 L232 204 Q232 220 216 220 L44 220 Q28 220 28 204 Z" fill="#F6F3EC"/>
+    <path d="M94 104 L112 94 M104 118 L122 106 M116 128 L134 116" fill="none"/>
+  </g>
+</svg>
