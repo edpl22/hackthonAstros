@@ -56,7 +56,8 @@ def test_navegacao_inicio_materias_trilhas(janela, qtbot):
     assert janela.pilha.currentWidget() is janela.materias
     qtbot.mouseClick(janela.materias.botoes["matematica"], Qt.LeftButton)
     assert janela.pilha.currentWidget() is janela.trilhas
-    assert [b.text() for b in janela.trilhas.botoes] == ["Treino de arrastar", "Teste da mão"]
+    esperado = ["Treino de arrastar", "Contar e comparar", "Teste da mão"]
+    assert [b.text() for b in janela.trilhas.botoes] == esperado
     qtbot.mouseClick(janela.trilhas.botao_voltar, Qt.LeftButton)
     assert janela.pilha.currentWidget() is janela.materias
 

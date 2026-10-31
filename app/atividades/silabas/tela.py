@@ -38,6 +38,10 @@ class TelaSilabas(AtividadeBase):
 
     # --- rodada e cena ---------------------------------------------------------------
 
+    def iniciar(self, *args, **kwargs) -> None:
+        self._rodadas = 0  # a mesma semente dá as mesmas rodadas a cada abertura
+        super().iniciar(*args, **kwargs)
+
     def preparar_rodada(self, semente: int | None) -> None:
         anterior = self.rodada.palavra.id if self.rodada else None
         semente_rodada = None if semente is None else semente + self._rodadas

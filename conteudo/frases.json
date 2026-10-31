@@ -118,6 +118,26 @@
     "instrucao": "Pegue a letra {letra}. Coloque na caixa da letra {letra}.",
     "terminou": "Todas as letras estão nas caixas."
   },
+  "quantidades": {
+    "habilidade_montar": "contar e montar quantidades",
+    "habilidade_comparar": "comparar quantidades",
+    "habilidade_contas": "somar e subtrair",
+    "apresentacao": "Vamos contar com os objetos da mesa.",
+    "instrucao_montar": "Coloque {n} {objetos} na bandeja. Depois toque em Pronto.",
+    "instrucao_comparar": "Compare as bandejas. A da esquerda é maior, menor ou igual à da direita?",
+    "instrucao_conta": "Quanto é {a} {sinal} {b}? Escolha o cartão.",
+    "terminou": "A mesa está certa.",
+    "pista_contar": "Vamos contar juntos.",
+    "sobrou": "sobrou",
+    "tirar": "tirar estas",
+    "bandeja-a": "bandeja da esquerda",
+    "bandeja-b": "bandeja da direita",
+    "pegou": "Você pegou {quantidade}.",
+    "certo_montar": "Isso. Na bandeja tem {quantidade}.",
+    "errado_montar": "Na bandeja tinha {quantidade}. Vamos tentar de novo.",
+    "certo": "Isso. A resposta é {resposta}.",
+    "errado": "{resposta} não é a resposta. Vamos tentar de novo."
+  },
   "anuncio": {
     "pegou": "Você pegou a letra {item}.",
     "encaixou": "Letra {item} colocada na caixa da letra {alvo}.",
