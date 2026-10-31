@@ -63,7 +63,7 @@ No Windows: `py -3.11 -m venv .venv` e `.venv\Scripts\activate`. No Linux sem in
 | `eventos.jsonl` | Um evento por linha, com a frase narrada e a entrada usada |
 | `audio.log` | Cada áudio que tocaria (no Docker não há som). Só o português tem voz: a letra ou a sílaba pega e a palavra pronta |
 
-Os roteiros têm **erros propositais**. Eles mostram a resposta neutra ("Vamos tentar de novo"), as pistas graduais (1ª repete a instrução, 2ª realça, 3ª mostra o modelo) e a classificação do erro: `ordem_trocada`, `silaba_de_outra_palavra`, `par_surdo_sonoro`, `tonica_errada`, `letra_trocada`, `um_a_mais_ou_menos`, `operacao_trocada`, `digitos_invertidos`, `comparacao_errada`, `somou_denominadores`, `contou_fatias_errado`, `confundiu_numerador_denominador`.
+Os roteiros têm **erros propositais**. Eles mostram a resposta neutra ("Vamos tentar de novo"), as pistas graduais (1ª repete a instrução, 2ª realça, 3ª mostra o modelo) e a classificação do erro: `ordem_trocada`, `silaba_de_outra_palavra`, `par_surdo_sonoro`, `tonica_errada`, `letra_trocada`, `um_a_mais_ou_menos`, `operacao_trocada`, `digitos_invertidos`, `comparacao_errada`, `chute`, `somou_denominadores`, `contou_fatias_errado`, `confundiu_numerador_denominador`, `trocou_as_ordens`, `contou_pecas_errado`, `somou_em_vez_de_multiplicar`, `vizinho_na_tabuada`.
 
 ### Variações
 
@@ -111,7 +111,7 @@ Resposta (resumida):
 {"ok": true, "anuncio": "Bolha LA colocada na segunda caixa.", "estado": {"concluida": true, "momento": "fim", "...": "..."}}
 ```
 
-Ids estáveis: `bolha-<sílaba>-<n>`, `caixa-<n>`, `peca-<letra>-<n>`, `objeto-<conjunto>-<n>`, `bandeja-a`, `bandeja-b`, `cartao-<valor>`, `fatia-<pizza>-<n>`, `cartao-<num>-<den>`. O `estado` traz a tela, o momento, o nível, a instrução, os itens e alvos com posição, a pista atual e se concluiu. Erros vêm como `{"ok": false, "erro": "item inexistente: bolha-xx", "dica": "ids disponiveis: ..."}`. A sessão completa está em [`docs/saida-exemplo/agente-respostas.jsonl`](docs/saida-exemplo/agente-respostas.jsonl).
+Ids estáveis: `bolha-<sílaba>-<n>`, `caixa-<n>`, `peca-<letra>-<n>`, `objeto-<conjunto>-<n>`, `bandeja-a`, `bandeja-b`, `cartao-<valor>`, `fatia-<pizza>-<n>` (pizza `a`, `b` ou `c`), `cartao-<num>-<den>`, `<ordem>-<n>` (peças do Jogo Dourado, com ordem `milhar`, `centena`, `dezena` ou `unidade`; só a de cima de cada pilha está livre), `coluna-<ordem>`, `cartao-pronto`, `monstro-<conta>-<n>` (o número fica no `rotulo`). O `estado` traz a tela, o momento, o nível, a instrução, os itens e alvos com posição, a pista atual e se concluiu. Erros vêm como `{"ok": false, "erro": "item inexistente: bolha-xx", "dica": "ids disponiveis: ..."}`. A sessão completa está em [`docs/saida-exemplo/agente-respostas.jsonl`](docs/saida-exemplo/agente-respostas.jsonl).
 
 ### Problemas comuns
 
