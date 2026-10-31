@@ -33,35 +33,74 @@ TAXA = 22050
 LETRAS = "ABCD"
 
 # Seções de frases.json lidas em voz alta (as demais são da área do adulto ou técnicas).
-SECOES_FALADAS = ("base", "treino")
-CHAVES_SEM_VOZ = {"habilidade", "instrucao", "nivel_subiu", "agora", "depois", "ouvir_curto"}
+SECOES_FALADAS = ("base", "treino", "silabas")
+CHAVES_SEM_VOZ = {
+    "habilidade", "habilidade_tonica", "instrucao", "nivel_subiu", "agora", "depois",
+    "ouvir_curto", "ordinais",
+}
 
 
-def coletar_textos() -> list[str]:
+def coletar_textos() -> list[tuple[str, str]]:
+    """Pares (texto como aparece na tela, texto que a voz lê).
+
+    Na tela aparece "Pegue a bolha BO."; a voz lê "Pegue a bolha bó." para não soletrar
+    a sílaba em maiúsculas e para soar como dentro da palavra.
+    """
+    from app.atividades.silabas import logica as silabas
+
     frases = carregar("frases.json")
-    textos: list[str] = []
+    pares: list[tuple[str, str]] = []
+
+    def mesmo(texto: str) -> None:
+        pares.append((texto, texto))
+
     for secao in SECOES_FALADAS:
         for chave, valor in frases[secao].items():
             if chave not in CHAVES_SEM_VOZ and "{" not in valor:
-                textos.append(valor)
-    # Frases com letra: uma por letra do treino.
+                mesmo(valor)
+    # Treino: frases com letra, uma por letra.
     for letra in LETRAS:
-        textos.append(frases["treino"]["instrucao"].format(letra=letra))
+        mesmo(frases["treino"]["instrucao"].format(letra=letra))
         for chave in ("pegou", "voltou", "soltou_fora"):
-            textos.append(frases["anuncio"][chave].format(item=letra))
-        textos.append(frases["anuncio"]["encaixou"].format(item=letra, alvo=letra))
+            mesmo(frases["anuncio"][chave].format(item=letra))
+        mesmo(frases["anuncio"]["encaixou"].format(item=letra, alvo=letra))
     for n in (1, 2, 3, 4):
-        textos.append(frases["base"]["nivel_subiu"].format(nivel=n))
+        mesmo(frases["base"]["nivel_subiu"].format(nivel=n))
     for chave in ("nada_para_pegar", "pausou", "continuou"):
-        textos.append(frases["anuncio"][chave])
-    # Palavras e sílabas do Ímã das Sílabas (quando existir).
-    try:
-        for palavra in carregar("palavras.json"):
-            textos.append(palavra["fala"]["palavra"])
-            textos.extend(palavra["fala"]["silabas"])
-    except FileNotFoundError:
-        pass
-    return list(dict.fromkeys(textos))  # sem repetir, na ordem
+        mesmo(frases["anuncio"][chave])
+
+    # Ímã das Sílabas.
+    s = frases["silabas"]
+    ordinais = s["ordinais"].split(",")
+    for palavra in silabas.carregar_palavras():
+        mesmo(palavra.fala_palavra)
+        for fala in palavra.fala_silabas:
+            mesmo(fala)
+        for pos, silaba in enumerate(palavra.silabas):
+            fala = palavra.fala_silabas[pos]
+            na_tela = silabas.rotulo(silaba, palavra.nivel)
+            pares.append((
+                s["instrucao"].format(silaba=na_tela, ordinal=ordinais[pos]),
+                s["instrucao"].format(silaba=fala, ordinal=ordinais[pos]),
+            ))
+        pares.append((
+            s["instrucao_tonica"].format(palavra=palavra.texto),
+            s["instrucao_tonica"].format(palavra=palavra.fala_palavra),
+        ))
+        tonica = palavra.silabas[palavra.tonica]
+        pares.append((
+            s["tonica_certa"].format(silaba=tonica, palavra=palavra.texto),
+            s["tonica_certa"].format(
+                silaba=palavra.fala_silabas[palavra.tonica], palavra=palavra.fala_palavra
+            ),
+        ))
+    # Som de cada sílaba que pode virar bolha distratora (de outra palavra ou par surdo/sonoro).
+    for palavra in silabas.carregar_palavras():
+        for silaba in palavra.silabas:
+            for candidata in (silaba, silabas.trocar_par(silaba)):
+                if candidata:
+                    mesmo(silabas.fala_distratora(candidata))
+    return list(dict.fromkeys(pares))  # sem repetir, na ordem
 
 
 def nome_arquivo(texto: str) -> str:
@@ -109,11 +148,13 @@ def main() -> int:
 
     PASTA_AUDIO.mkdir(parents=True, exist_ok=True)
     manifesto = {}
-    for texto in coletar_textos():
-        arquivo = nome_arquivo(texto)
+    for texto, fala in coletar_textos():
+        if texto in manifesto:
+            continue
+        arquivo = nome_arquivo(fala)
         destino = PASTA_AUDIO / arquivo
         if args.refazer or not destino.exists():
-            falar(texto, destino)
+            falar(fala, destino)
         conferir_formato(destino)
         manifesto[texto] = arquivo
 

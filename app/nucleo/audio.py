@@ -9,6 +9,7 @@ Regra pedagógica: nenhum som de "errado"; quem chama decide quando falar (após
 import array
 import io
 import os
+import queue
 import re
 import shutil
 import subprocess
@@ -53,39 +54,63 @@ def _wav_com_volume(caminhos_wav, volume: float) -> bytes:
 
 
 class _TocadorSistema:
+    """Toca em fila, numa thread: uma fala não corta a anterior (a sílaba e depois "Terminou!").
+    Se a criança age rápido, as falas antigas que ainda não começaram são descartadas."""
+
+    MAX_ESPERANDO = 1
+
     def __init__(self):
-        self._cache: dict[tuple[str, float], bytes] = {}
+        self._cache: dict[tuple, bytes] = {}
+        self._fila: queue.Queue = queue.Queue()
+        threading.Thread(target=self._trabalhar, daemon=True).start()
 
     def tocar(self, caminhos_wav: list[Path], volume: float) -> None:
         chave = (tuple(str(c) for c in caminhos_wav), round(volume, 2))
         if chave not in self._cache:
             self._cache[chave] = _wav_com_volume(caminhos_wav, volume)
-        dados = self._cache[chave]
+        while self._fila.qsize() >= self.MAX_ESPERANDO:
+            try:
+                self._fila.get_nowait()
+            except queue.Empty:
+                break
+        self._fila.put((chave, self._cache[chave]))
+
+    def _trabalhar(self) -> None:
+        while True:
+            chave, dados = self._fila.get()
+            try:
+                self._tocar_agora(chave, dados)
+            except Exception:  # noqa: BLE001 - sem som não pode derrubar a atividade
+                pass
+
+    @staticmethod
+    def _tocar_agora(chave, dados: bytes) -> None:
         if sys.platform == "win32":
+            import winsound
 
-            def tocar_windows():
-                import winsound
-
-                winsound.PlaySound(dados, winsound.SND_MEMORY | winsound.SND_NODEFAULT)
-
-            threading.Thread(target=tocar_windows, daemon=True).start()
+            winsound.PlaySound(dados, winsound.SND_MEMORY | winsound.SND_NODEFAULT)
             return
         # macOS e Linux tocam de um arquivo: o WAV juntado vai para a pasta temporária.
         arquivo = Path(tempfile.gettempdir()) / f"atlas-{abs(hash(chave))}.wav"
         if not arquivo.exists():
             arquivo.write_bytes(dados)
         if sys.platform == "darwin":
-            subprocess.Popen(["afplay", str(arquivo)])
+            subprocess.run(["afplay", str(arquivo)], check=False)
         elif shutil.which("paplay"):
-            subprocess.Popen(["paplay", str(arquivo)])
+            subprocess.run(["paplay", str(arquivo)], check=False)
         elif shutil.which("aplay"):
-            subprocess.Popen(["aplay", "-q", str(arquivo)])
+            subprocess.run(["aplay", "-q", str(arquivo)], check=False)
 
     def parar(self) -> None:
+        while not self._fila.empty():
+            try:
+                self._fila.get_nowait()
+            except queue.Empty:
+                break
         if sys.platform == "win32":
             import winsound
 
-            winsound.PlaySound(None, winsound.SND_PURGE)
+            winsound.PlaySound(None, 0)
 
 
 class ServicoAudio(QObject):
@@ -106,13 +131,16 @@ class ServicoAudio(QObject):
     def arquivo_de(self, texto: str) -> str | None:
         return self.manifesto.get(texto)
 
-    def arquivos_de(self, texto: str) -> list[str] | None:
-        """WAVs que, em sequência, falam o texto. Frases compostas ("A letra B voltou...
-        Pegue a letra A...") são montadas com os maiores trechos que existem no manifesto."""
+    def arquivos_de(self, texto: str) -> tuple[list[str], list[str]]:
+        """WAVs que, em sequência, falam o texto, e os trechos que ficaram sem áudio.
+
+        Frases compostas ("A letra B voltou... Pegue a letra A...") são montadas com os
+        maiores trechos que existem no manifesto; um trecho sem WAV fica só na legenda.
+        """
         if texto in self.manifesto:
-            return [self.manifesto[texto]]
+            return [self.manifesto[texto]], []
         frases = dividir_em_frases(texto)
-        arquivos, i = [], 0
+        arquivos, faltando, i = [], [], 0
         while i < len(frases):
             for j in range(len(frases), i, -1):
                 trecho = " ".join(frases[i:j])
@@ -121,8 +149,9 @@ class ServicoAudio(QObject):
                     i = j
                     break
             else:
-                return None
-        return arquivos
+                faltando.append(frases[i])
+                i += 1
+        return arquivos, faltando
 
     def falar(self, texto: str) -> None:
         if not texto:
@@ -131,11 +160,14 @@ class ServicoAudio(QObject):
         if self.silenciado:
             self.log.append(f"silenciado: {texto}")
             return
-        arquivos = self.arquivos_de(texto)
-        if arquivos is None:
+        arquivos, faltando = self.arquivos_de(texto)
+        if not arquivos:
             self.log.append(f"legenda (sem wav): {texto}")
             return
-        self.log.append("toca " + " + ".join(arquivos))
+        linha = "toca " + " + ".join(arquivos)
+        if faltando:
+            linha += " | so legenda: " + " ".join(faltando)
+        self.log.append(linha)
         if self._tocador is not None and self.volume > 0:
             self._tocador.tocar([caminhos.asset("audio", a) for a in arquivos], self.volume)
 

@@ -23,7 +23,7 @@ def test_conteudo_valido():
 def test_todo_texto_coletado_tem_audio():
     gerar = _script("gerar_audio")
     servico = ServicoAudio(backend="nulo")
-    faltando = [t for t in gerar.coletar_textos() if servico.arquivo_de(t) is None]
+    faltando = [t for t, _ in gerar.coletar_textos() if servico.arquivo_de(t) is None]
     assert faltando == []
 
 
@@ -72,9 +72,15 @@ def test_frase_composta_junta_os_trechos_que_tem_audio():
     servico = ServicoAudio(backend="nulo")
     voltou = texto("anuncio.voltou").format(item="B")
     instrucao = texto("treino.instrucao").format(letra="A")
-    arquivos = servico.arquivos_de(f"{voltou} {instrucao}")
+    arquivos, faltando = servico.arquivos_de(f"{voltou} {instrucao}")
     assert arquivos == [servico.arquivo_de(voltou), servico.arquivo_de(instrucao)]
-    assert servico.arquivos_de(f"{voltou} Frase nova sem audio.") is None
+    assert faltando == []
+    # Trecho sem WAV fica só na legenda; o resto ainda é falado.
+    arquivos, faltando = servico.arquivos_de(f"Frase nova sem audio. {instrucao}")
+    assert arquivos == [servico.arquivo_de(instrucao)]
+    assert faltando == ["Frase nova sem audio."]
+    servico.falar(f"Frase nova sem audio. {instrucao}")
+    assert servico.log[-1].endswith("| so legenda: Frase nova sem audio.")
 
 
 def test_juntar_wavs_soma_as_duracoes():
