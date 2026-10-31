@@ -80,4 +80,4 @@ docs/         DECISOES.md, PROGRESSO.md (depois: ARQUITETURA.md, AVALIACAO.md, s
 | 5. Mesa de Quantidades | concluída (sem Par/ímpar) |
 | 6. Pizza de Frações | concluída (tag v0.2.0) |
 | 7. Painel do professor e interface remota (noVNC) | painel concluído; noVNC cortado |
-| 8. Entrega | v1.0.0 publicada (Release e GHCR); falta o usuário tornar públicos o repositório e o pacote |
+| 8. Entrega | concluída: v1.0.0, repositório e imagem públicos, conferidos sem login |
