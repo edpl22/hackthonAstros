@@ -127,10 +127,11 @@ Ids estáveis: `bolha-<sílaba>-<n>`, `caixa-<n>`, `peca-<letra>-<n>`, `objeto-<
   - **macOS (Apple Silicon):** clique com o botão direito em `Atlas.app` e escolha "Abrir", ou rode `xattr -dr com.apple.quarantine Atlas.app` no Terminal. Em Macs Intel, use o Docker ou o Caminho B.
   - O executável também aceita os comandos sem tela: `Atlas.exe verificar --completo` confere até o detector da mão.
 - **Pelo código** (Windows, macOS inclusive Intel, Linux): veja [Abrir a interface pelo código](#abrir-a-interface-pelo-código).
-- **Sem webcam:** o Atlas usa mouse, toque e teclado sem nenhuma mensagem de erro; só aparece "Câmera desligada".
-- **Com webcam:** o instalador já traz a câmera; pelo código, instale `requirements-camera.txt`. A câmera liga só dentro de uma atividade. Junte o polegar e o indicador (pinça) para pegar e abra para soltar.
+- **Sem webcam:** o Atlas usa mouse, toque e teclado sem nenhuma mensagem de erro; o indicador mostra "Sem câmera". Se a webcam for desconectada no meio da atividade, acontece o mesmo e o jogo continua.
+- **Com webcam:** o instalador já traz a câmera; pelo código, instale `requirements-camera.txt`. A câmera liga só dentro de uma atividade, e o botão com a câmera, abaixo do Voltar, desliga e religa. Junte o polegar e o indicador (pinça) para pegar e abra para soltar; na Tabuada Protetora, faça uma "arminha" e dê um coice para cima para disparar.
 - **Teclado:** Tab ou setas movem o foco; Enter ou Espaço pega e solta; Esc pausa.
-- **Área do adulto:** segure o botão "Área do adulto" por 2 segundos. Lá ficam o cadastro (só apelido e um bicho, nunca o nome completo), os perfis, o volume, a opção de travar o nível, exportar JSON e apagar todos os dados.
+- **Leitor de tela:** a legenda embaixo da atividade traz cada instrução e retorno, e o leitor de tela lê o texto dela (a voz gravada é só do português).
+- **Área do adulto:** segure o botão "Área do adulto" por 2 segundos. Lá ficam o cadastro (só apelido e um bicho, nunca o nome completo), os perfis, o volume, a opção de travar o nível, exportar JSON e apagar todos os dados. Trocar o apelido de um aluno leva o histórico dele junto; apagar um aluno apaga também as tentativas dele.
 
 ### Abrir a interface pelo código
 
@@ -194,7 +195,7 @@ As atividades só escutam o barramento: não sabem se a jogada veio da mão, do 
 
 - O vídeo da câmera nunca sai do computador e nenhum quadro é salvo (`tests/test_privacidade.py` falha se o código usar `imwrite` ou módulos de rede).
 - Não há nenhuma chamada de rede enquanto o app roda; só os scripts de preparo (`scripts/`) acessam a internet.
-- Os alunos têm só apelido e avatar. Os dados ficam num SQLite local e podem ser exportados ou apagados na área do adulto.
+- Os alunos têm só apelido e avatar. Os dados ficam num SQLite local e podem ser exportados ou apagados na área do adulto; apagar um aluno apaga também as tentativas dele.
 
 ## Créditos e licenças
 
