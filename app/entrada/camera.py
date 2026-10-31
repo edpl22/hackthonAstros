@@ -163,5 +163,14 @@ def pacotes_disponiveis() -> bool:
     return all(importlib.util.find_spec(nome) is not None for nome in ("cv2", "mediapipe"))
 
 
+def testar_detector() -> None:
+    """Carrega OpenCV, MediaPipe e o modelo da mão sem abrir a webcam (`verificar --completo`).
+    Levanta a exceção original se algo faltar."""
+    import cv2  # noqa: F401 - só confere que carrega
+
+    _mp, detector = Camera()._criar_detector()
+    detector.close()
+
+
 def fabrica_padrao():
     return Camera if pacotes_disponiveis() else CameraNula
